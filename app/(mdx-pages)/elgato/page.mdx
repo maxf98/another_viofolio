@@ -1,0 +1,15 @@
+export const metadata = {
+  title: "Elgato Hover Gallery Preview",
+  description: "Interactive hover gallery demo for the Elgato case study",
+};
+
+import HoverGallery from "@/app/components/blog/HoverGallery";
+
+<HoverGallery
+  items={[
+    { src: "/gallery/monkeybrain.jpg", alt: "Mood collage", label: "Mood" },
+    { src: "/gallery/octoberfest.png", alt: "Poster sketch", label: "Poster" },
+    { src: "/gallery/breathe.png", alt: "Breathing guide", label: "Guide" },
+    { src: "/gallery/streamdeckk.png", alt: "Stream deck UI", label: "UI" },
+  ]}
+/>
