@@ -75,15 +75,16 @@ function LetterStack({ letters, selectedLetter }: LetterStackProps) {
   return (
     // .letterstack: relative h-full with aspect-ratio to maintain proportions
     <div className={`relative h-full aspect-[1]`}>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}
           src={letters[selectedLetter].image}
           alt={letters[selectedLetter].alt}
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 50, opacity: 0 }}
-          transition={{ type: "spring" }}
+          initial={{ rotateY: -90 }}
+          animate={{ rotateY: 0 }}
+          exit={{ rotateY: 90 }}
+          transition={{ duration: 0.4 }}
+          style={{ transformPerspective: 1000 }}
           // .letter: absolute inset-0 w-full h-full
           className="absolute inset-0 w-full h-full object-contain"
         />
