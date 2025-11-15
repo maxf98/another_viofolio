@@ -25,7 +25,7 @@ export default function Home() {
             <PagePreview
               title="Elgato"
               href="/elgato"
-              imageSrc="/covers/elgato+/3.png"
+              imageSrc="/covers/elgato+/4.png"
               size="large"
             />
           </div>
