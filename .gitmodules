@@ -1,0 +1,3 @@
+[submodule "app/components/blog/dearflip-react"]
+	path = app/components/blog/dearflip-react
+	url = https://github.com/dearhive/dearflip-react.git

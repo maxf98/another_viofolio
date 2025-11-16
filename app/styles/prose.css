@@ -1,0 +1,53 @@
+/* MDX-like prose styling that can be used in both .mdx and .tsx pages */
+.prose-mdx h1 {
+  font-size: 4rem; /* text-4xl */
+  font-weight: 700; /* font-bold */
+  line-height: 1.25; /* leading-tight */
+  margin-bottom: 1.5rem; /* mb-6 */
+  margin-top: 2rem; /* mt-8 */
+  color: var(--foreground);
+}
+
+.prose-mdx h2 {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 600; /* font-semibold */
+  line-height: 1.375; /* leading-snug */
+  margin-bottom: 1rem; /* mb-4 */
+  margin-top: 2rem; /* mt-8 */
+  color: var(--foreground);
+}
+
+.prose-mdx h3 {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  line-height: 1.375; /* leading-snug */
+  margin-bottom: 0.75rem; /* mb-3 */
+  margin-top: 1.5rem; /* mt-6 */
+  color: var(--foreground);
+}
+
+.prose-mdx h4 {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  line-height: 1.375; /* leading-snug */
+  margin-bottom: 0.5rem; /* mb-2 */
+  margin-top: 1rem; /* mt-4 */
+  color: var(--foreground);
+}
+
+.prose-mdx p {
+  font-size: 1.1rem; /* text-base */
+  line-height: 1.625; /* leading-relaxed */
+  margin-bottom: 1rem; /* mb-4 */
+  color: var(--foreground);
+}
+
+.prose-mdx a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--accent);
+}
+
+.prose-mdx a:hover {
+  text-decoration: none;
+}

@@ -1,9 +1,35 @@
 import Hero from "./components/Hero";
 import PagePreview from "./components/PagePreview";
+import ScrollNav, { ScrollNavSection } from "./components/ScrollNav";
+
+const navs: ScrollNavSection[] = [
+  {
+    id: "gallery",
+    label: "gallery",
+  },
+  {
+    id: "elgato",
+    label: "elgato",
+  },
+  {
+    id: "quards",
+    label: "quards",
+  },
+  {
+    id: "mascha",
+    label: "mascha",
+  },
+  {
+    id: "monkeybrain",
+    label: "monkeybrain",
+  },
+];
 
 export default function Home() {
   return (
     <main>
+      <ScrollNav sections={navs} />
+
       {/* Hero Section */}
       <Hero />
 
@@ -23,30 +49,30 @@ export default function Home() {
           {/* Elgato */}
           <div id="elgato">
             <PagePreview
-              title="Elgato"
+              title="Working with a Company"
               href="/elgato"
-              imageSrc="/covers/elgato+/4.png"
-              size="large"
+              imageSrc="/projects/elgato/front1.png"
+              size="normal"
             />
           </div>
 
           {/* Quards */}
           <div id="quards">
             <PagePreview
-              title="Quards"
+              title="Working with a Startup"
               href="/quards"
               imageSrc="/covers/quards/quards.png"
-              size="large"
+              size="normal"
             />
           </div>
 
           {/* Mascha */}
           <div id="mascha">
             <PagePreview
-              title="Mascha"
+              title="Working with an Artist"
               href="/mascha"
-              imageSrc="/covers/mascha/mascha2.png"
-              size="large"
+              imageSrc="/covers/mascha/mash.png"
+              size="normal"
             />
           </div>
 
@@ -55,8 +81,8 @@ export default function Home() {
             <PagePreview
               title="Monkeybrain"
               href="/monkeybrain"
-              imageSrc="/gallery/monkeybrain.jpg"
-              size="large"
+              imageSrc="/projects/MONKEYBRAIN/pages/monkeybrain.jpg"
+              size="normal"
             />
           </div>
         </div>

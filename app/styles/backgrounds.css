@@ -1,0 +1,34 @@
+.bg-default {
+  background: transparent;
+}
+
+.bg-dotted {
+  background: #24242e;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+}
+
+.bg-monkeybrain {
+  position: relative;
+  background-color: #1c1b1b;
+}
+
+.bg-monkeybrain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/projects/MONKEYBRAIN/pages/FINALPATTERNS_left.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+}

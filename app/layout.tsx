@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header/Header";
+import "./styles/backgrounds.css";
+import "./styles/prose.css";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 const geistSans = Geist({
@@ -30,11 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <div className="min-h-screen">
+          <div className="relative z-10">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </div>
       </body>
     </html>
   );

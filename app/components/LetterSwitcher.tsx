@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { letters } from "@/app/data/graph";
 import { LetterItem } from "@/app/data/model";
@@ -19,6 +19,7 @@ const os = letters.O;
 
 export default function LetterSwitcher() {
   const [selectedLetters, setSelectedLetters] = useState([0, 0, 0]);
+  const lastChangedLetterRef = useRef(0);
 
   function getRandomIndex<T>(list: T[]): number {
     return Math.floor(Math.random() * list.length);
@@ -28,7 +29,11 @@ export default function LetterSwitcher() {
   useEffect(() => {
     const interval = setInterval(() => {
       // Pick a random letter position (0, 1, or 2)
-      const randomPosition = Math.floor(Math.random() * 3);
+      let randomPosition = lastChangedLetterRef.current;
+      do {
+        randomPosition = Math.floor(Math.random() * 3);
+      } while (randomPosition === lastChangedLetterRef.current);
+      lastChangedLetterRef.current = randomPosition;
 
       setSelectedLetters((prev) => {
         const newLetters = [...prev];

@@ -21,7 +21,7 @@ export default function PagePreview({
   imageAlt,
   size = "normal",
 }: PagePreviewProps) {
-  const heightClass = size === "large" ? "h-196" : "h-128";
+  const heightClass = size === "large" ? "h-[700px]" : "h-128";
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Scroll progress drives a soft parallax shift for the preview image
@@ -61,6 +61,7 @@ export default function PagePreview({
           <Image
             src={imageSrc}
             alt={imageAlt || title}
+            priority
             fill
             className="object-cover transition-transform duration-500"
           />
