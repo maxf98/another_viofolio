@@ -121,13 +121,13 @@ export default function Page() {
           height={700}
         />
 
-        <div className="flex gap-8 w-full">
-          <video width={200} height={400} autoPlay loop className="rounded-2xl">
+        <div className="flex gap-8 w-[700px]">
+          {/* <video width={200} height={400} autoPlay loop className="rounded-2xl">
             <source
               src="/projects/mascha/kundalini/kundalinianimation.mp4"
               type="video/mp4"
             />
-          </video>
+          </video> */}
           <iframe
             data-testid="embed-iframe"
             className="rounded-2xl"
@@ -159,22 +159,24 @@ export default function Page() {
           height={600}
         />
 
-        <iframe
-          data-testid="embed-iframe"
-          className="rounded-2xl"
-          src="https://open.spotify.com/embed/track/6SYvsiN3KZqKIepny2UX5D?utm_source=generator"
-          width="100%"
-          height="352"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-        ></iframe>
+        <div className="flex gap-8 w-[700px] items-center">
+          <iframe
+            data-testid="embed-iframe"
+            className="rounded-2xl"
+            src="https://open.spotify.com/embed/track/6SYvsiN3KZqKIepny2UX5D?utm_source=generator"
+            width="100%"
+            height="352"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
 
-        <Image
-          src="/projects/mascha/loved/loved-mockup.png"
-          alt="Mascha Feel Loved CD Cover"
-          width={800}
-          height={800}
-        />
+          <Image
+            src="/projects/mascha/loved/loved-mockup.png"
+            alt="Mascha Feel Loved CD Cover"
+            width={400}
+            height={400}
+          />
+        </div>
       </div>
     </div>
   );
