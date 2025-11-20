@@ -50,7 +50,7 @@ export default function FlipBook({ images }: FlipBookProps) {
       >
         {pageImages.map((imageSrc, index) => {
           // Prioritize current page and next 2 pages
-          const isPriority = index >= currentPage && index <= currentPage + 2;
+          const isPriority = index >= currentPage && index <= currentPage + 3;
 
           return (
             <div key={index} className="page relative w-full h-full">

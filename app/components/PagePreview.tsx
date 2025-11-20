@@ -61,7 +61,7 @@ export default function PagePreview({
           <Image
             src={imageSrc}
             alt={imageAlt || title}
-            priority
+            priority={true}
             fill
             className="object-cover transition-transform duration-500"
           />
