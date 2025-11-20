@@ -46,7 +46,8 @@ export default function FlipBook({ images }: FlipBookProps) {
             <Image
               src={imageSrc}
               alt={`Page ${index + 1}`}
-              fill
+              width={600}
+              height={740}
               className="object-contain"
               placeholder="blur"
               priority={index < 4}
