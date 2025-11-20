@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import Image, { type StaticImageData } from "next/image";
 import { pageImages as defaultImages } from "./images";
@@ -10,6 +11,11 @@ interface FlipBookProps {
 
 export default function FlipBook({ images }: FlipBookProps) {
   const pageImages = images || defaultImages;
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handleFlip = (e: any) => {
+    setCurrentPage(e.data);
+  };
 
   return (
     <div className="flipbook-wrapper flex justify-center items-center w-full relative">
@@ -40,20 +46,26 @@ export default function FlipBook({ images }: FlipBookProps) {
         clickEventForward={true}
         useMouseEvents={true}
         swipeDistance={30}
+        onFlip={handleFlip}
       >
-        {pageImages.map((imageSrc, index) => (
-          <div key={index} className="page relative w-full h-full">
-            <Image
-              src={imageSrc}
-              alt={`Page ${index + 1}`}
-              width={600}
-              height={740}
-              className="object-contain"
-              placeholder="blur"
-              priority={index < 4}
-            />
-          </div>
-        ))}
+        {pageImages.map((imageSrc, index) => {
+          // Prioritize current page and next 2 pages
+          const isPriority = index >= currentPage && index <= currentPage + 2;
+
+          return (
+            <div key={index} className="page relative w-full h-full">
+              <Image
+                src={imageSrc}
+                alt={`Page ${index + 1}`}
+                width={600}
+                height={740}
+                className="object-contain"
+                placeholder="blur"
+                priority={isPriority}
+              />
+            </div>
+          );
+        })}
       </HTMLFlipBook>
     </div>
   );
