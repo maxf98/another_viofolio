@@ -71,7 +71,7 @@ export default function Home() {
             <PagePreview
               title="Working with an Artist"
               href="/mascha"
-              imageSrc="/covers/mascha/mash.png"
+              imageSrc="/covers/mascha/mascha-cd.png"
               size="normal"
             />
           </div>
@@ -81,7 +81,7 @@ export default function Home() {
             <PagePreview
               title="Monkeybrain"
               href="/monkeybrain"
-              imageSrc="/projects/MONKEYBRAIN/pages/monkeybrain.jpg"
+              imageSrc="/projects/MONKEYBRAIN/monkeybrain.png"
               size="normal"
             />
           </div>
