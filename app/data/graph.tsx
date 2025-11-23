@@ -2,43 +2,43 @@
 import { GalleryItem, LetterItem } from "./model";
 
 // Gallery images
-import angels from "../../public/gallery/angels.png";
-import beach from "../../public/gallery/beach.png";
-import bird from "../../public/gallery/bird.png";
-import bottle from "../../public/gallery/bottle.png";
-import chat from "../../public/gallery/chat.png";
-import couple from "../../public/gallery/couple.png";
-import dogs from "../../public/gallery/dogs.png";
-import field from "../../public/gallery/field.png";
-import ghosts from "../../public/gallery/ghosts.png";
-import grandpa from "../../public/gallery/grandpa2.png";
-import looking from "../../public/gallery/looking.png";
-import memories from "../../public/gallery/memories.png";
-import shame from "../../public/gallery/shame.png";
-import sunburn from "../../public/gallery/sunburn.png";
-import surrealdude from "../../public/gallery/surrealdude.png";
-import treeudude from "../../public/gallery/treeudude.png";
-import vogue from "../../public/gallery/vogue.png";
-import wood from "../../public/gallery/wood.png";
+import angels from "@/public/gallery/angels.png";
+import beach from "@/public/gallery/beach.png";
+import bird from "@/public/gallery/bird.png";
+import bottle from "@/public/gallery/bottle.png";
+import chat from "@/public/gallery/chat.png";
+import couple from "@/public/gallery/couple.png";
+import dogs from "@/public/gallery/dogs.png";
+import field from "@/public/gallery/field.png";
+import ghosts from "@/public/gallery/ghosts.png";
+import grandpa from "@/public/gallery/grandpa2.png";
+import looking from "@/public/gallery/looking.png";
+import memories from "@/public/gallery/memories.png";
+import shame from "@/public/gallery/shame.png";
+import sunburn from "@/public/gallery/sunburn.png";
+import surrealdude from "@/public/gallery/surrealdude.png";
+import treeudude from "@/public/gallery/treeudude.png";
+import vogue from "@/public/gallery/vogue.png";
+import wood from "@/public/gallery/wood.png";
 
 // Letter V images
-import vMe from "../../public/letters/V/me.png";
-import vPants from "../../public/letters/V/pants.png";
-import vPens from "../../public/letters/V/pens.png";
-import vShape from "../../public/letters/V/shape.png";
-import vSelfPortrait from "../../public/letters/V/selfportrait.png";
+import vMe from "@/public/letters/V/me.png";
+import vPants from "@/public/letters/V/pants.png";
+import vPens from "@/public/letters/V/pens.png";
+import vShape from "@/public/letters/V/shape.png";
+import vSelfPortrait from "@/public/letters/V/selfportrait.png";
 
 // Letter I images
-import iFace from "../../public/letters/I/face.png";
-import iShapes from "../../public/letters/I/shapes.png";
-import iSun from "../../public/letters/I/sun.png";
-import iWindow from "../../public/letters/I/window.png";
+import iFace from "@/public/letters/I/face.png";
+import iShapes from "@/public/letters/I/shapes.png";
+import iSun from "@/public/letters/I/sun.png";
+import iWindow from "@/public/letters/I/window.png";
 
 // Letter O images
-import oFace from "../../public/letters/O/face.png";
-import oFlowerHead from "../../public/letters/O/flower head.png";
-import oKaktus from "../../public/letters/O/kaktus.png";
-import oShape from "../../public/letters/O/shape.png";
+import oFace from "@/public/letters/O/face.png";
+import oFlowerHead from "@/public/letters/O/flower head.png";
+import oKaktus from "@/public/letters/O/kaktus.png";
+import oShape from "@/public/letters/O/shape.png";
 
 export const gallery_graph: GalleryItem[] = [
   { index: 0, image: angels, alt: "Vio's gallery, number 0" },

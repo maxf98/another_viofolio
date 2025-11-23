@@ -8,6 +8,7 @@ import { GalleryItem } from "@/app/data/model";
 import { gallery_graph } from "@/app/data/graph"; // Assuming graph is an array of GridItem
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const allImages: GalleryItem[] = gallery_graph;
 allImages.sort((a, b) => Number(a.index) - Number(b.index));
@@ -25,7 +26,7 @@ function WorkGallery() {
 
   return (
     // .galleryContainer: flex flex-col justify-center relative
-    <div className="flex flex-col justify-center relative pt-16 pb-32">
+    <div className="flex flex-col justify-center relative py-8">
       <GalleryGrid images={allImages} clickedImage={clickedImage} />
 
       <Modal
@@ -33,12 +34,22 @@ function WorkGallery() {
         close={() => setSelectedImage(null)}
         layoutId={`gallery-img${selectedImage?.index ?? ""}`}
       >
-        {/* .imgOverlay: max-h-[95vh] object-contain overflow-hidden */}
-        <motion.img
-          className="max-h-[95vh] object-contain overflow-hidden"
-          src={selectedImage?.image ?? ""}
-          alt="ello"
-        />
+        <motion.div
+          className="relative w-full"
+          style={{
+            aspectRatio: selectedImage?.image
+              ? `${selectedImage.image.width} / ${selectedImage.image.height}`
+              : "auto",
+          }}
+        >
+          <Image
+            className="object-contain"
+            src={selectedImage?.image ?? ""}
+            alt={selectedImage?.alt ?? "Gallery image"}
+            placeholder="blur"
+            fill
+          />
+        </motion.div>
       </Modal>
     </div>
   );

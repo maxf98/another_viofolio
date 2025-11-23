@@ -3,9 +3,6 @@ import createMDX from "@next/mdx";
 const nextConfig = {
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
-  experimental: {
-    viewTransition: true,
-  },
 };
 
 const withMDX = createMDX({

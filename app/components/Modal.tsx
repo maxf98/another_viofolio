@@ -76,9 +76,7 @@ export default function Modal({
               <MdClose size="35px" />
             </motion.button>
             {/* .modalContent: min-w-[30vw] bg-background rounded-[30px] */}
-            <div className="min-w-[30vw] bg-background rounded-[30px]">
-              {children}
-            </div>
+            <div className="min-w-[30vw] rounded-[30px]">{children}</div>
           </motion.div>
         </motion.div>
       )}
