@@ -12,6 +12,7 @@ interface PagePreviewProps {
   imageSrc: string;
   imageAlt?: string;
   size?: "normal" | "large"; // normal = h-96 (384px), large = h-[32rem] (512px)
+  imageOpacity?: number; // 0-100, default 100
 }
 
 export default function PagePreview({
@@ -20,6 +21,7 @@ export default function PagePreview({
   imageSrc,
   imageAlt,
   size = "normal",
+  imageOpacity = 100,
 }: PagePreviewProps) {
   const heightClass = size === "large" ? "h-[700px]" : "h-128";
   const cardRef = useRef<HTMLDivElement>(null);
@@ -29,7 +31,7 @@ export default function PagePreview({
     target: cardRef,
     offset: ["start end", "end start"],
   });
-  const parallaxDistance = size === "large" ? 300 : 150;
+  const parallaxDistance = size === "large" ? 200 : 150;
   const parallaxY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -50,7 +52,7 @@ export default function PagePreview({
     <div className="relative w-full">
       <motion.div
         ref={cardRef}
-        className="overflow-hidden shadow-lg transition-shadow"
+        className="overflow-hidden shadow-lg transition-shadow bg-body"
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
         {/* Image container with fixed height */}
@@ -63,7 +65,8 @@ export default function PagePreview({
             alt={imageAlt || title}
             priority={true}
             fill
-            className="object-cover transition-transform duration-500"
+            className="object-cover"
+            style={{ opacity: imageOpacity / 100 }}
           />
         </motion.div>
       </motion.div>

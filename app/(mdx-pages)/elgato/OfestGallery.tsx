@@ -1,14 +1,6 @@
 import Image from "next/image";
 import GiftBoxPreview from "./GiftBoxPreview";
-
-// Oktoberfest images
-const ofestImages = [
-  "/projects/elgato/brand-illustration/ofest/1.png",
-  "/projects/elgato/brand-illustration/ofest/2.png",
-  "/projects/elgato/brand-illustration/ofest/3.png",
-  "/projects/elgato/brand-illustration/ofest/4.png",
-  "/projects/elgato/brand-illustration/ofest/5.png",
-];
+import { ofestImages } from "@/app/data/elgato";
 
 export default function OfestGallery() {
   return (

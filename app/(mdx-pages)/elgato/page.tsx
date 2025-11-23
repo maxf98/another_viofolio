@@ -8,7 +8,15 @@ import CustomsGallery from "./CustomsGallery";
 import Winter22Gallery from "./Winter22Gallery";
 import Winter23Gallery from "./Winter23Gallery";
 import OfestGallery from "./OfestGallery";
-import CustomsWebShots from "./CustomsWebShots";
+import InfiniteScrollGallery from "./InfiniteScrollGallery";
+import {
+  customsWebShotsImages,
+  dImages,
+  xImages,
+  ofestImages,
+  winter22Images,
+  winter23Images,
+} from "@/app/data/elgato";
 
 const navs: ScrollNavSection[] = [
   {
@@ -75,9 +83,50 @@ export default function Page() {
         <CustomsGallery />
       </div>
 
-      <CustomsWebShots />
+      <InfiniteScrollGallery
+        images={customsWebShotsImages}
+        altPrefix="Customs web shot"
+      />
 
-      <div id="w22">
+      <div className="flex flex-col items-center">
+        <h1>Dreamville</h1>
+        <p>Custom Mic</p>
+      </div>
+      <InfiniteScrollGallery
+        images={dImages}
+        altPrefix="D collection"
+        direction="right"
+      />
+      <div className="flex flex-col items-center">
+        <h1>Elgato X</h1>
+        <p>Customs + Pattern + Logo</p>
+      </div>
+      <InfiniteScrollGallery images={xImages} altPrefix="X collection" />
+
+      <div className="flex flex-col items-center">
+        <h1>Partner Gift Boxes</h1>
+        <p>Illustrations</p>
+      </div>
+      <InfiniteScrollGallery
+        images={winter23Images}
+        altPrefix="Winter 23 collection"
+        height={400}
+        direction="right"
+      />
+      <InfiniteScrollGallery
+        images={ofestImages}
+        altPrefix="Ofest collection"
+        height={400}
+        direction="right"
+      />
+      <InfiniteScrollGallery
+        images={winter22Images}
+        altPrefix="Winter 22 collection"
+        height={400}
+        direction="right"
+      />
+
+      {/* <div id="w22">
         <Winter23Gallery />
       </div>
       <div id="ofest">
@@ -85,7 +134,7 @@ export default function Page() {
       </div>
       <div id="w21">
         <Winter22Gallery />
-      </div>
+      </div> */}
     </div>
   );
 }

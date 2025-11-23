@@ -4,7 +4,7 @@ import RotateOnHover from "./animations/RotateOnHover";
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-gray-200 dark:border-gray-700">
+    <footer className="w-full border-t border-gray-200 dark:border-gray-700 bg-body">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center gap-8">
           {/* Social Links */}

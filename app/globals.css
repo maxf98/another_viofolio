@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -27,6 +31,10 @@
   }
 }
 
+.slide-in {
+  animation: slideFromRight 0.3s ease;
+}
+
 body {
   background-color: #1c1b1b;
   color: var(--foreground);
@@ -45,5 +53,9 @@ body {
     padding-left: 1.5rem; /* px-6 = 1.5rem */
     padding-right: 1.5rem;
     z-index: 2;
+  }
+
+  .bg-body {
+    background-color: #1c1b1b;
   }
 }

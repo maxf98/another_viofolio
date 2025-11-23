@@ -1,21 +1,6 @@
 import Image from "next/image";
 import GiftBoxPreview from "./GiftBoxPreview";
-
-// Winter 22 images
-const winter22Images = [
-  "/projects/elgato/brand-illustration/winter22/1.png",
-  "/projects/elgato/brand-illustration/winter22/2.png",
-  "/projects/elgato/brand-illustration/winter22/3.png",
-  "/projects/elgato/brand-illustration/winter22/4.png",
-  "/projects/elgato/brand-illustration/winter22/5.png",
-  "/projects/elgato/brand-illustration/winter22/6.png",
-  "/projects/elgato/brand-illustration/winter22/7.png",
-  "/projects/elgato/brand-illustration/winter22/8.png",
-  "/projects/elgato/brand-illustration/winter22/9.png",
-  "/projects/elgato/brand-illustration/winter22/10.png",
-  "/projects/elgato/brand-illustration/winter22/11.png",
-  "/projects/elgato/brand-illustration/winter22/tweet.png",
-];
+import { winter22Images } from "@/app/data/elgato";
 
 export default function Winter22Gallery() {
   return (

@@ -25,6 +25,30 @@ export default function LetterSwitcher() {
     return Math.floor(Math.random() * list.length);
   }
 
+  // Strategy functions for selecting the next index
+  const getNextIndexRandom = (
+    currentIndex: number,
+    letterArray: LetterItem[]
+  ): number => {
+    // Keep generating until we get a different index
+    let newIndex;
+    do {
+      newIndex = getRandomIndex(letterArray);
+    } while (newIndex === currentIndex);
+    return newIndex;
+  };
+
+  const getNextIndexIncrement = (
+    currentIndex: number,
+    letterArray: LetterItem[]
+  ): number => {
+    // Increment by 1, wrapping around using modulo
+    return (currentIndex + 1) % letterArray.length;
+  };
+
+  // Choose which strategy to use here
+  const getNextIndex = getNextIndexIncrement;
+
   // Auto-shuffle a random letter every second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,14 +65,9 @@ export default function LetterSwitcher() {
         const letterArray =
           randomPosition === 0 ? vs : randomPosition === 1 ? is : os;
 
-        // Get a new index that's different from the current one
+        // Get the next index using the selected strategy
         const currentIndex = prev[randomPosition];
-        let newIndex;
-
-        // Keep generating until we get a different index
-        do {
-          newIndex = getRandomIndex(letterArray);
-        } while (newIndex === currentIndex);
+        const newIndex = getNextIndex(currentIndex, letterArray);
 
         newLetters[randomPosition] = newIndex;
         return newLetters;
@@ -69,12 +88,11 @@ export default function LetterSwitcher() {
 interface LetterStackProps {
   letters: LetterItem[];
   selectedLetter: number;
-  isMiddle?: boolean; // For the "I" which is narrower (20% vs 40%)
 }
 
 function LetterStack({ letters, selectedLetter }: LetterStackProps) {
   useEffect(() => {
-    preloadImages(letters.map((letter) => letter.image));
+    preloadImages(letters.map((letter) => letter.image.src));
   });
 
   return (
@@ -83,7 +101,7 @@ function LetterStack({ letters, selectedLetter }: LetterStackProps) {
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}
-          src={letters[selectedLetter].image}
+          src={letters[selectedLetter].image.src}
           alt={letters[selectedLetter].alt}
           initial={{ rotateY: -90 }}
           animate={{ rotateY: 0 }}

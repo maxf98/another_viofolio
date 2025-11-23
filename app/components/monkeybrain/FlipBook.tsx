@@ -18,10 +18,7 @@ export default function FlipBook({ images }: FlipBookProps) {
   };
 
   return (
-    <div className="flipbook-wrapper flex justify-center items-center w-full relative">
-      <div className="absolute left-1/8 top-1/2 -translate-y-1/2">
-        <h1 className="text-bold text-4xl rotate-[-25deg]">Flick through!</h1>
-      </div>
+    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative">
       <HTMLFlipBook
         width={400}
         height={600}
@@ -34,7 +31,7 @@ export default function FlipBook({ images }: FlipBookProps) {
         mobileScrollSupport={true}
         className="flipbook"
         style={{}}
-        startPage={0}
+        startPage={3}
         drawShadow={false}
         flippingTime={1000}
         usePortrait={true}
@@ -53,13 +50,13 @@ export default function FlipBook({ images }: FlipBookProps) {
           const isPriority = index >= currentPage && index <= currentPage + 3;
 
           return (
-            <div key={index} className="page relative w-full h-full">
+            <div key={index} className="page relative w-full h-full flex items-center justify-center">
               <Image
                 src={imageSrc}
                 alt={`Page ${index + 1}`}
                 width={600}
                 height={740}
-                className="object-contain"
+                className="object-contain w-full h-full"
                 placeholder="blur"
                 priority={isPriority}
               />
