@@ -2,12 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
+import TextBlock from "./TextBlock";
 
 export default function AboutMe() {
   return (
-    <section className="relative">
+    <section className="relative h-[150vh]">
       {/* Fixed background image - stays in place while previous content scrolls away */}
-      <div className="fixed top-0 left-0 w-full h-screen -z-10">
+      <div className="fixed top-0 left-0 w-full h-[100vh] -z-[1]">
         <Image
           src="/me-cover.png"
           alt="About me"
@@ -18,24 +19,17 @@ export default function AboutMe() {
       </div>
 
       {/* Text content that scrolls over the fixed image */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
-        <div className="content-container py-20">
-          <div className="bg-background/90 backdrop-blur-sm p-8 rounded-lg">
-            <h2 className="text-4xl font-bold mb-6">About Me</h2>
-            <p className="text-lg mb-4">
-              I&apos;m a designer and developer passionate about creating
-              beautiful, functional experiences.
-            </p>
-            <p className="text-lg mb-4">
-              With a background in visual design and front-end development, I
-              bring ideas to life through thoughtful design and clean code.
-            </p>
-            <p className="text-lg">
-              Currently working on projects that blend creativity with
-              technology.
-            </p>
-          </div>
-        </div>
+      <div className="relative z-10 h-[150vh] flex flex-col justify-center">
+        <TextBlock>
+          Hi I'm Violetta Prandetskaya, or simply Vio :) I'm an artist and
+          designer based in Munich, Germany! Using art as a form of
+          self-expression led me to study Graphic Design and Art Direction, and
+          I’ve been working as a visual artist ever since. My curiosity about
+          how images can resonate emotionally inspired me to expand my practice
+          into art therapy studies. Today, I combine design, illustration, and
+          insights from the intersection of art and psychology to explore how
+          visuals shape understanding and feeling.
+        </TextBlock>
       </div>
     </section>
   );

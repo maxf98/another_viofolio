@@ -3,15 +3,10 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
-export interface ScrollNavSection {
-  id: string;
-  label?: string;
-  src?: string;
-}
+import { NavSection } from "./Navigation";
 
 interface ScrollNavProps {
-  sections: ScrollNavSection[];
+  sections: NavSection[];
 }
 
 export default function ScrollNav({ sections }: ScrollNavProps) {
@@ -60,7 +55,7 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
   };
 
   return (
-    <div className="fixed z-30 top-0 left-0 bottom-0 h-screen ml-6 w-[45px] flex items-center justify-center">
+    <div className="fixed z-[50] top-0 left-0 bottom-0 h-screen ml-6 w-[45px] flex items-center justify-center">
       <nav className="flex flex-col gap-10">
         {sections.map((section) => {
           const isActive = activeSection === section.id;

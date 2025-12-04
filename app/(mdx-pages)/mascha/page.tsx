@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import ScrollNav, { ScrollNavSection } from "@/app/components/ScrollNav";
+import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
+import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 
-const navs: ScrollNavSection[] = [
+const navs: NavSection[] = [
   {
     id: "breathe",
     src: "/projects/mascha/breathe/6.png",
@@ -21,39 +20,16 @@ const navs: ScrollNavSection[] = [
 ];
 
 export default function Page() {
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress: heroScrollProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroY = useTransform(heroScrollProgress, [0, 1], ["0%", "50%"]);
-
   return (
     <div>
-      <ScrollNav sections={navs} />
+      <Navigation sections={navs} />
 
-      <div
-        ref={heroRef}
-        className="relative mb-32 w-screen h-screen overflow-hidden"
-      >
-        <div className="absolute bottom-20 left-20 z-10">
-          <h1 className="!text-8xl">Working with Mascha</h1>
-          <p></p>
-        </div>
-        <motion.div
-          style={{ y: heroY }}
-          className="absolute inset-0 w-full h-128"
-        >
-          <Image
-            src="/projects/mascha/breathe/6.png"
-            fill
-            alt="Mascha Breathe"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      </div>
+      <ProjectHeroSection
+        src="/projects/mascha/breathe/6.png"
+        alt="Mascha Breathe"
+        title="Working with Mascha"
+        description="I collaborated with Mascha, an artist and musician to bring the vision behind her music to life through my mixed media style. Together, we created three album covers, each aiming to capture the essence and emotion of her album. For these project, I used AI-generated elements as building blocks, combining them with her portrait in a collage and painting over the composition to blend everything into a single, cohesive visual story."
+      />
 
       <div id="breathe" className="content-container">
         <div className="flex flex-col justify-center items-center">

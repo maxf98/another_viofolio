@@ -32,7 +32,7 @@ export default function Monkeybrain() {
       {/* Fixed background image - z-index changes based on scroll position */}
       <div
         className={`bg-body fixed top-0 left-0 w-full h-screen ${
-          isActive ? "-z-1" : "-z-50"
+          isActive ? "-z-[1]" : "-z-50"
         }`}
       >
         <Image
@@ -45,7 +45,7 @@ export default function Monkeybrain() {
 
       {/* Content that scrolls over the fixed image */}
       <div className="relative z-10">
-        <div className="content-container py-8">
+        <div className="content-container min-h-screen flex flex-col justify-center py-8">
           <FlipBook />
         </div>
       </div>

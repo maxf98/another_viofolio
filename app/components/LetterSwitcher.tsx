@@ -77,7 +77,7 @@ export default function LetterSwitcher() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="flex flex-row items-center justify-center w-full h-full">
+    <div className="flex flex-row items-center justify-center h-full -space-x-6 md:space-x-0">
       <LetterStack letters={vs} selectedLetter={selectedLetters[0]} />
       <LetterStack letters={is} selectedLetter={selectedLetters[1]} />
       <LetterStack letters={os} selectedLetter={selectedLetters[2]} />
@@ -96,8 +96,8 @@ function LetterStack({ letters, selectedLetter }: LetterStackProps) {
   });
 
   return (
-    // .letterstack: relative h-full with aspect-ratio to maintain proportions
-    <div className={`relative h-full aspect-[1]`}>
+    // Mobile: width-based sizing, Desktop: height-based sizing with max constraint
+    <div className={`relative w-full max-w-[250px] aspect-square`}>
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}

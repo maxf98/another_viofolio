@@ -31,7 +31,7 @@ export default function PagePreview({
     target: cardRef,
     offset: ["start end", "end start"],
   });
-  const parallaxDistance = size === "large" ? 200 : 150;
+  const parallaxDistance = size === "large" ? 300 : 150;
   const parallaxY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -50,30 +50,38 @@ export default function PagePreview({
 
   return (
     <div className="relative w-full">
-      <motion.div
-        ref={cardRef}
-        className="overflow-hidden shadow-lg transition-shadow bg-body"
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        {/* Image container with fixed height */}
-        <motion.div
-          className={`relative ${heightClass} w-full overflow-hidden bg-gray-100`}
-          style={{ y: parallaxY }}
-        >
-          <Image
-            src={imageSrc}
-            alt={imageAlt || title}
-            priority={true}
-            fill
-            className="object-cover"
-            style={{ opacity: imageOpacity / 100 }}
-          />
-        </motion.div>
-      </motion.div>
-
+      {/* Mobile: entire preview is tappable */}
       <Link
         href={href}
-        className="absolute bottom-4 right-4 block"
+        className="block md:pointer-events-none"
+        aria-label={`Open ${title}`}
+      >
+        <motion.div
+          ref={cardRef}
+          className="overflow-hidden shadow-lg transition-shadow bg-body"
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          {/* Image container with fixed height */}
+          <motion.div
+            className={`relative ${heightClass} w-full overflow-hidden bg-gray-100`}
+            style={{ y: parallaxY }}
+          >
+            <Image
+              src={imageSrc}
+              alt={imageAlt || title}
+              priority={true}
+              fill
+              className="object-cover"
+              style={{ opacity: imageOpacity / 100 }}
+            />
+          </motion.div>
+        </motion.div>
+      </Link>
+
+      {/* Desktop: only text is clickable */}
+      <Link
+        href={href}
+        className="absolute bottom-4 right-4 hidden md:block"
         aria-label={`Open ${title}`}
       >
         <motion.div
@@ -94,6 +102,14 @@ export default function PagePreview({
           <FaArrowRight aria-hidden className="text-5xl" />
         </motion.div>
       </Link>
+
+      {/* Mobile: text overlay (non-clickable, just visual) */}
+      <div className="absolute bottom-4 right-4 block md:hidden pointer-events-none">
+        <div className="flex items-center gap-6 rounded-full px-10 py-6 text-4xl font-semibold uppercase tracking-wide text-white">
+          <span>{title}</span>
+          <FaArrowRight aria-hidden className="text-5xl" />
+        </div>
+      </div>
     </div>
   );
 }

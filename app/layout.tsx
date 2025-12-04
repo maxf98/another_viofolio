@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./styles/backgrounds.css";
 import "./styles/prose.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 const geistSans = Geist({
@@ -35,12 +34,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <div className="min-h-screen">
-          <div className="relative z-10">
-            <Header />
+          <div className="relative z-[10]">
             {children}
             <Footer />
           </div>
         </div>
+        <div id="modal-root" />
       </body>
     </html>
   );

@@ -1,56 +1,38 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Navigation from "../components/navigation/Navigation";
 import GalleryGrid from "@/app/components/GalleryGrid";
-import Modal from "@/app/components/Modal";
+import Lightbox from "@/app/components/Lightbox";
 
 import { GalleryItem } from "@/app/data/model";
-import { gallery_graph } from "@/app/data/graph"; // Assuming graph is an array of GridItem
-
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { gallery_graph } from "@/app/data/graph";
 
 const allImages: GalleryItem[] = gallery_graph;
 allImages.sort((a, b) => Number(a.index) - Number(b.index));
 
 function WorkGallery() {
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   function clickedImage(image: GalleryItem) {
-    if (selectedImage?.index === image.index) {
-      setSelectedImage(null);
+    const index = allImages.findIndex((img) => img.index === image.index);
+    if (selectedIndex === index) {
+      setSelectedIndex(null);
     } else {
-      setSelectedImage(image);
+      setSelectedIndex(index);
     }
   }
 
   return (
-    // .galleryContainer: flex flex-col justify-center relative
     <div className="flex flex-col justify-center relative py-8">
+      <Navigation sections={[]} />
       <GalleryGrid images={allImages} clickedImage={clickedImage} />
 
-      <Modal
-        isOpen={selectedImage !== null}
-        close={() => setSelectedImage(null)}
-        layoutId={`gallery-img${selectedImage?.index ?? ""}`}
-      >
-        <motion.div
-          className="relative w-full"
-          style={{
-            aspectRatio: selectedImage?.image
-              ? `${selectedImage.image.width} / ${selectedImage.image.height}`
-              : "auto",
-          }}
-        >
-          <Image
-            className="object-contain"
-            src={selectedImage?.image ?? ""}
-            alt={selectedImage?.alt ?? "Gallery image"}
-            placeholder="blur"
-            fill
-          />
-        </motion.div>
-      </Modal>
+      <Lightbox
+        images={allImages}
+        selectedIndex={selectedIndex}
+        onClose={() => setSelectedIndex(null)}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ interface TextBlockProps {
 export default function TextBlock({ children }: TextBlockProps) {
   return (
     <div className="bg-body">
-      <div className="content-container text-4xl text-white text-center py-32">
+      <div className="content-container text-2xl text-white text-center py-32">
         {children}
       </div>
     </div>
