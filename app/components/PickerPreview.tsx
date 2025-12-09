@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Picker from "@/app/components/Picker";
+import useEmblaCarousel from "embla-carousel-react";
+import Fade from "embla-carousel-fade";
 
 interface PickerPreviewProps {
   images: string[];
@@ -31,8 +33,35 @@ export default function PickerPreview({
   sideBySide = false,
 }: PickerPreviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(defaultIndex);
-  const selectedImage = images[selectedIndex];
   const selectedDescription = descriptions?.[selectedIndex];
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, skipSnaps: true, dragThreshold: 10 },
+    [Fade()]
+  );
+
+  // Sync picker selection when carousel changes (via swipe/tap)
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      onSelectionChange?.(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelectionChange]);
+
+  // Scroll carousel when picker is clicked
+  const handlePickerClick = useCallback(
+    (index: number) => {
+      emblaApi?.scrollTo(index);
+    },
+    [emblaApi]
+  );
 
   return (
     <div className="flex flex-col">
@@ -44,10 +73,7 @@ export default function PickerPreview({
             src={src}
             alt={`${label} design ${index + 1}`}
             isSelected={selectedIndex === index}
-            onClick={() => {
-              setSelectedIndex(index);
-              onSelectionChange?.(index);
-            }}
+            onClick={() => handlePickerClick(index)}
             animatesScale={false}
             className={pickerClassName}
           />
@@ -60,44 +86,66 @@ export default function PickerPreview({
           {/* Left side - Middle Content */}
           <div className="flex-1 basis-[300px]">{middleContent}</div>
 
-          {/* Right side - Preview */}
-          <motion.div
-            className={`flex-1 basis-[300px] relative ${previewClassName} ${
-              onPreviewClick ? "cursor-pointer" : ""
-            }`}
-            onClick={() => onPreviewClick?.(selectedIndex)}
-            whileTap={onPreviewClick ? { scale: 0.98 } : undefined}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          {/* Right side - Preview Carousel */}
+          <div
+            className={`flex-1 basis-[300px] relative ${previewClassName} overflow-hidden select-none`}
+            ref={emblaRef}
           >
-            <Image
-              src={selectedImage}
-              alt={`${label} preview`}
-              fill
-              className="object-contain w-full h-full"
-            />
-          </motion.div>
+            <div className="flex h-full">
+              {images.map((src, index) => (
+                <motion.div
+                  key={index}
+                  className={`flex-[0_0_100%] min-w-0 relative h-full ${
+                    onPreviewClick ? "cursor-pointer" : ""
+                  }`}
+                  onClick={() => onPreviewClick?.(index)}
+                  whileTap={onPreviewClick ? { scale: 0.98 } : undefined}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <Image
+                    src={src}
+                    alt={`${label} preview ${index + 1}`}
+                    fill
+                    className="object-contain w-full h-full select-none"
+                    draggable={false}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       ) : (
         <>
           {/* Middle Content */}
           {middleContent}
 
-          {/* Preview */}
-          <motion.div
-            className={`w-full relative ${previewClassName} ${
-              onPreviewClick ? "cursor-pointer" : ""
-            }`}
-            onClick={() => onPreviewClick?.(selectedIndex)}
-            whileTap={onPreviewClick ? { scale: 0.98 } : undefined}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          {/* Preview Carousel */}
+          <div
+            className={`w-full relative ${previewClassName} overflow-hidden select-none`}
+            ref={emblaRef}
           >
-            <Image
-              src={selectedImage}
-              alt={`${label} preview`}
-              fill
-              className="object-contain w-full h-full"
-            />
-          </motion.div>
+            <div className="flex h-full">
+              {images.map((src, index) => (
+                <motion.div
+                  key={index}
+                  className={`flex-[0_0_100%] min-w-0 relative h-full ${
+                    onPreviewClick ? "cursor-pointer" : ""
+                  }`}
+                  onClick={() => onPreviewClick?.(index)}
+                  whileTap={onPreviewClick ? { scale: 0.98 } : undefined}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <Image
+                    src={src}
+                    alt={`${label} preview ${index + 1}`}
+                    fill
+                    className="object-contain w-full h-full select-none"
+                    draggable={false}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </>
       )}
 
