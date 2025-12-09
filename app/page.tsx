@@ -44,29 +44,25 @@ export default function Home() {
       {/* Gallery */}
       <div id="gallery">
         <TextBlock>
-          My personal style leans toward mixed media and surrealism. I often
-          begin with my own photographs and merge them with drawing and digital
-          editing in Photoshop and Procreate. This combination of techniques
-          allows me to create imaginative, atmospheric worlds, that sometimes
-          are rooted in real elements, and other times built entirely from
-          imagination.
+          My personal style leans toward mixed media and surrealism — merging
+          photography with drawing and digital editing to create imaginative,
+          atmospheric worlds.
         </TextBlock>
         <PagePreview
           title="Gallery"
           href="/gallery"
           imageSrc="/covers/gallery/4.png"
-          size="large"
+          size="normal"
         />
       </div>
 
       {/* Projects Section */}
       <section id="projects" className="w-full bg-body">
         <TextBlock>
-          My client projects cover a broad spectrum, continually shaping and
-          expanding my visual approach. They range from precise graphic design
-          tasks to projects that invite more artistic freedom. With my visual
-          communication skills and high proficiency in Adobe programs, I tailor
-          each project to its unique creative needs.
+          In my design work, I combine the project vision with my
+          narrative-building approach and my skills in Adobe Creative Cloud.
+          I’ve had the opportunity to work on projects with creative freedom,
+          shaping small imaginative worlds built around their themes.
         </TextBlock>
         <div className="flex flex-col gap-16">
           {/* Elgato */}
@@ -89,41 +85,41 @@ export default function Home() {
           <PagePreview
             title="Working with an Artist"
             href="/mascha"
-            imageSrc="/covers/mascha/mascha 2.png"
+            imageSrc="/covers/mascha/m3.png"
             size="normal"
           />
         </div>
       </section>
-      {/* Monkeybrain */}
 
-      <div id="monkeybrain">
-        <TextBlock>
-          For my Bachelor thesis in Graphic Design and Art Direction at NABA
-          Milano, I created an inner-worlds magazine called Monkeybrain. It
-          became a space where I could bring all my passions together, visually
-          expressing the inner world and the concepts behind it, exploring
-          themes connected to psychology, and shaping everything into a complete
-          and cohesive graphic project.
-        </TextBlock>
-        <Monkeybrain />
-      </div>
-
+      {/* Art Therapy */}
       <div id="art-therapy" className="bg-body">
         <TextBlock>
-          In June 2025, my journey led me to begin my Art Therapy Practitioner
-          training at Campus Naturalis in Munich - exploring various realms of
-          art and creativity. Returning to traditional mediums and hands-on
-          processes has created a space for deeper exploration—where imagination
-          meets emotion, and where small creative experiments can grow into
-          meaningful inner work.
+          Starting my{" "}
+          <span className="text-[2em] leading-none align-baseline">
+            Art Therapy
+          </span>{" "}
+          Practitioner training at Campus Naturalis in Munich has led me back to
+          traditional mediums and invited a more introspective, exploratory
+          approach to my creativity.
         </TextBlock>
 
         <PagePreview
-          title="Art Therapy"
-          href="/gallery"
+          title="Analogue Experimentations"
+          href="/art-therapy"
           imageSrc="/covers/arttherapy.png"
           size="normal"
         />
+      </div>
+
+      {/* Monkeybrain */}
+      <div id="monkeybrain">
+        <TextBlock>
+          For my Bachelor thesis in Graphic Design and Art Direction at NABA
+          Milano, I created a magazine exploring inner worlds, and mental health
+          themes through visual design, combining my interests in art as a form
+          of communication, and art as personal expression.
+        </TextBlock>
+        <Monkeybrain />
       </div>
 
       <div id="wrap-up">

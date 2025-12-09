@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import CustomsGallery from "./CustomsGallery";
 import Giftboxes from "./Giftboxes";
 import InfiniteScrollGallery from "./InfiniteScrollGallery";
+import Lightbox from "@/app/components/Lightbox";
 import Image from "next/image";
+import { ImageItem } from "@/app/data/model";
 import {
   customsWebShotsImages,
   dImages,
@@ -35,6 +38,29 @@ const navs: NavSection[] = [
 ];
 
 export default function Page() {
+  const [lightboxImages, setLightboxImages] = useState<ImageItem[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const handleDreamvilleClick = (imageIndex: number) => {
+    const images = dImages.map((img, i) => ({
+      index: i,
+      image: img,
+      alt: `Dreamville x Elgato ${i + 1}`,
+    }));
+    setLightboxImages(images);
+    setLightboxIndex(imageIndex);
+  };
+
+  const handleXClick = (imageIndex: number) => {
+    const images = xImages.map((img, i) => ({
+      index: i,
+      image: img,
+      alt: `Elgato X ${i + 1}`,
+    }));
+    setLightboxImages(images);
+    setLightboxIndex(imageIndex);
+  };
+
   return (
     <div>
       <Navigation sections={navs} />
@@ -43,12 +69,7 @@ export default function Page() {
         src="/projects/elgato/front1.png"
         alt="Elgato Poster"
         title="Working with Elgato"
-        description="Over the course of several years, I had the opportunity to work with
-            Elgato on many visual projects. Our work together began with
-            developing custom product designs and gradually expanded into
-            creating illustrative and creative assets that brought their brand
-            to life. Throughout this time, I worked closely with different teams
-            across the company, and across the globe."
+        description="Elgato is a leading creator of hardware and software for content creators, known for products like the Stream Deck, capture cards, microphones, and lighting tools used by streamers and creatives worldwide. I had the opportunity to collaborate with their teams globally on custom product designs and illustrated brand assets, contributing to the visual identity of several releases and campaigns."
       />
 
       <div className="flex flex-col justify-center items-center gap-16">
@@ -56,12 +77,13 @@ export default function Page() {
           <div className="content-container mb-24">
             <h1>Product Customs</h1>
             <p>
-              My custom design projects involved working with product
-              specifications and mockups using Adobe programs, while having the
-              creative freedom to develop and execute my own ideas or bring
-              specific design directions to life. I created a wide range of
-              designs for both Elgato’s own product releases and their partner
-              collaborations.
+              I created a wide range of custom designs for Elgato’s
+              interchangeable Stream Deck and Wave XLR faceplates, including the
+              first versions released in their store and various partner
+              collaborations. Working from product mockups, I developed both
+              assigned concepts and self-initiated proposals, collaborating
+              closely with Elgato’s print team to bring these designs to life as
+              pieces now in the hands of creators globally.
             </p>
           </div>
           <CustomsGallery />
@@ -83,15 +105,16 @@ export default function Page() {
           />
           <p>
             {" "}
-            I designed the first limited-edition Dreamville x Elgato Wave 3
-            microphone, creating the visual concept, color variations, and
-            assets used for the collaboration’s promotion.
+            I helped bring the first Dreamville x Elgato Wave 3 microphone to
+            life by crafting its visual identity, exploring color directions,
+            and creating assets used throughout the collaboration’s launch.
           </p>
         </div>
         <InfiniteScrollGallery
           images={dImages}
           altPrefix="D collection"
-          direction="right"
+          direction="backward"
+          onImageClick={handleDreamvilleClick}
         />
         <div className="content-container">
           <Image
@@ -102,14 +125,24 @@ export default function Page() {
             className="w-full"
           />
           <p>
-            I developed the visual identity for Elgato&#39;s 10-year anniversary
-            event, creating limited-edition products featuring a custom pattern,
-            two color palettes, and the Elgato X event logo.
+            For Elgato’s 10-year anniversary, I developed the event’s visual
+            identity, creating limited-edition products featuring a custom
+            pattern, two color palettes, and the Elgato X event logo.
           </p>
         </div>
-        <InfiniteScrollGallery images={xImages} altPrefix="X collection" />
+        <InfiniteScrollGallery
+          images={xImages}
+          altPrefix="X collection"
+          onImageClick={handleXClick}
+        />
 
         <Giftboxes />
+
+        <Lightbox
+          images={lightboxImages}
+          selectedIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       </div>
     </div>
   );

@@ -19,11 +19,8 @@ export default function QuardSwitcher() {
           alt="Quard front side"
           width={800}
           height={1200}
-          className="w-full max-w-md rounded-lg"
-          style={{
-            backgroundColor: "var(--bento-bg)",
-            border: "1px solid var(--border)",
-          }}
+          className="w-full max-w-md ipad-border"
+          onClick={toggleImage}
         />
 
         <AnimatePresence>
@@ -31,13 +28,10 @@ export default function QuardSwitcher() {
             <Image
               src="/projects/quards/sample_quard_back.jpg"
               alt="Quard back side"
-              className="absolute inset-0 w-full max-w-md rounded-lg"
-              style={{
-                backgroundColor: "var(--bento-bg)",
-                border: "1px solid var(--border)",
-              }}
+              className="absolute inset-0 w-full max-w-md ipad-border"
               width={800}
               height={1200}
+              onClick={toggleImage}
             />
           )}
         </AnimatePresence>

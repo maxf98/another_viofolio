@@ -13,6 +13,8 @@ interface PagePreviewProps {
   imageAlt?: string;
   size?: "normal" | "large"; // normal = h-96 (384px), large = h-[32rem] (512px)
   imageOpacity?: number; // 0-100, default 100
+  imagePosition?: "center" | "top" | "bottom" | string; // default center, or custom like "center 20%"
+  stickyTitle?: boolean; // if true, title sticks to bottom of viewport while scrolling
 }
 
 export default function PagePreview({
@@ -22,6 +24,8 @@ export default function PagePreview({
   imageAlt,
   size = "normal",
   imageOpacity = 100,
+  imagePosition = "center",
+  stickyTitle = false,
 }: PagePreviewProps) {
   const heightClass = size === "large" ? "h-[700px]" : "h-128";
   const cardRef = useRef<HTMLDivElement>(null);
@@ -49,21 +53,20 @@ export default function PagePreview({
   };
 
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${heightClass}`} ref={cardRef}>
       {/* Mobile: entire preview is tappable */}
       <Link
         href={href}
-        className="block md:pointer-events-none"
+        className="absolute inset-0 md:pointer-events-none"
         aria-label={`Open ${title}`}
       >
         <motion.div
-          ref={cardRef}
-          className="overflow-hidden shadow-lg transition-shadow bg-body"
+          className="h-full overflow-hidden shadow-lg transition-shadow bg-body"
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          {/* Image container with fixed height */}
+          {/* Image container */}
           <motion.div
-            className={`relative ${heightClass} w-full overflow-hidden bg-gray-100`}
+            className="relative h-full w-full overflow-hidden bg-body"
             style={{ y: parallaxY }}
           >
             <Image
@@ -72,42 +75,61 @@ export default function PagePreview({
               priority={true}
               fill
               className="object-cover"
-              style={{ opacity: imageOpacity / 100 }}
+              style={{
+                opacity: imageOpacity / 100,
+                objectPosition:
+                  imagePosition === "top"
+                    ? "top"
+                    : imagePosition === "bottom"
+                    ? "bottom"
+                    : imagePosition === "center"
+                    ? "center"
+                    : imagePosition,
+              }}
             />
           </motion.div>
         </motion.div>
       </Link>
 
-      {/* Desktop: only text is clickable */}
-      <Link
-        href={href}
-        className="absolute bottom-4 right-4 hidden md:block"
-        aria-label={`Open ${title}`}
+      {/* Title - either sticky (sticks to viewport) or absolute (fixed in corner) */}
+      <div
+        className={`${
+          stickyTitle
+            ? "sticky top-[calc(100vh-5rem)]"
+            : "absolute bottom-4 right-0"
+        } z-10 flex justify-end px-4 pointer-events-none`}
       >
-        <motion.div
-          className="flex items-center gap-6 rounded-full px-10 py-6 text-4xl font-semibold uppercase tracking-wide text-white"
-          variants={ctaContainerVariants}
-          initial="rest"
-          animate="rest"
-          whileHover="hover"
-          whileTap="tap"
-          transition={{ type: "spring", stiffness: 250, damping: 18 }}
+        {/* Desktop: clickable */}
+        <Link
+          href={href}
+          className="hidden md:block pointer-events-auto"
+          aria-label={`Open ${title}`}
         >
-          <motion.span
-            variants={ctaTextVariants}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          <motion.div
+            className="flex items-center gap-6 rounded-full px-10 py-6 text-4xl font-semibold uppercase tracking-wide text-white"
+            variants={ctaContainerVariants}
+            initial="rest"
+            animate="rest"
+            whileHover="hover"
+            whileTap="tap"
+            transition={{ type: "spring", stiffness: 250, damping: 18 }}
           >
-            {title}
-          </motion.span>
-          <FaArrowRight aria-hidden className="text-5xl" />
-        </motion.div>
-      </Link>
+            <motion.span
+              variants={ctaTextVariants}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              {title}
+            </motion.span>
+            <FaArrowRight aria-hidden className="text-5xl" />
+          </motion.div>
+        </Link>
 
-      {/* Mobile: text overlay (non-clickable, just visual) */}
-      <div className="absolute bottom-4 right-4 block md:hidden pointer-events-none">
-        <div className="flex items-center gap-6 rounded-full px-10 py-6 text-4xl font-semibold uppercase tracking-wide text-white">
-          <span>{title}</span>
-          <FaArrowRight aria-hidden className="text-5xl" />
+        {/* Mobile: non-clickable visual */}
+        <div className="block md:hidden">
+          <div className="flex items-center gap-6 rounded-full px-10 py-6 text-4xl font-semibold uppercase tracking-wide text-white">
+            <span>{title}</span>
+            <FaArrowRight aria-hidden className="text-5xl" />
+          </div>
         </div>
       </div>
     </div>

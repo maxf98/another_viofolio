@@ -44,6 +44,13 @@ export default function Page() {
             and after to see what I mean.
           </p>
           <BeforeAfter />
+          <p>
+            One of the core selling points of the app is that instead of having
+            two sides (like a regular flashcard), a Quard has <i>layers</i>, so
+            instead of a front and a back, a Quard has a question and an answer
+            layer. I got that idea from the design apps I use!
+          </p>
+          <QuardSwitcher />
         </div>
         <div id="brand">
           <div className="content-container flex flex-col gap-8 mb-32">

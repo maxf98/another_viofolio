@@ -13,6 +13,7 @@ interface InfiniteScrollGalleryProps {
   altPrefix?: string;
   direction?: "forward" | "backward";
   speed?: number;
+  onImageClick?: (index: number) => void;
 }
 
 export default function InfiniteScrollGallery({
@@ -21,6 +22,7 @@ export default function InfiniteScrollGallery({
   altPrefix = "Image",
   direction = "forward",
   speed = 1,
+  onImageClick,
 }: InfiniteScrollGalleryProps) {
   // Duplicate images to ensure enough for looping
   const duplicatedImages = [...images, ...images, ...images];
@@ -49,9 +51,13 @@ export default function InfiniteScrollGallery({
     <div className="w-full">
       {/* Carousel */}
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-4" style={{ height: `${height}px` }}>
+        <div className="flex gap-8" style={{ height: `${height}px` }}>
           {duplicatedImages.map((image, index) => (
-            <div key={index} className="flex-[0_0_auto] h-full">
+            <div
+              key={index}
+              className={`flex-[0_0_auto] h-full ${onImageClick ? "cursor-pointer" : ""}`}
+              onClick={() => onImageClick?.(index % images.length)}
+            >
               <Image
                 src={image}
                 alt={`${altPrefix} ${(index % images.length) + 1}`}

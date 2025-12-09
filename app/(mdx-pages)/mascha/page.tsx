@@ -28,7 +28,7 @@ export default function Page() {
         src="/projects/mascha/breathe/6.png"
         alt="Mascha Breathe"
         title="Working with Mascha"
-        description="I collaborated with Mascha, an artist and musician to bring the vision behind her music to life through my mixed media style. Together, we created three album covers, each aiming to capture the essence and emotion of her album. For these project, I used AI-generated elements as building blocks, combining them with her portrait in a collage and painting over the composition to blend everything into a single, cohesive visual story."
+        description="In collaboration with musician Mascha, I created three album covers that translate the themes of her music into visual form. Using a mixed-media process, I combined AI-generated imagery, photography, hand-painted illustration, and digital editing to craft layered, cohesive artworks that reflect the depth and atmosphere of her sound."
       />
 
       <div id="breathe" className="content-container">
