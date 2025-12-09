@@ -77,7 +77,7 @@ export default function LetterSwitcher() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="flex flex-row items-center justify-center h-full -space-x-6 md:space-x-0">
+    <div className="flex flex-col md:flex-row items-center justify-center h-full w-full">
       <LetterStack letters={vs} selectedLetter={selectedLetters[0]} />
       <LetterStack letters={is} selectedLetter={selectedLetters[1]} />
       <LetterStack letters={os} selectedLetter={selectedLetters[2]} />
@@ -96,8 +96,9 @@ function LetterStack({ letters, selectedLetter }: LetterStackProps) {
   });
 
   return (
-    // Mobile: width-based sizing, Desktop: height-based sizing with max constraint
-    <div className={`relative w-full max-w-[250px] aspect-square`}>
+    // flex-1 allows equal distribution, aspect-square maintains ratio
+    // max-w and max-h ensure it doesn't exceed container in either direction
+    <div className="relative flex-1 aspect-square max-w-full max-h-[33.33%] md:max-h-full md:max-w-[33.33%]">
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}
@@ -108,7 +109,6 @@ function LetterStack({ letters, selectedLetter }: LetterStackProps) {
           exit={{ rotateY: 90 }}
           transition={{ duration: 0.4 }}
           style={{ transformPerspective: 1000 }}
-          // .letter: absolute inset-0 w-full h-full
           className="absolute inset-0 w-full h-full object-contain"
         />
       </AnimatePresence>
