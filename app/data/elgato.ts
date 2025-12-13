@@ -8,6 +8,7 @@ import customsWebShot4 from "../../public/projects/elgato/customs-web-shots/4.pn
 import customsWebShot5 from "../../public/projects/elgato/customs-web-shots/5.png";
 import customsWebShot6 from "../../public/projects/elgato/customs-web-shots/6.png";
 import customsWebShot7 from "../../public/projects/elgato/customs-web-shots/7.jpg";
+import front1 from "../../public/projects/elgato/front1.png";
 
 // Ofest images
 import ofest1 from "../../public/projects/elgato/brand-illustration/ofest/1.png";
@@ -46,7 +47,6 @@ import winter23_221 from "../../public/projects/elgato/brand-illustration/winter
 import winter23_222 from "../../public/projects/elgato/brand-illustration/winter23/222.png";
 import winter23_223 from "../../public/projects/elgato/brand-illustration/winter23/223.png";
 import winter23_tweet from "../../public/projects/elgato/brand-illustration/winter23/tweet.png";
-import winter23_w22sd from "../../public/projects/elgato/brand-illustration/winter23/w22-sd.png";
 import winter23_new from "../../public/projects/elgato/brand-illustration/winter23/new.png";
 
 // D folder images
@@ -63,7 +63,6 @@ import d8 from "../../public/projects/elgato/D/8.jpg";
 import x1 from "../../public/projects/elgato/X/1.png";
 import x2 from "../../public/projects/elgato/X/2.png";
 import x3 from "../../public/projects/elgato/X/3.png";
-import x4 from "../../public/projects/elgato/X/4.png";
 import x5 from "../../public/projects/elgato/X/5.jpg";
 import x6 from "../../public/projects/elgato/X/6.jpg";
 import x7 from "../../public/projects/elgato/X/7.png";
@@ -71,11 +70,10 @@ import x8 from "../../public/projects/elgato/X/8.png";
 
 export const customsWebShotsImages: StaticImageData[] = [
   customsWebShot1,
-  customsWebShot2,
-  customsWebShot3,
+  customsWebShot4,
   customsWebShot5,
-
-  customsWebShot7,
+  customsWebShot2,
+  front1,
 ];
 
 export const ofestImages: StaticImageData[] = [
@@ -103,7 +101,6 @@ export const winter23Images: StaticImageData[] = [
   winter23_2,
   winter23_3,
   winter23_new,
-  winter23_w22sd,
   winter23_tweet,
   winter23_4,
   winter23_5,
@@ -111,4 +108,4 @@ export const winter23Images: StaticImageData[] = [
 
 export const dImages: StaticImageData[] = [d1, d3, d5, d6];
 
-export const xImages: StaticImageData[] = [x2, x1, x5, x4, x6];
+export const xImages: StaticImageData[] = [x2, x1, x5, x6];

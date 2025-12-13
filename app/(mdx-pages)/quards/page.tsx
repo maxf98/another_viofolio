@@ -7,6 +7,7 @@ import BeforeAfter from "./BeforeAfter";
 import ParallaxImage from "./ParallaxImage";
 import Link from "next/link";
 import Image from "next/image";
+import "@/app/styles/backgrounds.css";
 
 const navs: NavSection[] = [
   {
@@ -25,17 +26,17 @@ const navs: NavSection[] = [
 
 export default function Page() {
   return (
-    <div className="bg-dotted pb-128">
+    <div className="bg-[#24242e]">
       <Navigation sections={navs} />
       <ProjectHeroSection
         src="/projects/quards/featureArtNoBG.png"
         alt="Quards"
-        title="Working on Quards"
+        title="WORKING ON ^QUARDS^"
         description="Quards is an indie iPad app for creating handdrawn flashcards, for which I developed the visual identity and created all assets.
         As the only designer, working with a single developer, that meant I was responsible for a wide variety of big and small tasks, from designing button icons, to logo design, colors, app store screenshots and themed artworks."
       />
 
-      <div className="flex flex-col gap-32 ">
+      <div className="flex flex-col gap-32 bg-dotted pt-16 md:pt-24">
         <div id="app" className="content-container">
           <h1>App Design</h1>
           <p>
@@ -91,7 +92,7 @@ export default function Page() {
         </div>
         <div
           id="visual-identity"
-          className="content-container md:mt-32 flex flex-col gap-16"
+          className="content-container mt-16 md:mt-48 flex flex-col gap-16"
         >
           <h1>Visual Identity</h1>
           <p>
@@ -124,6 +125,25 @@ export default function Page() {
           />
           <p>And so is the onboarding (and app store screenshots):</p>
           <QuardExamplesCarousel />
+        </div>
+      </div>
+
+      <div className="h-32" />
+
+      {/* Summary Section */}
+      <div className="relative" style={{ clipPath: "inset(0)" }}>
+        <div className="fixed inset-0 -z-10 bg-[#24242e]">
+          <Image
+            src="/projects/quards/featureArtNoBG.png"
+            alt=""
+            fill
+            className="object-cover opacity-20"
+          />
+        </div>
+        <div className="content-container py-32 flex flex-col items-center text-center">
+          <p className="max-w-2xl text-lg">
+            Being the sole designer on this project taught me to wear many hats—from icon design to brand strategy, from app store assets to marketing materials. It was a rewarding challenge that pushed me to grow in every direction.
+          </p>
         </div>
       </div>
     </div>

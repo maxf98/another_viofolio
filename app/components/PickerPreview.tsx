@@ -66,7 +66,7 @@ export default function PickerPreview({
   return (
     <div className="flex flex-col">
       {/* Picker Row */}
-      <div className="flex gap-2 justify-center flex-wrap">
+      <div className="flex gap-2 justify-center flex-wrap mb-8 relative z-10">
         {images.map((src, index) => (
           <Picker
             key={index}

@@ -13,13 +13,15 @@ const boxes: {
   title: string;
   description: string;
   galleryImages: StaticImageData[];
+  backgroundImage?: string;
 }[] = [
   {
     image: "/projects/elgato/boxes/box2.png",
     title: "Winter Holidays 2022",
     description:
-      "For Elgato’s 2022 Holiday Gift Box, I developed two visual narratives: reimagining the Stream Deck layout as a series of illuminated winter-night windows, and creating an Elgato-inspired gingerbread house illustration. These artworks were applied across the gift box and became core elements of Elgato’s winter campaign online.",
+      "For Elgato's 2022 Holiday Gift Box, I developed two visual narratives: reimagining the Stream Deck as illuminated winter-night windows, and creating an Elgato-inspired gingerbread house.",
     galleryImages: winter23Images,
+    backgroundImage: "/projects/elgato/brand-illustration/winter23/1.png",
   },
   {
     image: "/projects/elgato/boxes/box3.png",
@@ -27,13 +29,15 @@ const boxes: {
     description:
       "This gift box brought together a wide range of custom illustrations I developed over time—from Elgato winter-themed stickers to branded posters—all coming together in one cheerful, festive box.",
     galleryImages: winter22Images,
+    backgroundImage: "/projects/elgato/brand-illustration/winter22/8.png",
   },
   {
     image: "/projects/elgato/boxes/box1.png",
     title: "Oktoberfest Gift Box",
     description:
-      "Drawing inspiration from Munich’s lively Oktoberfest, I created an illustrated gift box that combines classic festival elements with Elgato’s creative, content-focused identity. The products appear within a dynamic, energetic world that reflects the playfulness and variety of the Elgato experience.",
+      "Inspired by Munich's Oktoberfest, I created an illustrated gift box combining classic festival elements with Elgato's playful, creative identity.",
     galleryImages: ofestImages,
+    backgroundImage: "/projects/elgato/brand-illustration/ofest/6.png",
   },
 ];
 
@@ -53,7 +57,7 @@ export default function Giftboxes() {
 
   return (
     <div>
-      <div className="content-container">
+      <div className="content-container pt-16">
         <h1>Partner Gift Boxes</h1>
         <p>
           I created a series of playful visual narratives for Elgato’s partner
@@ -62,11 +66,25 @@ export default function Giftboxes() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-24 mt-24">
+      <div className="flex flex-col mt-24">
         {boxes.map((box, index) => (
-          <div key={index} className="flex flex-col gap-8">
+          <div
+            key={index}
+            className="relative flex flex-col pt-16 pb-16"
+            style={box.backgroundImage ? { clipPath: "inset(0)" } : undefined}
+          >
+            {box.backgroundImage && (
+              <div className="fixed inset-0 -z-10 bg-[#1e1e28]">
+                <Image
+                  src={box.backgroundImage}
+                  alt=""
+                  fill
+                  className="object-cover opacity-5"
+                />
+              </div>
+            )}
             <div className="content-container">
-              <div className="flex flex-col md:flex-row gap-12 items-center">
+              <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
                 <div className="relative w-full md:w-3/5 aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
                     src={box.image}
@@ -81,7 +99,7 @@ export default function Giftboxes() {
                 </div>
               </div>
             </div>
-            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-16">
+            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-12 md:mt-20 mb-4 md:mb-16">
               <InfiniteScrollGallery
                 images={box.galleryImages}
                 height={200}

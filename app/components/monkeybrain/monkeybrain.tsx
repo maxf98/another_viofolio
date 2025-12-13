@@ -15,10 +15,9 @@ export default function Monkeybrain() {
       const rect = sectionRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      // Section is active when approaching or in viewport
-      // Triggers well before section enters view for seamless transition
-      const active =
-        rect.top < viewportHeight * 2 && rect.bottom > -viewportHeight;
+      // Section is active when the section is in or near the viewport
+      // Only show pattern when section top is at or above viewport top
+      const active = rect.top <= 0 && rect.bottom > -viewportHeight;
       setIsActive(active);
     };
 

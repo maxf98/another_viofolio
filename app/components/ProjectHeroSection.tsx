@@ -9,6 +9,7 @@ interface ProjectHeroSectionProps {
   alt: string;
   title: string;
   description?: string;
+  children?: React.ReactNode;
 }
 
 export default function ProjectHeroSection({
@@ -16,6 +17,7 @@ export default function ProjectHeroSection({
   alt,
   title,
   description,
+  children,
 }: ProjectHeroSectionProps) {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -29,59 +31,46 @@ export default function ProjectHeroSection({
   return (
     <div
       ref={heroRef}
-      className="relative mb-32 w-screen h-screen overflow-hidden"
+      className="relative w-screen h-screen overflow-hidden"
     >
-      <div className="absolute bottom-20 left-32 right-32 z-10">
-        <h1 className="!text-8xl">{title}</h1>
-        {description && <p>{description}</p>}
+      <div className="absolute inset-0 flex items-end z-10">
+        <div className="content-container pb-20 md:pb-32">
+          <h1 className="!leading-none">
+            {title.split(/(\^[^^]+\^)/g).map((segment, i) => {
+              if (segment.startsWith("^") && segment.endsWith("^")) {
+                // Large text (marked with ^) - split by \n for newlines
+                const content = segment.slice(1, -1);
+                return content.split("\\n").map((line, k) => (
+                  <span key={`${i}-${k}`} className="block !text-7xl md:!text-[10rem]">
+                    {line}
+                  </span>
+                ));
+              }
+              // Small text - split by spaces and render each word
+              return segment.split(" ").filter(Boolean).map((word, j) => (
+                <span
+                  key={`${i}-${j}`}
+                  className="block !text-3xl md:!text-5xl tracking-[0.3em] md:tracking-[0.5em]"
+                >
+                  {word}
+                </span>
+              ));
+            })}
+          </h1>
+          {description && <p className="text-sm md:text-base mt-4 max-w-2xl">{description}</p>}
+          {children}
+        </div>
       </div>
       <motion.div
-        style={{
-          y,
-          mask: `linear-gradient(to top,
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0.013) 8.1%,
-            rgba(255,255,255,0.049) 15.5%,
-            rgba(255,255,255,0.104) 22.5%,
-            rgba(255,255,255,0.175) 29%,
-            rgba(255,255,255,0.259) 35.3%,
-            rgba(255,255,255,0.352) 41.2%,
-            rgba(255,255,255,0.45) 47.1%,
-            rgba(255,255,255,0.55) 52.9%,
-            rgba(255,255,255,0.648) 58.8%,
-            rgba(255,255,255,0.741) 64.7%,
-            rgba(255,255,255,0.825) 71%,
-            rgba(255,255,255,0.896) 77.5%,
-            rgba(255,255,255,0.951) 84.5%,
-            rgba(255,255,255,0.987) 91.9%,
-            rgba(255,255,255,1) 100%
-          )`,
-          WebkitMask: `linear-gradient(to top,
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0.013) 8.1%,
-            rgba(255,255,255,0.049) 15.5%,
-            rgba(255,255,255,0.104) 22.5%,
-            rgba(255,255,255,0.175) 29%,
-            rgba(255,255,255,0.259) 35.3%,
-            rgba(255,255,255,0.352) 41.2%,
-            rgba(255,255,255,0.45) 47.1%,
-            rgba(255,255,255,0.55) 52.9%,
-            rgba(255,255,255,0.648) 58.8%,
-            rgba(255,255,255,0.741) 64.7%,
-            rgba(255,255,255,0.825) 71%,
-            rgba(255,255,255,0.896) 77.5%,
-            rgba(255,255,255,0.951) 84.5%,
-            rgba(255,255,255,0.987) 91.9%,
-            rgba(255,255,255,1) 100%
-          )`,
-        }}
+        style={{ y }}
         className="absolute inset-0 w-full h-full"
       >
         <Image
           src={src}
           fill
           alt={alt}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-20 scale-100"
+          style={{ objectPosition: "center 70%" }}
         />
       </motion.div>
     </div>

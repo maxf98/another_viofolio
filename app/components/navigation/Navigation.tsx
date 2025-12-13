@@ -32,14 +32,6 @@ export default function Navigation({ sections }: NavigationProps) {
 
   return (
     <div>
-      {/* Top gradient overlay */}
-      <div
-        className="fixed top-0 left-0 right-0 h-36 z-[40] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to bottom, #1c1b1b 0%, rgba(28,27,27,0.5) 30%, rgba(28,27,27,0.2) 50%, rgba(28,27,27,0.08) 70%, rgba(28,27,27,0.02) 85%, transparent 100%)",
-        }}
-      />
       {/* Logo */}
       <header className="fixed top-0 left-0 z-[60] flex flex-col items-center px-6 py-6 md:py-10">
         <Link href="/" className="inline-block">

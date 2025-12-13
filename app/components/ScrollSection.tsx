@@ -37,7 +37,7 @@ export default function ScrollSection({
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <div className="container mx-auto px-6 py-24">
-          <h2 className="text-4xl md:text-6xl font-light text-white mb-12 tracking-wide">
+          <h2 className="text-4xl md:text-6xl font-light text-white mb-12 tracking-wide opacity-100">
             {title}
           </h2>
           <div className="text-white">{children}</div>

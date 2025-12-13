@@ -12,8 +12,8 @@ interface GalleryGridProps {
 
 function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
   return (
-    // CSS columns layout: columns-[300px] for masonry effect
-    <div className="w-full" style={{ columns: "300px" }}>
+    // CSS columns layout: 2 columns on mobile, auto columns on larger screens
+    <div className="w-full columns-2 md:columns-[300px]">
       {images.map((item: GalleryItem, idx: number) => (
         <Image
           key={item.index || idx}

@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 // Base interface for image items
 export interface ImageItem {
   index: number;
-  image: StaticImageData;
+  image: StaticImageData | string;
   alt?: string;
 }
 

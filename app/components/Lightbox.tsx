@@ -22,7 +22,7 @@ export default function Lightbox({
   const [currentIndex, setCurrentIndex] = useState(selectedIndex ?? 0);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
+    loop: true,
     align: "center",
     containScroll: false,
   });
@@ -85,7 +85,7 @@ export default function Lightbox({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="z-20 fixed inset-0 bg-black/90 backdrop-blur-[10px] flex flex-col justify-center items-center"
+          className="z-20 fixed inset-0 bg-gray-900/50 backdrop-blur-[10px] flex flex-col justify-center items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -110,7 +110,7 @@ export default function Lightbox({
               {images.map((image, i) => (
                 <div
                   key={image.index ?? i}
-                  className={`flex-[0_0_50%] min-w-0 flex items-center justify-center px-4 transition-all duration-300 ${
+                  className={`flex-[0_0_90%] md:flex-[0_0_50%] min-w-0 flex items-center justify-center px-4 transition-all duration-300 ${
                     i !== currentIndex ? "cursor-pointer" : ""
                   }`}
                   style={{
@@ -126,9 +126,9 @@ export default function Lightbox({
                     className="object-contain select-none max-h-[85vh] w-auto h-auto"
                     src={image.image}
                     alt={image.alt ?? "Gallery image"}
-                    placeholder="blur"
-                    width={image.image.width}
-                    height={image.image.height}
+                    placeholder={typeof image.image === "string" ? "empty" : "blur"}
+                    width={typeof image.image === "string" ? 1920 : image.image.width}
+                    height={typeof image.image === "string" ? 1080 : image.image.height}
                     draggable={false}
                   />
                 </div>

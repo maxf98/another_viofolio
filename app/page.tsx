@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Hero from "./components/Hero";
 import ScrollLinkSection from "./components/ScrollLinkSection";
-import ScrollSection from "./components/ScrollSection";
 import Navigation from "./components/navigation/Navigation";
 import { NavSection } from "./components/navigation/Navigation";
 
@@ -29,15 +29,25 @@ const navs: NavSection[] = [
 
 export default function Home() {
   return (
-    <main className="z-[5]">
+    <main className="z-[5] bg-[#24242e]">
       <Navigation sections={navs} />
 
-      {/* Hero Section */}
-      <Hero />
+      {/* Hero + About Me Section with Background */}
+      <div className="relative" style={{ clipPath: "inset(0)" }}>
+        <div className="fixed inset-0 -z-10">
+          <Image
+            src="/gallery/sky.png"
+            alt="Background"
+            fill
+            className="object-cover object-top opacity-90"
+          />
+        </div>
 
-      <div id="about-me">
-        <ScrollSection title="" backgroundImage="/me-cover.png">
-          <p className="absolute inset-0 flex items-center justify-center text-lg md:text-xl max-w-2xl mx-auto text-white text-center px-6">
+        {/* Hero Section */}
+        <Hero />
+
+        <div id="about-me" className="flex items-start justify-center pt-8 pb-32">
+          <p className="text-lg md:text-xl max-w-2xl mx-auto text-white text-center px-6">
             Hey, I&apos;m Vio, an artist based in Munich, Germany. I create work
             that blends illustration, visual communication, and intuitive,
             process-driven art. I&apos;m deeply passionate about visual
@@ -45,16 +55,17 @@ export default function Home() {
             exploring these interests through my career in Graphic Design and
             Illustration as well as my studies in art therapy.
           </p>
-        </ScrollSection>
+        </div>
       </div>
 
       {/* Gallery */}
       <div id="gallery">
         <ScrollLinkSection
           href="/gallery"
-          imageSrc="/covers/gallery/4.png"
+          imageSrc="/gallery/chat.png"
           imageAlt="Gallery"
           label="View Gallery"
+          objectPosition="center bottom"
         />
       </div>
 
@@ -62,9 +73,11 @@ export default function Home() {
       <section id="projects" className="w-full">
         <ScrollLinkSection
           href="/elgato"
-          imageSrc="/projects/elgato/front1.png"
+          imageSrc="/projects/elgato/gato3.png"
           imageAlt="Elgato"
           label="Working with a Company"
+          objectPosition="center bottom"
+          mobileObjectPosition="left"
         />
         <ScrollLinkSection
           href="/quards"
@@ -84,9 +97,10 @@ export default function Home() {
       <div id="art-therapy">
         <ScrollLinkSection
           href="/art-therapy"
-          imageSrc="/covers/arttherapy.png"
+          imageSrc="/arttherapy/fragments/pens.png"
           imageAlt="Art Therapy"
-          label="Analogue Experimentations"
+          label="EXPLORING ART THERAPY"
+          objectPosition="center top"
         />
       </div>
 
@@ -94,9 +108,9 @@ export default function Home() {
       <div id="monkeybrain">
         <ScrollLinkSection
           href="/monkeybrain"
-          imageSrc="/projects/MONKEYBRAIN/monkeybrain.png"
+          imageSrc="/projects/MONKEYBRAIN/coverdesign.png"
           imageAlt="Monkeybrain"
-          label="Monkeybrain"
+          label="Monkeybrain Mag"
         />
       </div>
     </main>
