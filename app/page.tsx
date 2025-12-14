@@ -8,6 +8,14 @@ import Navigation from "./components/navigation/Navigation";
 import { NavSection } from "./components/navigation/Navigation";
 import { useLoadState } from "./context/LoadContext";
 
+// Static imports for ScrollLinkSection images
+import chatImg from "../public/gallery/chat.png";
+import elgatoImg from "../public/projects/elgato/gato3.png";
+import quardsImg from "../public/covers/quards/quards.png";
+import maschaImg from "../public/covers/mascha/m3.png";
+import artTherapyImg from "../public/arttherapy/fragments/pens.png";
+import monkeybrainImg from "../public/projects/MONKEYBRAIN/coverdesign.png";
+
 const navs: NavSection[] = [
   {
     id: "about-me",
@@ -41,7 +49,7 @@ export default function Home() {
       {/* Hero + About Me Section with Background */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <motion.div
-          className="fixed inset-0 -z-10"
+          className="fixed inset-0 -z-10 pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: state.allLettersReady ? 0.9 : 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -49,9 +57,10 @@ export default function Home() {
           {/* Only start loading background after letters are ready */}
           {state.allLettersReady && (
             <Image
-              src="/gallery/sky.png"
+              src={chatImg}
               alt="Background"
               fill
+              placeholder="blur"
               className="object-cover object-top"
             />
           )}
@@ -60,7 +69,10 @@ export default function Home() {
         {/* Hero Section */}
         <Hero />
 
-        <div id="about-me" className="flex items-start justify-center pt-8 pb-32">
+        <div
+          id="about-me"
+          className="flex items-start justify-center pt-8 pb-32"
+        >
           <p className="text-lg md:text-xl max-w-2xl mx-auto text-white text-center px-6">
             Hey, I&apos;m Vio, an artist based in Munich, Germany. I create work
             that blends illustration, visual communication, and intuitive,
@@ -76,7 +88,7 @@ export default function Home() {
       <div id="gallery">
         <ScrollLinkSection
           href="/gallery"
-          imageSrc="/gallery/chat.png"
+          imageSrc={chatImg}
           imageAlt="Gallery"
           label="View Gallery"
           objectPosition="center bottom"
@@ -87,7 +99,7 @@ export default function Home() {
       <section id="projects" className="w-full">
         <ScrollLinkSection
           href="/elgato"
-          imageSrc="/projects/elgato/gato3.png"
+          imageSrc={elgatoImg}
           imageAlt="Elgato"
           label="Working with a Company"
           objectPosition="center bottom"
@@ -95,13 +107,13 @@ export default function Home() {
         />
         <ScrollLinkSection
           href="/quards"
-          imageSrc="/covers/quards/quards.png"
+          imageSrc={quardsImg}
           imageAlt="Quards"
           label="Working with a Startup"
         />
         <ScrollLinkSection
           href="/mascha"
-          imageSrc="/covers/mascha/m3.png"
+          imageSrc={maschaImg}
           imageAlt="Mascha"
           label="Working with an Artist"
         />
@@ -111,7 +123,7 @@ export default function Home() {
       <div id="art-therapy">
         <ScrollLinkSection
           href="/art-therapy"
-          imageSrc="/arttherapy/fragments/pens.png"
+          imageSrc={artTherapyImg}
           imageAlt="Art Therapy"
           label="EXPLORING ART THERAPY"
           objectPosition="center top"
@@ -122,7 +134,7 @@ export default function Home() {
       <div id="monkeybrain">
         <ScrollLinkSection
           href="/monkeybrain"
-          imageSrc="/projects/MONKEYBRAIN/coverdesign.png"
+          imageSrc={monkeybrainImg}
           imageAlt="Monkeybrain"
           label="Monkeybrain Mag"
         />

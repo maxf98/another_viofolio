@@ -26,21 +26,32 @@ const os = letters.O;
 export default function LetterSwitcher() {
   const [selectedLetters, setSelectedLetters] = useState([0, 0, 0]);
   const lastChangedLetterRef = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const { state, setLetterLoaded } = useLoadState();
 
-  // Strategy functions for selecting the next index
-  const getNextIndexIncrement = (
-    currentIndex: number,
-    letterArray: LetterItem[]
-  ): number => {
-    return (currentIndex + 1) % letterArray.length;
-  };
-
-  const getNextIndex = getNextIndexIncrement;
-
-  // Auto-shuffle a random letter every second (only after all letters are loaded)
+  // Track visibility with IntersectionObserver
   useEffect(() => {
-    if (!state.allLettersReady) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-shuffle a random letter every second (only when visible and ready)
+  useEffect(() => {
+    if (!state.allLettersReady || !isVisible) return;
+
+    const getNextIndex = (currentIndex: number, letterArray: LetterItem[]) =>
+      (currentIndex + 1) % letterArray.length;
 
     const interval = setInterval(() => {
       let randomPosition = lastChangedLetterRef.current;
@@ -61,10 +72,13 @@ export default function LetterSwitcher() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [state.allLettersReady]);
+  }, [state.allLettersReady, isVisible]);
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0">
+    <div
+      ref={containerRef}
+      className="flex flex-col md:flex-row items-center justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0"
+    >
       <LetterStack
         letters={vs}
         selectedLetter={selectedLetters[0]}

@@ -19,6 +19,9 @@ import {
 } from "@/app/data/elgato";
 import { pairImages, sdImages, xlrImages } from "./CustomsGallery";
 
+// Static import for hero image
+import heroImg from "@/public/projects/elgato/gato3.png";
+
 const navs: NavSection[] = [
   {
     id: "customs",
@@ -107,7 +110,7 @@ export default function Page() {
       <Navigation sections={navs} />
 
       <ProjectHeroSection
-        src="/projects/elgato/gato3.png"
+        src={heroImg}
         alt="Elgato Poster"
         title="WORKING WITH ^ELGATO^"
         description="Elgato is a leading creator of hardware and software for content creators, known for products like the Stream Deck, capture cards, microphones, and lighting tools used by streamers and creatives worldwide. I had the opportunity to collaborate with their teams globally on custom product designs and illustrated brand assets, contributing to the visual identity of several releases and campaigns."

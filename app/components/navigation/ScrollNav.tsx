@@ -55,7 +55,7 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
   };
 
   return (
-    <div className="fixed z-[50] top-0 left-0 bottom-0 h-screen ml-6 w-[45px] flex items-center justify-center">
+    <div className="fixed z-[9998] top-0 left-0 bottom-0 h-screen ml-6 w-[45px] flex items-center justify-center pointer-events-auto">
       <nav className="flex flex-col gap-10">
         {sections.map((section) => {
           const isActive = activeSection === section.id;
@@ -63,7 +63,7 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
             <button
               key={section.id}
               onClick={() => handleClick(section.id)}
-              className="group relative flex items-center justify-center cursor-pointer"
+              className="group relative flex items-center justify-center cursor-pointer force-pointer"
               aria-label={`Navigate to ${section.label}`}
             >
               <motion.div

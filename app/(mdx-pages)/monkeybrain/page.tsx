@@ -5,13 +5,16 @@ import Navigation from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import FlipBook from "@/app/components/monkeybrain/FlipBook";
 
+// Static import for hero image
+import heroImg from "@/public/projects/MONKEYBRAIN/monkeybrain.png";
+
 export default function Page() {
   return (
     <div className="bg-body">
       <Navigation sections={[]} />
 
       <ProjectHeroSection
-        src="/projects/MONKEYBRAIN/monkeybrain.png"
+        src={heroImg}
         alt="Monkeybrain"
         title="^MONKEY\nBRAIN^ MAG"
         description="Monkeybrain is a magazine (better viewed on a Desktop computer!)"

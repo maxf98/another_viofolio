@@ -4,6 +4,9 @@ import Image from "next/image";
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 
+// Static import for hero image
+import heroImg from "@/public/covers/mascha/m3.png";
+
 const navs: NavSection[] = [
   {
     id: "breathe",
@@ -25,7 +28,7 @@ export default function Page() {
       <Navigation sections={navs} />
 
       <ProjectHeroSection
-        src="/covers/mascha/m3.png"
+        src={heroImg}
         alt="Mascha"
         title="WORKING WITH ^MASCHA^"
         description="In collaboration with musician Mascha, I created three album covers that translate the themes of her music into visual form. Using a mixed-media process, I combined AI-generated imagery, photography, hand-painted illustration, and digital editing to craft layered, cohesive artworks that reflect the depth and atmosphere of her sound."

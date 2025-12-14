@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ProjectHeroSectionProps {
-  src: string;
+  src: StaticImageData;
   alt: string;
   title: string;
   description?: string;
@@ -69,6 +69,7 @@ export default function ProjectHeroSection({
           src={src}
           fill
           alt={alt}
+          placeholder="blur"
           className="w-full h-full object-cover opacity-20 scale-100"
           style={{ objectPosition: "center 70%" }}
         />

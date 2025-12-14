@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 interface ScrollLinkSectionProps {
   href: string;
-  imageSrc: string;
+  imageSrc: StaticImageData;
   imageAlt: string;
   label: string;
   height?: string;
@@ -51,7 +51,7 @@ export default function ScrollLinkSection({
       className={`relative ${height} w-full`}
       style={{ clipPath: "inset(0)" }}
     >
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         {shouldLoad && (
           <>
             {/* Mobile image */}
@@ -60,6 +60,7 @@ export default function ScrollLinkSection({
                 src={imageSrc}
                 alt={imageAlt}
                 fill
+                placeholder="blur"
                 className={`object-cover object-${mobileObjectPosition} md:hidden`}
               />
             )}
@@ -68,19 +69,26 @@ export default function ScrollLinkSection({
               src={imageSrc}
               alt={imageAlt}
               fill
-              className={`object-cover ${mobileObjectPosition ? "hidden md:block" : ""}`}
+              placeholder="blur"
+              className={`object-cover ${
+                mobileObjectPosition ? "hidden md:block" : ""
+              }`}
               style={{ objectPosition }}
             />
           </>
         )}
       </div>
-      <Link
-        href={href}
-        className="absolute inset-0 flex items-center justify-center text-center text-5xl md:text-7xl font-semibold text-white uppercase hover:opacity-80"
-        style={{ WebkitTextStroke: "1px rgba(255, 255, 255, 0.3)" }}
-      >
-        {label}
-      </Link>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Link
+          href={href}
+          className="px-8 py-6 md:px-16 md:py-12 text-center text-5xl md:text-7xl font-semibold text-white uppercase tracking-[0.05em] hover:tracking-[-0.02em] transition-[letter-spacing] duration-300 ease-out"
+          style={{
+            WebkitTextStroke: "1px rgba(255, 255, 255, 0.3)",
+          }}
+        >
+          {label}
+        </Link>
+      </div>
     </div>
   );
 }

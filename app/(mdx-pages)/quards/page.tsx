@@ -9,6 +9,9 @@ import Link from "next/link";
 import Image from "next/image";
 import "@/app/styles/backgrounds.css";
 
+// Static import for hero image
+import heroImg from "@/public/projects/quards/featureArtNoBG.png";
+
 const navs: NavSection[] = [
   {
     id: "app",
@@ -29,7 +32,7 @@ export default function Page() {
     <div className="bg-[#24242e]">
       <Navigation sections={navs} />
       <ProjectHeroSection
-        src="/projects/quards/featureArtNoBG.png"
+        src={heroImg}
         alt="Quards"
         title="WORKING ON ^QUARDS^"
         description="Quards is an indie iPad app for creating handdrawn flashcards, for which I developed the visual identity and created all assets.

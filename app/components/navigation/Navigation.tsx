@@ -51,7 +51,7 @@ export default function Navigation({ sections }: NavigationProps) {
   return (
     <>
       {/* Logo */}
-      <header className="fixed top-0 left-0 z-[60] flex flex-col items-center px-6 py-6 md:py-10">
+      <header className="fixed top-0 left-0 z-[9999] flex flex-col items-center px-6 py-6 md:py-10 pointer-events-auto">
         <Link href="/" className="inline-block">
           <RotateOnHover rotation={8}>
             <Image src="/logo.png" alt="Logo" width={36} height={36} priority />
