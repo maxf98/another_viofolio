@@ -12,17 +12,17 @@ interface GalleryGridProps {
 
 function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
   return (
-    // CSS columns layout: 2 columns on mobile, auto columns on larger screens
-    <div className="w-full columns-2 md:columns-[300px]">
+    // Horizontal flexbox masonry: fills left-to-right, row by row
+    <div className="w-full flex flex-wrap gap-3 justify-center">
       {images.map((item: GalleryItem, idx: number) => (
         <Image
           key={item.index || idx}
           src={item.image}
           alt={item.alt ?? "A Gallery Image"}
-          // w-full h-full object-contain cursor-pointer mb-3 hover:opacity-80 transition-opacity duration-300
-          className="w-full h-full object-contain cursor-pointer mb-3 hover:opacity-80 transition-opacity duration-300"
+          className="h-64 md:h-96 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity duration-300"
           width={300}
           height={200}
+          placeholder="blur"
           onClick={() => clickedImage(item)}
         />
       ))}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,29 +23,56 @@ export default function ScrollLinkSection({
   objectPosition = "center",
   mobileObjectPosition,
 }: ScrollLinkSectionProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Preload image when section is 1.5 viewports away
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "150% 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
+      ref={sectionRef}
       className={`relative ${height} w-full`}
       style={{ clipPath: "inset(0)" }}
     >
       <div className="fixed inset-0 -z-10">
-        {/* Mobile image */}
-        {mobileObjectPosition && (
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            className={`object-cover object-${mobileObjectPosition} md:hidden`}
-          />
+        {shouldLoad && (
+          <>
+            {/* Mobile image */}
+            {mobileObjectPosition && (
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                fill
+                className={`object-cover object-${mobileObjectPosition} md:hidden`}
+              />
+            )}
+            {/* Desktop image (or only image if no mobileObjectPosition) */}
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              className={`object-cover ${mobileObjectPosition ? "hidden md:block" : ""}`}
+              style={{ objectPosition }}
+            />
+          </>
         )}
-        {/* Desktop image (or only image if no mobileObjectPosition) */}
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          className={`object-cover ${mobileObjectPosition ? 'hidden md:block' : ''}`}
-          style={{ objectPosition }}
-        />
       </div>
       <Link
         href={href}

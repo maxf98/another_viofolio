@@ -6,6 +6,7 @@ import Image from "next/image";
 import RotateOnHover from "../animations/RotateOnHover";
 import ScrollNav from "./ScrollNav";
 import HamburgerMenu from "./HamburgerMenu";
+import { useLoadState } from "@/app/context/LoadContext";
 
 export interface NavSection {
   id: string;
@@ -19,6 +20,7 @@ interface NavigationProps {
 
 export default function Navigation({ sections }: NavigationProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const { state } = useLoadState();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,8 +32,24 @@ export default function Navigation({ sections }: NavigationProps) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const [showNav, setShowNav] = useState(false);
+
+  // Show nav after background has faded in (0.5s delay + 0.6s fade = ~1.1s after letters ready)
+  useEffect(() => {
+    if (state.allLettersReady && !showNav) {
+      const timer = setTimeout(() => {
+        setShowNav(true);
+      }, 1100);
+      return () => clearTimeout(timer);
+    }
+  }, [state.allLettersReady, showNav]);
+
+  if (!showNav) {
+    return null;
+  }
+
   return (
-    <div>
+    <>
       {/* Logo */}
       <header className="fixed top-0 left-0 z-[60] flex flex-col items-center px-6 py-6 md:py-10">
         <Link href="/" className="inline-block">
@@ -51,6 +69,6 @@ export default function Navigation({ sections }: NavigationProps) {
           )}
         </>
       )}
-    </div>
+    </>
   );
 }

@@ -50,7 +50,7 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
   const handleClick = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
@@ -68,6 +68,11 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
             >
               <motion.div
                 className="relative rounded-full overflow-hidden"
+                initial={{
+                  width: 36,
+                  height: 36,
+                  scale: 1,
+                }}
                 animate={{
                   width: 36,
                   height: 36,

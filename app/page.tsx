@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import Hero from "./components/Hero";
 import ScrollLinkSection from "./components/ScrollLinkSection";
 import Navigation from "./components/navigation/Navigation";
 import { NavSection } from "./components/navigation/Navigation";
+import { useLoadState } from "./context/LoadContext";
 
 const navs: NavSection[] = [
   {
@@ -28,20 +32,30 @@ const navs: NavSection[] = [
 ];
 
 export default function Home() {
+  const { state } = useLoadState();
+
   return (
     <main className="z-[5] bg-[#24242e]">
       <Navigation sections={navs} />
 
       {/* Hero + About Me Section with Background */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10">
-          <Image
-            src="/gallery/sky.png"
-            alt="Background"
-            fill
-            className="object-cover object-top opacity-90"
-          />
-        </div>
+        <motion.div
+          className="fixed inset-0 -z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: state.allLettersReady ? 0.9 : 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          {/* Only start loading background after letters are ready */}
+          {state.allLettersReady && (
+            <Image
+              src="/gallery/sky.png"
+              alt="Background"
+              fill
+              className="object-cover object-top"
+            />
+          )}
+        </motion.div>
 
         {/* Hero Section */}
         <Hero />

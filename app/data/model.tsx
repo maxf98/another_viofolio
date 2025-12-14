@@ -5,6 +5,7 @@ export interface ImageItem {
   index: number;
   image: StaticImageData | string;
   alt?: string;
+  blurDataURL?: string;
 }
 
 // GalleryItem is the same as ImageItem (no extension needed)

@@ -2,13 +2,19 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { StaticImageData } from "next/image";
 import { letters } from "@/app/data/graph";
 import { LetterItem } from "@/app/data/model";
+import { useLoadState } from "@/app/context/LoadContext";
 
-function preloadImages(images: string[]) {
-  images.forEach((imagePath) => {
+function getImageSrc(image: StaticImageData | string): string {
+  return typeof image === "string" ? image : image.src;
+}
+
+function preloadImages(images: (StaticImageData | string)[]) {
+  images.forEach((image) => {
     const img = new Image();
-    img.src = imagePath;
+    img.src = getImageSrc(image);
   });
 }
 
@@ -20,39 +26,23 @@ const os = letters.O;
 export default function LetterSwitcher() {
   const [selectedLetters, setSelectedLetters] = useState([0, 0, 0]);
   const lastChangedLetterRef = useRef(0);
-
-  function getRandomIndex<T>(list: T[]): number {
-    return Math.floor(Math.random() * list.length);
-  }
+  const { state, setLetterLoaded } = useLoadState();
 
   // Strategy functions for selecting the next index
-  const getNextIndexRandom = (
-    currentIndex: number,
-    letterArray: LetterItem[]
-  ): number => {
-    // Keep generating until we get a different index
-    let newIndex;
-    do {
-      newIndex = getRandomIndex(letterArray);
-    } while (newIndex === currentIndex);
-    return newIndex;
-  };
-
   const getNextIndexIncrement = (
     currentIndex: number,
     letterArray: LetterItem[]
   ): number => {
-    // Increment by 1, wrapping around using modulo
     return (currentIndex + 1) % letterArray.length;
   };
 
-  // Choose which strategy to use here
   const getNextIndex = getNextIndexIncrement;
 
-  // Auto-shuffle a random letter every second
+  // Auto-shuffle a random letter every second (only after all letters are loaded)
   useEffect(() => {
+    if (!state.allLettersReady) return;
+
     const interval = setInterval(() => {
-      // Pick a random letter position (0, 1, or 2)
       let randomPosition = lastChangedLetterRef.current;
       do {
         randomPosition = Math.floor(Math.random() * 3);
@@ -61,26 +51,41 @@ export default function LetterSwitcher() {
 
       setSelectedLetters((prev) => {
         const newLetters = [...prev];
-        // Get the appropriate letter array based on position
         const letterArray =
           randomPosition === 0 ? vs : randomPosition === 1 ? is : os;
-
-        // Get the next index using the selected strategy
         const currentIndex = prev[randomPosition];
         const newIndex = getNextIndex(currentIndex, letterArray);
-
         newLetters[randomPosition] = newIndex;
         return newLetters;
       });
-    }, 1000); // Every 1 second
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [state.allLettersReady]);
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0">
-      <LetterStack letters={vs} selectedLetter={selectedLetters[0]} />
-      <LetterStack letters={is} selectedLetter={selectedLetters[1]} />
-      <LetterStack letters={os} selectedLetter={selectedLetters[2]} />
+      <LetterStack
+        letters={vs}
+        selectedLetter={selectedLetters[0]}
+        position={0}
+        canStart={true}
+        onLoad={() => setLetterLoaded(0)}
+      />
+      <LetterStack
+        letters={is}
+        selectedLetter={selectedLetters[1]}
+        position={1}
+        canStart={true}
+        onLoad={() => setLetterLoaded(1)}
+      />
+      <LetterStack
+        letters={os}
+        selectedLetter={selectedLetters[2]}
+        position={2}
+        canStart={true}
+        onLoad={() => setLetterLoaded(2)}
+      />
     </div>
   );
 }
@@ -88,21 +93,64 @@ export default function LetterSwitcher() {
 interface LetterStackProps {
   letters: LetterItem[];
   selectedLetter: number;
+  position: 0 | 1 | 2;
+  canStart: boolean;
+  onLoad: () => void;
 }
 
-function LetterStack({ letters, selectedLetter }: LetterStackProps) {
+// Initial delay before letters start appearing (after "Hey I'm" appears)
+const INITIAL_DELAY = 1200;
+// Stagger delay between each letter appearing (in ms)
+const STAGGER_DELAY = 450;
+
+function LetterStack({
+  letters,
+  selectedLetter,
+  position,
+  canStart,
+  onLoad,
+}: LetterStackProps) {
+  const [loaded, setLoaded] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const hasStartedLoading = useRef(false);
+
+  // Load first image when canStart becomes true
   useEffect(() => {
-    preloadImages(letters.map((letter) => letter.image.src));
-  });
+    if (!canStart || hasStartedLoading.current) return;
+    hasStartedLoading.current = true;
+
+    const img = new Image();
+    img.onload = () => {
+      setLoaded(true);
+      // Add stagger delay before showing the letter
+      setTimeout(() => {
+        setVisible(true);
+        onLoad();
+      }, INITIAL_DELAY + position * STAGGER_DELAY);
+    };
+    img.src = getImageSrc(letters[0].image);
+  }, [canStart, letters, onLoad, position]);
+
+  // Preload remaining images after first is loaded
+  useEffect(() => {
+    if (loaded) {
+      preloadImages(letters.slice(1).map((letter) => letter.image));
+    }
+  }, [loaded, letters]);
+
+  // Empty placeholder while loading or waiting for stagger
+  if (!visible) {
+    return (
+      <div className="relative flex-1 aspect-square max-w-[90%] max-h-[65%] md:max-h-full md:max-w-[40%]" />
+    );
+  }
 
   return (
-    // flex-1 allows equal distribution, aspect-square maintains ratio
-    // max-w and max-h ensure it doesn't exceed container in either direction
     <div className="relative flex-1 aspect-square max-w-[90%] max-h-[65%] md:max-h-full md:max-w-[40%]">
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}
-          src={letters[selectedLetter].image.src}
+          src={getImageSrc(letters[selectedLetter].image)}
           alt={letters[selectedLetter].alt}
           initial={{ rotateY: -90 }}
           animate={{ rotateY: 0 }}
