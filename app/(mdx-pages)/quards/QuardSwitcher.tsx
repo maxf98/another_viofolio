@@ -12,7 +12,7 @@ export default function QuardSwitcher() {
   };
 
   return (
-    <div className="my-8 flex justify-center">
+    <div className="my-8 flex justify-center items-start gap-4">
       <div className="relative inline-block">
         <Image
           src="/projects/quards/sample_quard_front.jpg"
@@ -75,6 +75,39 @@ export default function QuardSwitcher() {
           </motion.div>
         </div>
       </div>
+
+      {/* Hint arrow on the right */}
+      <motion.div
+        className="flex items-center gap-2 text-white/60 text-sm mt-12 whitespace-nowrap"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <svg
+          width="40"
+          height="30"
+          viewBox="0 0 40 30"
+          fill="none"
+          className="text-white/60 scale-x-[-1]"
+        >
+          <path
+            d="M2 25 C 10 25, 15 20, 20 12 C 25 4, 30 2, 38 5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <path
+            d="M32 2 L38 5 L34 10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </svg>
+        <span className="italic">tap to switch layers</span>
+      </motion.div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import Hero from "./components/Hero";
 import ScrollLinkSection from "./components/ScrollLinkSection";
 import Navigation from "./components/navigation/Navigation";
@@ -9,6 +9,7 @@ import { NavSection } from "./components/navigation/Navigation";
 import { useLoadState } from "./context/LoadContext";
 
 // Static imports for ScrollLinkSection images
+import coverNoPeople from "../public/coverNoPeople.png";
 import chatImg from "../public/gallery/chat.png";
 import elgatoImg from "../public/projects/elgato/gato3.png";
 import quardsImg from "../public/covers/quards/quards.png";
@@ -57,7 +58,7 @@ export default function Home() {
           {/* Only start loading background after letters are ready */}
           {state.allLettersReady && (
             <Image
-              src={chatImg}
+              src={coverNoPeople}
               alt="Background"
               fill
               placeholder="blur"
@@ -91,7 +92,7 @@ export default function Home() {
           imageSrc={chatImg}
           imageAlt="Gallery"
           label="View Gallery"
-          objectPosition="center bottom"
+          objectPosition="center"
         />
       </div>
 

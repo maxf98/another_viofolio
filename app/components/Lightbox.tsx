@@ -11,18 +11,19 @@ type LightboxProps = {
   images: ImageItem[];
   selectedIndex: number | null;
   onClose: () => void;
+  imageClassName?: string;
 };
 
 export default function Lightbox({
   images,
   selectedIndex,
   onClose,
+  imageClassName = "",
 }: LightboxProps) {
   const isOpen = selectedIndex !== null;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex ?? 0);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
     align: "center",
     containScroll: false,
   });
@@ -101,11 +102,7 @@ export default function Lightbox({
           </motion.button>
 
           {/* Embla Carousel */}
-          <div
-            className="w-full h-full overflow-hidden"
-            ref={emblaRef}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="w-full h-full overflow-hidden" ref={emblaRef}>
             <div className="flex h-full items-center">
               {images.map((image, i) => (
                 <div
@@ -117,18 +114,27 @@ export default function Lightbox({
                     opacity: getSlideStyles(i).opacity,
                     transform: `scale(${getSlideStyles(i).scale})`,
                   }}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (i < currentIndex) scrollPrev();
                     else if (i > currentIndex) scrollNext();
                   }}
                 >
                   <Image
-                    className="object-contain select-none max-h-[85vh] w-auto h-auto"
+                    className={`object-contain select-none max-h-[85vh] w-auto h-auto ${imageClassName}`}
                     src={image.image}
                     alt={image.alt ?? "Gallery image"}
-                    placeholder={typeof image.image === "string" ? "empty" : "blur"}
-                    width={typeof image.image === "string" ? 1920 : image.image.width}
-                    height={typeof image.image === "string" ? 1080 : image.image.height}
+                    placeholder={
+                      typeof image.image === "string" ? "empty" : "blur"
+                    }
+                    width={
+                      typeof image.image === "string" ? 1920 : image.image.width
+                    }
+                    height={
+                      typeof image.image === "string"
+                        ? 1080
+                        : image.image.height
+                    }
                     draggable={false}
                   />
                 </div>

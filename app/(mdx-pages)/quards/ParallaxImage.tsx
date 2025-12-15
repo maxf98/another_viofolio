@@ -27,9 +27,18 @@ export default function ParallaxImage({
   const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
   return (
-    <div ref={ref} className="relative overflow-hidden w-full">
-      <motion.div style={{ y }}>
-        <Image src={src} alt={alt} width={width} height={height} />
+    <div
+      ref={ref}
+      className="relative w-full overflow-hidden w-full origin-center scale-[3] sm:scale-100 my-64 sm:my-0"
+    >
+      <motion.div style={{ y }} className="">
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className="w-full h-auto"
+        />
       </motion.div>
     </div>
   );

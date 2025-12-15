@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import InfiniteScrollGallery from "./InfiniteScrollGallery";
+import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
 import Lightbox from "@/app/components/Lightbox";
 import { winter23Images, ofestImages, winter22Images } from "@/app/data/elgato";
 import { StaticImageData } from "next/image";

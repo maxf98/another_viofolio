@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import RotateOnHover from "../animations/RotateOnHover";
@@ -21,6 +22,8 @@ interface NavigationProps {
 export default function Navigation({ sections }: NavigationProps) {
   const [isMobile, setIsMobile] = useState(false);
   const { state } = useLoadState();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     const checkMobile = () => {
@@ -32,17 +35,18 @@ export default function Navigation({ sections }: NavigationProps) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const [showNav, setShowNav] = useState(false);
+  // On non-homepage routes, show immediately
+  const [showNav, setShowNav] = useState(!isHomepage);
 
   // Show nav after background has faded in (0.5s delay + 0.6s fade = ~1.1s after letters ready)
   useEffect(() => {
-    if (state.allLettersReady && !showNav) {
+    if (isHomepage && state.allLettersReady && !showNav) {
       const timer = setTimeout(() => {
         setShowNav(true);
       }, 1100);
       return () => clearTimeout(timer);
     }
-  }, [state.allLettersReady, showNav]);
+  }, [state.allLettersReady, showNav, isHomepage]);
 
   if (!showNav) {
     return null;

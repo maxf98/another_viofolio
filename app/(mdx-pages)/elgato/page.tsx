@@ -5,7 +5,7 @@ import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import CustomsGallery from "./CustomsGallery";
 import Giftboxes from "./Giftboxes";
-import InfiniteScrollGallery from "./InfiniteScrollGallery";
+import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
 import Lightbox from "@/app/components/Lightbox";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
@@ -137,10 +137,10 @@ export default function Page() {
               </p>
             </div>
             <CustomsGallery
-                onPairClick={handlePairClick}
-                onSdClick={handleSdClick}
-                onXlrClick={handleXlrClick}
-              />
+              onPairClick={handlePairClick}
+              onSdClick={handleSdClick}
+              onXlrClick={handleXlrClick}
+            />
           </div>
 
           <InfiniteScrollGallery
@@ -256,7 +256,10 @@ export default function Page() {
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">
           <p className="max-w-2xl text-lg">
-            Throughout these projects, I faced many challenges and learned a great deal—working across a wide variety of specifications, experimenting with new ideas, and always keeping the brand feeling consistent.
+            Throughout these projects, I faced many challenges and learned a
+            great deal—working across a wide variety of specifications,
+            experimenting with new ideas, and always keeping the brand feeling
+            consistent.
           </p>
         </div>
       </div>
