@@ -9,11 +9,16 @@
   - Increased nav/header z-index to `z-[9999]/z-[9998]` and forced `pointer-events-auto` -> no change.
 - Hypothesis 3: CSS override elsewhere.
   - Added `.force-pointer { cursor: pointer !important; }` and applied to nav buttons -> no change.
+- Debug tooling:
+  - Added `DebugPointerInspector` overlay to show `elementFromPoint` and computed cursor under the mouse.
+- Further attempts (no change):
+  - Forced inline `cursor: pointer` on nav buttons, nav container, ScrollLinkSection Link, logo.
+  - Disabled framer-motion `whileHover/whileTap` on nav circles.
+  - Forced `crosshair` and then a custom SVG cursor (data URL) on nav and ScrollLinkSection links; computed cursor shows but visible cursor does not change.
+  - Cleared cache and tried multiple browsers; still no visible cursor change.
 - elementFromPoint check:
   - On ScrollLinkSection center, returns the `<a>` Link (as expected), not an overlay.
-- Next steps to isolate:
-  1) Temporarily wrap `body` with `pointer-events-none` on known full-screen wrappers one by one via a test flag to see when cursor returns.
-  2) Add a temporary mousemove logger to print `document.elementFromPoint(e.clientX, e.clientY)` to verify actual hit targets while hovering the nav/link.
-  3) Search for global styles that may set `cursor: auto` on `motion` elements (Framer adds transforms, creating stacking contexts).
-  4) Try disabling Framer `whileHover`/`whileTap` on nav buttons to see if animation is resetting cursor.
-  5) If isolated to ScrollLinkSection, test removing the outer `relative` + `clipPath: inset(0)` to see if clipping triggers a new stacking context.
+- Resolution:
+  - Root cause was environment-level: Photoshop running concurrently was intercepting cursor rendering system-wide (not specific to this site). Closing Photoshop restored the pointer/crosshair rendering.
+  - Reference: https://stackoverflow.com/questions/18434626/why-is-cursorpointer-effect-in-css-not-working
+  - was the first result on google for the search "cursor pointer not working", stack overflow page from 2016
