@@ -26,14 +26,28 @@ export default function ProjectHeroSection({
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
 
   return (
     <div
       ref={heroRef}
-      className="relative w-screen h-screen overflow-hidden"
+      className="relative w-screen h-screen"
+      style={{ clipPath: "inset(0)" }}
     >
-      <div className="absolute inset-0 flex items-end z-10">
+      <div className="fixed inset-0 w-full h-full -z-10">
+        <Image
+          src={src}
+          fill
+          alt={alt}
+          placeholder="blur"
+          className="w-full h-full object-cover opacity-20 scale-100"
+          style={{ objectPosition: "center 70%" }}
+        />
+      </div>
+      <motion.div
+        style={{ y: textY }}
+        className="absolute inset-0 flex items-end z-10"
+      >
         <div className="content-container pb-20 md:pb-32">
           <h1 className="!leading-none">
             {title.split(/(\^[^^]+\^)/g).map((segment, i) => {
@@ -60,19 +74,6 @@ export default function ProjectHeroSection({
           {description && <p className="text-sm md:text-base mt-4 max-w-2xl">{description}</p>}
           {children}
         </div>
-      </div>
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 w-full h-full"
-      >
-        <Image
-          src={src}
-          fill
-          alt={alt}
-          placeholder="blur"
-          className="w-full h-full object-cover opacity-20 scale-100"
-          style={{ objectPosition: "center 70%" }}
-        />
       </motion.div>
     </div>
   );

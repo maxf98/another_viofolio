@@ -5,11 +5,11 @@ import Image from "next/image";
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 
 const navs: NavSection[] = [
-  { id: "nature" },
-  { id: "sensory" },
-  { id: "chance" },
-  { id: "fragments" },
-  { id: "imagination" },
+  { id: "nature", label: "Nature" },
+  { id: "sensory", label: "Sensory" },
+  { id: "chance", label: "Chance" },
+  { id: "fragments", label: "Fragments" },
+  { id: "imagination", label: "Imagination" },
 ];
 
 // Define subsection data
@@ -101,8 +101,8 @@ const sections: Section[] = [
         id: "felt",
         title: "Felt",
         description: "Working with felt offers a tactile, meditative experience. The soft fibers respond to gentle manipulation, allowing forms to emerge slowly through patient, repetitive motion.",
-        thumbnail: "/arttherapy/felt /felt1.png",
-        images: ["/arttherapy/felt /felt1.png", "/arttherapy/felt /felt2.png"],
+        thumbnail: "/arttherapy/felt/felt1.png",
+        images: ["/arttherapy/felt/felt1.png", "/arttherapy/felt/felt2.png"],
       },
       {
         id: "handpainting",
@@ -218,47 +218,24 @@ export default function Page() {
     <div className="bg-[#24242e]">
       <Navigation sections={navs} />
 
+      {/* Art Therapy Exercises Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        {/* Fixed background image */}
-        <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-[#24242e]" />
+        <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
             src="/arttherapy/fragments/pens.png"
             fill
-            alt="Art Therapy"
-            className="object-cover opacity-20 scale-150 md:scale-100"
-            style={{ objectPosition: "center 70%" }}
+            alt=""
+            className="object-cover opacity-10"
           />
         </div>
-
-        {/* First section - Hero */}
-        <div className="relative w-screen min-h-screen flex items-end">
-          <div className="content-container pb-20 md:pb-32">
-            <h1 className="!leading-none">
-              <span className="block !text-3xl md:!text-5xl tracking-[0.3em] md:tracking-[0.5em]">
-                EXPLORING
-              </span>
-              <span className="block !text-7xl md:!text-[10rem]">
-                ART THERAPY
-              </span>
-            </h1>
-            <p className="text-sm md:text-base mt-4 max-w-2xl">
-              In June 2025, my journey led me to begin my Art Therapy Practitioner training at Campus Naturalis in Munich - exploring various realms of art and creativity. Returning to traditional mediums and hands-on processes has created a space for deeper exploration—where imagination meets emotion, and where small creative experiments can grow into meaningful inner work.
+        <div className="content-container py-16 md:py-24">
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-5xl font-light text-white tracking-wide">
+              Art Therapy Exercises
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed opacity-90 max-w-4xl">
+              Art therapy uses creative expression as a pathway to healing, self-discovery, and emotional well-being. Through various exercises and techniques, we can access parts of ourselves that words alone cannot reach. The medium we choose fundamentally transforms our creative experience—working with clay grounds us in the body, while watercolors invite us to surrender control. Each material carries its own language, its own resistance, its own way of meeting us. I&apos;ve started exploring different exercises myself—you can see some of them below.
             </p>
-          </div>
-        </div>
-
-        {/* Second section - Art Therapy Exercises */}
-        <div className="relative min-h-screen flex items-center">
-          <div className="content-container py-32">
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-5xl font-light text-white tracking-wide">
-                Art Therapy Exercises
-              </h2>
-              <p className="text-xl md:text-2xl leading-relaxed opacity-90 max-w-4xl">
-                Art therapy uses creative expression as a pathway to healing, self-discovery, and emotional well-being. Through various exercises and techniques, we can access parts of ourselves that words alone cannot reach. The medium we choose fundamentally transforms our creative experience—working with clay grounds us in the body, while watercolors invite us to surrender control. Each material carries its own language, its own resistance, its own way of meeting us. I&apos;ve started exploring different exercises myself—you can see some of them below.
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -327,16 +304,9 @@ export default function Page() {
       {/* Overlay modal */}
       {activeOverlay && (
         <div
-          className="fixed inset-0 z-50 flex items-start md:items-end justify-center p-4 pt-16 md:p-8"
-          style={{ backgroundColor: activeOverlay.section.backgroundColor || "#24242e" }}
+          className="fixed inset-0 z-50 flex items-start md:items-end justify-center p-4 pt-16 md:p-8 bg-gray-900/60 backdrop-blur-[20px]"
           onClick={() => setActiveOverlay(null)}
         >
-          <Image
-            src={activeOverlay.subsection.thumbnail}
-            alt="Background"
-            fill
-            className="object-cover opacity-30 scale-150 md:scale-100"
-          />
 
           {/* Navigation arrows - bottom on mobile, side on desktop */}
           <div className="fixed bottom-6 left-0 right-0 flex justify-center gap-8 z-20 md:hidden">
@@ -391,7 +361,7 @@ export default function Page() {
           {/* Left arrow - desktop only */}
           {activeOverlay.subsectionIndex > 0 && (
             <button
-              className="hidden md:block absolute left-8 top-1/2 -translate-y-1/2 z-10 p-2 text-white/50 hover:text-white transition-colors"
+              className="hidden md:block absolute left-[calc(50%-32rem)] top-1/2 -translate-y-1/2 z-10 p-2 text-white/50 hover:text-white transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 navigateOverlay("prev");
@@ -416,7 +386,7 @@ export default function Page() {
           {/* Right arrow - desktop only */}
           {activeOverlay.subsectionIndex < activeOverlay.section.subsections.length - 1 && (
             <button
-              className="hidden md:block absolute right-8 top-1/2 -translate-y-1/2 z-10 p-2 text-white/50 hover:text-white transition-colors"
+              className="hidden md:block absolute right-[calc(50%-32rem)] top-1/2 -translate-y-1/2 z-10 p-2 text-white/50 hover:text-white transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 navigateOverlay("next");

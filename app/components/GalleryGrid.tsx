@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import { GalleryItem } from "@/app/data/model";
-import { motion } from "framer-motion";
 
 interface GalleryGridProps {
   images: GalleryItem[];
@@ -12,19 +11,22 @@ interface GalleryGridProps {
 
 function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
   return (
-    // Horizontal flexbox masonry: fills left-to-right, row by row
-    <div className="w-full flex flex-wrap gap-3 justify-center">
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2">
       {images.map((item: GalleryItem, idx: number) => (
-        <Image
+        <div
           key={item.index || idx}
-          src={item.image}
-          alt={item.alt ?? "A Gallery Image"}
-          className="h-64 md:h-96 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity duration-300"
-          width={300}
-          height={200}
-          placeholder="blur"
+          className="relative aspect-[3/4] overflow-hidden cursor-pointer"
           onClick={() => clickedImage(item)}
-        />
+        >
+          <Image
+            src={item.image}
+            alt={item.alt ?? "A Gallery Image"}
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="object-cover"
+            placeholder="blur"
+          />
+        </div>
       ))}
     </div>
   );

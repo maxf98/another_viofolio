@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(for:*)",
+      "Bash(do mv \"$f\" \"$f%.PNG.png\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

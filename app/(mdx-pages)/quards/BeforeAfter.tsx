@@ -38,7 +38,7 @@ export default function BeforeAfter() {
   );
 
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-center sm:items-stretch gap-4 my-18">
+    <div className="flex flex-col-reverse sm:flex-row justify-center items-center sm:items-stretch gap-12 sm:gap-4 my-18">
       {/* Side-by-side Preview */}
       <div className="relative">
         <AnimatePresence initial={false}>
@@ -57,7 +57,7 @@ export default function BeforeAfter() {
               onTap={() => setBeforeOnTop(true)}
             >
               <motion.span
-                className="text-white !text-4xl font-semibold mb-4 pointer-events-none"
+                className="text-white !text-2xl font-semibold mb-2 pointer-events-none"
                 initial={{
                   opacity: 0.3,
                 }}
@@ -70,9 +70,9 @@ export default function BeforeAfter() {
               <Image
                 src={oldImages[selectedIndex]}
                 alt="Before"
-                width={400}
-                height={533}
-                className="h-auto w-full ipad-border"
+                width={300}
+                height={400}
+                className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto ipad-border"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
               />
@@ -85,7 +85,7 @@ export default function BeforeAfter() {
               onTap={() => setBeforeOnTop(false)}
             >
               <motion.span
-                className="text-white !text-4xl font-semibold mb-4 pointer-events-none"
+                className="text-white !text-2xl font-semibold mb-2 pointer-events-none"
                 animate={{
                   opacity: beforeOnTop ? 0.3 : 1,
                 }}
@@ -95,9 +95,9 @@ export default function BeforeAfter() {
               <Image
                 src={newImages[selectedIndex]}
                 alt="After"
-                width={400}
-                height={533}
-                className="h-auto w-full ipad-border"
+                width={300}
+                height={400}
+                className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto ipad-border"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
               />
@@ -127,7 +127,7 @@ export default function BeforeAfter() {
       </div>
 
       {/* Picker - row on mobile, column on desktop */}
-      <div className="flex flex-row sm:flex-col justify-center sm:justify-end gap-1">
+      <div className="flex flex-row sm:flex-col justify-between sm:justify-end gap-1 w-[352px] sm:w-auto">
         {newImages.map((image, index) => (
           <Picker
             key={index}
@@ -136,7 +136,7 @@ export default function BeforeAfter() {
             isSelected={selectedIndex === index}
             onClick={() => handleSelectIndex(index)}
             animatesScale={false}
-            className="h-12 w-9 sm:h-20 sm:w-15 ipad-border-thin"
+            className="h-20 w-14 sm:h-20 sm:w-15 ipad-border-thin"
           />
         ))}
       </div>

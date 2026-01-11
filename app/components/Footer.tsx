@@ -56,7 +56,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} All rights reserved
+            © {new Date().getFullYear()} Violetta Prandetskaya
           </p>
         </div>
       </div>

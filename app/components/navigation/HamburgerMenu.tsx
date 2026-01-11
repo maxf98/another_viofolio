@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { NavSection } from "./Navigation";
 
 interface HamburgerMenuProps {
@@ -113,18 +114,42 @@ export default function HamburgerMenu({ sections }: HamburgerMenuProps) {
               backgroundColor: "rgba(28, 27, 27, 0.65)",
             }}
           >
-            <nav className="flex flex-col gap-8 items-center">
+            <nav className="flex flex-col gap-8 items-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
               {sections.map((section) => {
                 const isActive = activeSection === section.id;
                 return (
                   <button
                     key={section.id}
                     onClick={() => handleClick(section.id)}
-                    className="text-white text-2xl font-medium transition-all"
+                    className="text-white text-2xl font-medium transition-all flex flex-col items-center gap-2"
                   >
+                    {section.src && (
+                      <motion.div
+                        animate={{
+                          scale: isActive ? 1.8 : 1,
+                          opacity: isActive ? 1 : 0.7,
+                        }}
+                        whileTap={{
+                          scale: 0.95,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                      >
+                        <Image
+                          src={section.src}
+                          alt={section.label ?? section.id}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
+                      </motion.div>
+                    )}
                     <motion.span
                       animate={{
-                        scale: isActive ? 1.2 : 1,
+                        scale: isActive ? 1.1 : 1,
                         opacity: isActive ? 1 : 0.7,
                       }}
                       whileTap={{

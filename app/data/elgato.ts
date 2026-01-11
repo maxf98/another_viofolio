@@ -39,14 +39,12 @@ import winter22_tweet from "../../public/projects/elgato/brand-illustration/wint
 
 // Winter 23 images
 import winter23_1 from "../../public/projects/elgato/brand-illustration/winter23/1.png";
-import winter23_2 from "../../public/projects/elgato/brand-illustration/winter23/2.png";
 import winter23_3 from "../../public/projects/elgato/brand-illustration/winter23/3.png";
 import winter23_4 from "../../public/projects/elgato/brand-illustration/winter23/4.png";
 import winter23_5 from "../../public/projects/elgato/brand-illustration/winter23/5.png";
 import winter23_221 from "../../public/projects/elgato/brand-illustration/winter23/221.png";
 import winter23_222 from "../../public/projects/elgato/brand-illustration/winter23/222.png";
 import winter23_223 from "../../public/projects/elgato/brand-illustration/winter23/223.png";
-import winter23_tweet from "../../public/projects/elgato/brand-illustration/winter23/tweet.png";
 import winter23_new from "../../public/projects/elgato/brand-illustration/winter23/new.png";
 
 // D folder images
@@ -98,10 +96,8 @@ export const winter22Images: StaticImageData[] = [
 
 export const winter23Images: StaticImageData[] = [
   winter23_1,
-  winter23_2,
   winter23_3,
   winter23_new,
-  winter23_tweet,
   winter23_4,
   winter23_5,
 ];

@@ -29,7 +29,7 @@ export default function ParallaxImage({
   return (
     <div
       ref={ref}
-      className="relative w-full overflow-hidden w-full origin-center scale-[3] sm:scale-100 my-64 sm:my-0"
+      className="relative w-full overflow-hidden w-full origin-center scale-[2] sm:scale-[1.2] my-32 sm:my-8"
     >
       <motion.div style={{ y }} className="">
         <Image

@@ -5,8 +5,8 @@ import QuardExamplesCarousel from "./QuardExamplesCarousel";
 import LogoEquation from "./LogoEquation";
 import BeforeAfter from "./BeforeAfter";
 import ParallaxImage from "./ParallaxImage";
-import Link from "next/link";
 import Image from "next/image";
+import NextProjectButton from "@/app/components/NextProjectButton";
 import "@/app/styles/backgrounds.css";
 
 // Static import for hero image
@@ -15,15 +15,13 @@ import heroImg from "@/public/projects/quards/featureArtNoBG.png";
 const navs: NavSection[] = [
   {
     id: "app",
-    src: "",
-  },
-  {
-    id: "brand",
-    src: "",
+    label: "App Design",
+    src: "/icons/q1.png",
   },
   {
     id: "visual-identity",
-    src: "",
+    label: "Visual Identity",
+    src: "/icons/q2.png",
   },
 ];
 
@@ -44,9 +42,10 @@ export default function Page() {
           <div className="content-container flex flex-col gap-8">
             <h1>App Design</h1>
             <p>
-              When I started working on this app, the design was...
-              non-existent. It took a lot of work to get it where it is now.
-              Check the before and after to see what I mean.
+              When I joined the project, the app had no visual design—just basic
+              functionality. I helped transform it into what you see today,
+              bringing the builder&apos;s vision to life together with my own
+              additions.
             </p>
           </div>
           <div className="my-16">
@@ -54,92 +53,89 @@ export default function Page() {
           </div>
           <div className="content-container flex flex-col gap-8">
             <p>
-              One of the core selling points of the app is that instead of
-              having two sides (like a regular flashcard), a Quard has{" "}
-              <i>layers</i>, so instead of a front and a back, a Quard has a
-              question and an answer layer. I got that idea from the design apps
-              I use!
+              What makes Quards unique is that instead of having two sides like
+              a regular flashcard, a Quard has <i>layers</i>—a question layer
+              and an answer layer, a decision inspired by digital illustration
+              programs.
             </p>
             <QuardSwitcher />
           </div>
         </div>
-        <div id="brand">
+        <div id="visual-identity">
           <div className="content-container flex flex-col gap-8">
-            <h1>Circles and Squares</h1>
+            <h1>Visual Identity</h1>
             <p>
               The app consists of two basic elements: the circle (folder) and
               the rounded rectangle (quard), which together form the logo.
             </p>
+            <Image
+              src="/projects/quards/QUARDS-empty.png"
+              alt="Circles and squares artwork elements"
+              width={1200}
+              height={600}
+              className="w-full h-auto"
+            />
             <LogoEquation />
-            <p className="">
-              The app was featured on Apple&#39;s App Store when it launched, so
-              I created a themed artwork around these basic elements, showing
-              the learner at the center of his personal knowledge universe.
+            <p className="mb-16">
+              I developed the visual identity around this concept of squares and
+              circles—cards and folders orbiting in a personal knowledge
+              universe, with the learner at the center.
             </p>
           </div>
           <div className="my-16">
-            <ParallaxImage
+            {/* Full width version on mobile, parallax on desktop */}
+            <Image
               src="/projects/quards/fullFeature.png"
               alt="Quards feature artwork"
               width={1600}
               height={412}
+              className="w-full h-auto sm:hidden"
+            />
+            <div className="hidden sm:block">
+              <ParallaxImage
+                src="/projects/quards/fullFeature.png"
+                alt="Quards feature artwork"
+                width={1600}
+                height={412}
+              />
+            </div>
+          </div>
+          <div className="content-container flex justify-center">
+            <Image
+              src="/projects/quards/feature.png"
+              alt="Quards featured artwork"
+              width={800}
+              height={533}
+              className="w-full max-w-md h-auto"
             />
           </div>
-          <div className="content-container flex flex-col sm:flex-row gap-8">
-            <Image
-              src="/projects/quards/appstore/appstore.png"
-              alt="Quards App Store"
-              width={960}
-              height={540}
-              className="w-full sm:w-1/2 ipad-border"
-            />
-            <Image
-              src="/projects/quards/appstore/feature.png"
-              alt="Quards Feature"
-              width={960}
-              height={540}
-              className="w-full sm:w-1/2 ipad-border"
-            />
+          <div className="content-container flex flex-col gap-8 mt-32 mb-16">
+            <p>
+              This idea of space and floating elements was carried through to
+              the website, showing the unique and representative elements of the
+              app—cards, folders, drawings—floating in space.
+            </p>
           </div>
-        </div>
-        <div id="visual-identity" className="flex flex-col gap-8">
-          <h1 className="content-container">Visual Identity</h1>
-          <p className="content-container">
-            Quards is about drawing instead of typing, about feeling free and
-            having fun and putting your soul into something that can otherwise
-            feel kind of rigid and boring: studying.
-            <br /> <br />
-            The design of the app highlights this through its use of color, and
-            through visual assets (like types and icons) that are primarily
-            handdrawn. The{" "}
-            <Link href="https://www.quards.app">landing page</Link> is an
-            example of this:
-          </p>
           <Image
             src="/projects/quards/WebLandingPage.png"
             alt="Quards landing page"
-            className="rounded-lg"
+            className="rounded-lg mb-16"
             width={1920}
             height={1080}
           />
-          <p className="content-container">
-            And any number of other assets and icons in around the app...
-          </p>
-          <Image
-            src="/projects/quards/webicons.png"
-            alt="Quards icons"
-            className="rounded-lg"
-            width={1920}
-            height={1080}
-          />
-          <p className="content-container">
-            And so is the onboarding (and app store screenshots):
-          </p>
+          <div className="content-container flex flex-col gap-8 mt-16 mb-8">
+            <p>
+              Quards is about drawing instead of typing, about feeling free and
+              having fun and putting your soul into something that can otherwise
+              feel kind of rigid and boring: studying. The design reflects this
+              through its use of color and handdrawn visual assets.
+              <br /> <br />I created these visuals for the app store and
+              onboarding to showcase what using the app feels like:
+            </p>
+          </div>
           <QuardExamplesCarousel />
         </div>
       </div>
-
-      <div className="h-32" />
 
       {/* Summary Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
@@ -159,6 +155,15 @@ export default function Page() {
             grow in every direction.
           </p>
         </div>
+      </div>
+
+      {/* Next Project Button - on blank background */}
+      <div className="bg-[#1c1b1b]">
+        <NextProjectButton
+          href="/mascha"
+          label="Mascha"
+          imageSrc="/covers/mascha/m3.png"
+        />
       </div>
     </div>
   );

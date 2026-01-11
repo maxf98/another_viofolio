@@ -3,9 +3,10 @@ import { StaticImageData } from "next/image";
 // Base interface for image items
 export interface ImageItem {
   index: number;
-  image: StaticImageData | string;
+  image: StaticImageData;
   alt?: string;
-  blurDataURL?: string;
+  title?: string;
+  description?: string;
 }
 
 // GalleryItem is the same as ImageItem (no extension needed)

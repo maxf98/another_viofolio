@@ -7,6 +7,7 @@ import CustomsGallery from "./CustomsGallery";
 import Giftboxes from "./Giftboxes";
 import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
 import Lightbox from "@/app/components/Lightbox";
+import NextProjectButton from "@/app/components/NextProjectButton";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
 import {
@@ -25,19 +26,23 @@ import heroImg from "@/public/projects/elgato/gato3.png";
 const navs: NavSection[] = [
   {
     id: "customs",
-    src: "/projects/elgato/brand-illustration/winter22/221.png",
+    label: "Product Customs",
+    src: "/icons/sd.png",
   },
   {
     id: "w22",
-    src: "/projects/elgato/brand-illustration/groups/2.png",
+    label: "Dreamville",
+    src: "/icons/D.png",
   },
   {
-    id: "ofest",
-    src: "/projects/elgato/brand-illustration/groups/3.png",
+    id: "anniversary",
+    label: "Anniversary",
+    src: "/icons/ex.png",
   },
   {
     id: "w21",
-    src: "/projects/elgato/brand-illustration/groups/1.png",
+    label: "Giftboxes",
+    src: "/icons/gift.png",
   },
 ];
 
@@ -106,7 +111,7 @@ export default function Page() {
   };
 
   return (
-    <div className="bg-[#24242e]">
+    <div className="bg-[#24242e] overflow-x-hidden">
       <Navigation sections={navs} />
 
       <ProjectHeroSection
@@ -118,15 +123,16 @@ export default function Page() {
 
       {/* Product Customs Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#2e2a4d]">
+        <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/covers/elgato+/uni.png"
+            src="/projects/elgato/gato3.png"
             alt=""
             fill
-            className="object-cover opacity-10"
+            className="object-cover opacity-20"
+            style={{ objectPosition: "center 70%" }}
           />
         </div>
-        <div className="flex flex-col justify-center items-center gap-16 pt-24 md:pt-32 pb-16">
+        <div className="flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
           <div id="customs">
             <div className="content-container mb-24">
               <h1>Product Customs</h1>
@@ -162,8 +168,8 @@ export default function Page() {
             className="object-cover opacity-5"
           />
         </div>
-        <div className="flex flex-col justify-center items-center gap-16 py-16">
-          <div className="content-container">
+        <div className="flex flex-col justify-center items-center gap-16 py-32 md:py-16">
+          <div id="w22" className="content-container pt-16 md:pt-0">
             <h1>Dreamville x Elgato </h1>
             <div className="flex flex-col-reverse md:flex-col-reverse gap-4">
               <Image
@@ -200,8 +206,11 @@ export default function Page() {
             className="object-cover opacity-5"
           />
         </div>
-        <div className="flex flex-col justify-center items-center gap-16 py-16">
-          <div className="content-container">
+        <div
+          id="anniversary"
+          className="flex flex-col justify-center items-center gap-16 py-24 md:py-16"
+        >
+          <div className="content-container pt-16 md:pt-0">
             <h1>Anniversary Designs</h1>
             <div className="flex flex-col-reverse md:flex-col-reverse gap-4">
               <Image
@@ -209,7 +218,7 @@ export default function Page() {
                 alt="Elgato X"
                 width={1920}
                 height={1080}
-                className="w-[calc(100%+4rem)] -mx-8 md:w-full md:mx-0"
+                className="w-full"
               />
               <p>
                 For Elgato&apos;s 10-year anniversary, I developed the
@@ -242,8 +251,6 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="h-32" />
-
       {/* Summary Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
@@ -262,6 +269,15 @@ export default function Page() {
             consistent.
           </p>
         </div>
+      </div>
+
+      {/* Next Project Button - on blank background */}
+      <div className="bg-[#1c1b1b]">
+        <NextProjectButton
+          href="/quards"
+          label="Quards"
+          imageSrc="/covers/quards/quards.png"
+        />
       </div>
 
       <Lightbox

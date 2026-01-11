@@ -8,36 +8,43 @@ import { winter23Images, ofestImages, winter22Images } from "@/app/data/elgato";
 import { StaticImageData } from "next/image";
 import { ImageItem } from "@/app/data/model";
 
+import box1 from "@/public/projects/elgato/boxes/box1.png";
+import box2 from "@/public/projects/elgato/boxes/box2.png";
+import box3 from "@/public/projects/elgato/boxes/box3.png";
+import bg1 from "@/public/projects/elgato/brand-illustration/winter23/1.png";
+import bg2 from "@/public/projects/elgato/brand-illustration/winter22/8.png";
+import bg3 from "@/public/projects/elgato/brand-illustration/ofest/6.png";
+
 const boxes: {
-  image: string;
+  image: StaticImageData;
   title: string;
   description: string;
   galleryImages: StaticImageData[];
-  backgroundImage?: string;
+  backgroundImage?: StaticImageData;
 }[] = [
   {
-    image: "/projects/elgato/boxes/box2.png",
+    image: box2,
     title: "Winter Holidays 2022",
     description:
       "For Elgato's 2022 Holiday Gift Box, I developed two visual narratives: reimagining the Stream Deck as illuminated winter-night windows, and creating an Elgato-inspired gingerbread house.",
     galleryImages: winter23Images,
-    backgroundImage: "/projects/elgato/brand-illustration/winter23/1.png",
+    backgroundImage: bg1,
   },
   {
-    image: "/projects/elgato/boxes/box3.png",
+    image: box3,
     title: "Winter Holidays 2021",
     description:
       "This gift box brought together a wide range of custom illustrations I developed over time—from Elgato winter-themed stickers to branded posters—all coming together in one cheerful, festive box.",
     galleryImages: winter22Images,
-    backgroundImage: "/projects/elgato/brand-illustration/winter22/8.png",
+    backgroundImage: bg2,
   },
   {
-    image: "/projects/elgato/boxes/box1.png",
+    image: box1,
     title: "Oktoberfest Gift Box",
     description:
       "Inspired by Munich's Oktoberfest, I created an illustrated gift box combining classic festival elements with Elgato's playful, creative identity.",
     galleryImages: ofestImages,
-    backgroundImage: "/projects/elgato/brand-illustration/ofest/6.png",
+    backgroundImage: bg3,
   },
 ];
 
@@ -56,8 +63,8 @@ export default function Giftboxes() {
   };
 
   return (
-    <div>
-      <div className="content-container pt-16">
+    <div id="w21">
+      <div className="content-container pt-24 md:pt-16">
         <h1>Partner Gift Boxes</h1>
         <p>
           I created a series of playful visual narratives for Elgato’s partner

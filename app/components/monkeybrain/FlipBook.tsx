@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import Image, { type StaticImageData } from "next/image";
 import { pageImages as defaultImages } from "./images";
@@ -11,30 +11,94 @@ interface FlipBookProps {
 
 export default function FlipBook({ images }: FlipBookProps) {
   const pageImages = images || defaultImages;
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // starts at cover/page 1
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  }));
+
+  useEffect(() => {
+    const updateViewport = () =>
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    window.addEventListener("orientationchange", updateViewport);
+    return () => {
+      window.removeEventListener("resize", updateViewport);
+      window.removeEventListener("orientationchange", updateViewport);
+    };
+  }, []);
 
   const handleFlip = (e: any) => {
     setCurrentPage(e.data);
   };
 
+  // Keep two-page spread within viewport
+  const paddingX = 32; // px-4 on each side
+  const availableWidth = Math.max(0, viewport.width - paddingX);
+  const availableHeight = viewport.height;
+
+  const basePageWidth = 400;
+  const basePageHeight = 600;
+  const bookBaseWidth = basePageWidth * 2; // two pages
+
+  const widthScale =
+    availableWidth > 0 ? availableWidth / bookBaseWidth : 1;
+  const heightScale =
+    availableHeight > 0 ? availableHeight / basePageHeight : 1;
+  const scale = Math.min(1, widthScale, heightScale);
+
+  const pageWidth = basePageWidth * scale;
+  const pageHeight = basePageHeight * scale;
+  const bookKey = `${Math.round(pageWidth)}x${Math.round(pageHeight)}`;
+
   return (
-    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative">
+    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative px-4 overflow-hidden">
+      {/* Click through indicator - visible on page 1, hidden behind pages otherwise */}
+      <div
+        className={`absolute left-[5%] md:left-[15%] top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none transition-opacity duration-300 ${
+          currentPage === 0 ? "z-10 opacity-100" : "-z-10 opacity-0"
+        }`}
+      >
+        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center animate-pulse bg-[#F5E6A3]">
+          <span className="text-[#24242e] text-sm md:text-base font-medium text-center leading-tight px-4">
+            tap the
+            <br />
+            magazine to
+            <br />
+            click through
+          </span>
+        </div>
+        <svg
+          className="w-16 h-8 md:w-24 md:h-10 text-[#F5E6A3] -ml-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 48 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M38 6l6 6m0 0l-6 6m6-6H2"
+          />
+        </svg>
+      </div>
       <HTMLFlipBook
-        width={400}
-        height={600}
-        size="stretch"
-        minWidth={315}
-        maxWidth={1000}
-        minHeight={400}
-        maxHeight={1533}
+        key={bookKey}
+        width={pageWidth}
+        height={pageHeight}
+        size="fixed"
         showCover={true}
         mobileScrollSupport={true}
         className="flipbook"
-        style={{}}
-        startPage={3}
+        startPage={0}
         drawShadow={false}
         flippingTime={1000}
-        usePortrait={true}
+        usePortrait={false}
         startZIndex={0}
         autoSize={true}
         maxShadowOpacity={0.5}
@@ -50,7 +114,10 @@ export default function FlipBook({ images }: FlipBookProps) {
           const isPriority = index >= currentPage && index <= currentPage + 3;
 
           return (
-            <div key={index} className="page relative w-full h-full flex items-center justify-center">
+            <div
+              key={index}
+              className="page relative w-full h-full flex items-center justify-center"
+            >
               <Image
                 src={imageSrc}
                 alt={`Page ${index + 1}`}

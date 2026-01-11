@@ -12,14 +12,45 @@ export default function QuardSwitcher() {
   };
 
   return (
-    <div className="my-8 flex justify-center items-start gap-4">
+    <div className="my-8 flex flex-col items-center">
+      {/* Hint text and arrow above image */}
+      <motion.div
+        className="flex flex-col items-center text-white/60 mb-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <span className="italic text-sm">tap to switch</span>
+        <svg
+          width="24"
+          height="20"
+          viewBox="0 0 24 20"
+          fill="none"
+          className="text-white/60"
+        >
+          <path
+            d="M12 2 L12 14"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M6 10 L12 16 L18 10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </motion.div>
+
       <div className="relative inline-block">
         <Image
           src="/projects/quards/sample_quard_front.jpg"
           alt="Quard front side"
           width={800}
           height={1200}
-          className="w-full max-w-md ipad-border"
+          className="w-full max-w-xs sm:max-w-md ipad-border cursor-pointer"
           onClick={toggleImage}
         />
 
@@ -28,7 +59,7 @@ export default function QuardSwitcher() {
             <Image
               src="/projects/quards/sample_quard_back.jpg"
               alt="Quard back side"
-              className="absolute inset-0 w-full max-w-md ipad-border"
+              className="absolute inset-0 w-full max-w-xs sm:max-w-md ipad-border cursor-pointer"
               width={800}
               height={1200}
               onClick={toggleImage}
@@ -75,39 +106,6 @@ export default function QuardSwitcher() {
           </motion.div>
         </div>
       </div>
-
-      {/* Hint arrow on the right */}
-      <motion.div
-        className="flex items-center gap-2 text-white/60 text-sm mt-12 whitespace-nowrap"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <svg
-          width="40"
-          height="30"
-          viewBox="0 0 40 30"
-          fill="none"
-          className="text-white/60 scale-x-[-1]"
-        >
-          <path
-            d="M2 25 C 10 25, 15 20, 20 12 C 25 4, 30 2, 38 5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            fill="none"
-          />
-          <path
-            d="M32 2 L38 5 L34 10"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </svg>
-        <span className="italic">tap to switch layers</span>
-      </motion.div>
     </div>
   );
 }

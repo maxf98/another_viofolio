@@ -1,42 +1,47 @@
 "use client";
 
 import Image from "next/image";
-import { color, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Hero from "./components/Hero";
 import ScrollLinkSection from "./components/ScrollLinkSection";
 import Navigation from "./components/navigation/Navigation";
 import { NavSection } from "./components/navigation/Navigation";
 import { useLoadState } from "./context/LoadContext";
+import AboutMeSection from "./components/AboutMeOverlay";
+import CTAButton from "./components/CTAButton";
 
 // Static imports for ScrollLinkSection images
 import coverNoPeople from "../public/coverNoPeople.png";
-import chatImg from "../public/gallery/chat.png";
+import chatImg from "../public/gallery/chat.webp";
 import elgatoImg from "../public/projects/elgato/gato3.png";
 import quardsImg from "../public/covers/quards/quards.png";
 import maschaImg from "../public/covers/mascha/m3.png";
-import artTherapyImg from "../public/arttherapy/fragments/pens.png";
-import monkeybrainImg from "../public/projects/MONKEYBRAIN/coverdesign.png";
 
 const navs: NavSection[] = [
   {
     id: "about-me",
     label: "about me",
+    src: "/icons/bout-icon.png",
   },
   {
     id: "gallery",
-    label: "gallery",
+    label: "personal archive",
+    src: "/icons/drawing.png",
   },
   {
-    id: "projects",
-    label: "projects",
+    id: "elgato-project",
+    label: "elgato",
+    src: "/icons/sd.png",
   },
   {
-    id: "art-therapy",
-    label: "art-therapy",
+    id: "quards-project",
+    label: "quards",
+    src: "/icons/q1.png",
   },
   {
-    id: "monkeybrain",
-    label: "monkeybrain",
+    id: "mascha-project",
+    label: "mascha",
+    src: "/icons/pink.png",
   },
 ];
 
@@ -47,98 +52,128 @@ export default function Home() {
     <main className="z-[5] bg-[#24242e]">
       <Navigation sections={navs} />
 
-      {/* Hero + About Me Section with Background */}
+      {/* Hero + About Me Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
+        {/* Fixed background for Hero + About Me */}
         <motion.div
           className="fixed inset-0 -z-10 pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: state.allLettersReady ? 0.9 : 0 }}
+          animate={{ opacity: state.allLettersReady ? 0.6 : 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          {/* Only start loading background after letters are ready */}
           {state.allLettersReady && (
             <Image
               src={coverNoPeople}
               alt="Background"
               fill
               placeholder="blur"
-              className="object-cover object-top"
+              className="object-cover object-bottom"
             />
           )}
         </motion.div>
-
+        {/* Dark overlay for Hero */}
+        <div className="fixed inset-0 -z-[5] bg-[#1a1a1f]/60 pointer-events-none" />
         {/* Hero Section */}
         <Hero />
 
-        <div
-          id="about-me"
-          className="flex items-start justify-center pt-8 pb-32"
-        >
-          <p className="text-lg md:text-xl max-w-2xl mx-auto text-white text-center px-6">
-            Hey, I&apos;m Vio, an artist based in Munich, Germany. I create work
-            that blends illustration, visual communication, and intuitive,
-            process-driven art. I&apos;m deeply passionate about visual
-            expression, world-building, and storytelling, and I&apos;m currently
-            exploring these interests through my career in Graphic Design and
-            Illustration as well as my studies in art therapy.
-          </p>
+        {/* About Me Section - Always visible */}
+        <div id="about-me" className="w-full">
+          <AboutMeSection isOpen={true} onClose={() => {}} />
         </div>
       </div>
 
-      {/* Gallery */}
-      <div id="gallery">
-        <ScrollLinkSection
-          href="/gallery"
-          imageSrc={chatImg}
-          imageAlt="Gallery"
-          label="View Gallery"
-          objectPosition="center"
-        />
-      </div>
+      {/* Cover to hide fixed background when scrolling to other sections */}
+      <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
 
-      {/* Projects Section */}
-      <section id="projects" className="w-full">
-        <ScrollLinkSection
-          href="/elgato"
-          imageSrc={elgatoImg}
-          imageAlt="Elgato"
-          label="Working with a Company"
-          objectPosition="center bottom"
-          mobileObjectPosition="left"
-        />
-        <ScrollLinkSection
-          href="/quards"
-          imageSrc={quardsImg}
-          imageAlt="Quards"
-          label="Working with a Startup"
-        />
-        <ScrollLinkSection
-          href="/mascha"
-          imageSrc={maschaImg}
-          imageAlt="Mascha"
-          label="Working with an Artist"
-        />
-      </section>
+        {/* Gallery */}
+        <div id="gallery">
+          <ScrollLinkSection
+            href="/gallery"
+            imageSrc={chatImg}
+            imageAlt="Gallery"
+            label="Personal Archive"
+            description="A collection of personal projects and explorations"
+            objectPosition="center bottom"
+            imageOpacity={100}
+            darkOverlay={false}
+            textColor="text-white"
+          />
+        </div>
 
-      {/* Art Therapy */}
-      <div id="art-therapy">
-        <ScrollLinkSection
-          href="/art-therapy"
-          imageSrc={artTherapyImg}
-          imageAlt="Art Therapy"
-          label="EXPLORING ART THERAPY"
-          objectPosition="center top"
-        />
-      </div>
+        {/* Projects Section */}
+        <section id="projects" className="w-full">
+          <div id="elgato-project">
+            <ScrollLinkSection
+              href="/elgato"
+              imageSrc={elgatoImg}
+              imageAlt="Elgato"
+              label="Working with a Company"
+              description="Custom designs and illustrations for Elgato"
+              objectPosition="center bottom"
+              mobileObjectPosition="left"
+            />
+          </div>
+          <div id="quards-project">
+            <ScrollLinkSection
+              href="/quards"
+              imageSrc={quardsImg}
+              imageAlt="Quards"
+              label="Working with a Startup"
+              description="Branding and app design for Quards"
+            />
+          </div>
+          <div id="mascha-project">
+            <ScrollLinkSection
+              href="/mascha"
+              imageSrc={maschaImg}
+              imageAlt="Mascha"
+              label="Working with an Artist"
+              description="Album artwork and visuals for Mascha"
+            />
+          </div>
+        </section>
 
-      {/* Monkeybrain */}
-      <div id="monkeybrain">
-        <ScrollLinkSection
-          href="/monkeybrain"
-          imageSrc={monkeybrainImg}
-          imageAlt="Monkeybrain"
-          label="Monkeybrain Mag"
-        />
+        {/* Footer CTA Section */}
+        <section className="relative py-32 md:py-48 px-8 overflow-hidden">
+          {/* Decorative background elements */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full pointer-events-none"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute top-1/4 -left-20 w-40 h-40 rounded-full bg-[#F5E6A3]/10 blur-3xl" />
+            <div className="absolute bottom-1/4 -right-20 w-60 h-60 rounded-full bg-[#D4B8E0]/10 blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#B8E0C8]/5 blur-3xl" />
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2
+                className="text-4xl md:text-6xl font-black mb-6"
+                style={{ textShadow: '3px 3px 0 rgba(0,0,0,0.3)' }}
+              >
+                <span className="text-[#F5E6A3]">Interested</span>{' '}
+                <span className="text-white">in</span>{' '}
+                <span className="text-[#D4B8E0]">Working</span>{' '}
+                <span className="text-[#B8E0C8]">Together?</span>
+              </h2>
+              <p className="text-white/60 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
+                Whether you&apos;re looking for illustration, branding, or creative direction—let&apos;s explore how we can bring your vision to life.
+              </p>
+            </motion.div>
+
+            <CTAButton href="mailto:hello@vio.art">
+              Get in Touch
+            </CTAButton>
+          </div>
+        </section>
+
       </div>
     </main>
   );

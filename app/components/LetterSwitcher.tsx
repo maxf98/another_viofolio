@@ -77,7 +77,7 @@ export default function LetterSwitcher() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col md:flex-row items-center justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0"
+      className="flex flex-col md:flex-row items-center justify-center md:items-start md:pt-16 h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0"
     >
       <LetterStack
         letters={vs}
@@ -155,12 +155,12 @@ function LetterStack({
   // Empty placeholder while loading or waiting for stagger
   if (!visible) {
     return (
-      <div className="relative flex-1 aspect-square max-w-[90%] max-h-[65%] md:max-h-full md:max-w-[40%]" />
+      <div className="relative flex-1 aspect-square max-w-[70%] max-h-[70%] md:max-h-full md:max-w-[40%]" />
     );
   }
 
   return (
-    <div className="relative flex-1 aspect-square max-w-[90%] max-h-[65%] md:max-h-full md:max-w-[40%]">
+    <div className="relative flex-1 aspect-square max-w-[70%] max-h-[70%] md:max-h-full md:max-w-[40%]">
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}

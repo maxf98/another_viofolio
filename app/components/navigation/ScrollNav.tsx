@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { NavSection } from "./Navigation";
 
@@ -12,40 +12,44 @@ interface ScrollNavProps {
 export default function ScrollNav({ sections }: ScrollNavProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight / 2;
 
-      // Find which section is currently in view
-      let foundSection = false;
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const { top, bottom } = element.getBoundingClientRect();
-          const absoluteTop = top + window.scrollY;
-          const absoluteBottom = bottom + window.scrollY;
+    // Find which section is currently in view
+    let foundSection = false;
+    for (const section of sections) {
+      const element = document.getElementById(section.id);
+      if (element) {
+        const { top, bottom } = element.getBoundingClientRect();
+        const absoluteTop = top + window.scrollY;
+        const absoluteBottom = bottom + window.scrollY;
 
-          if (
-            scrollPosition >= absoluteTop &&
-            scrollPosition <= absoluteBottom
-          ) {
-            setActiveSection(section.id);
-            foundSection = true;
-            return;
-          }
+        if (
+          scrollPosition >= absoluteTop &&
+          scrollPosition <= absoluteBottom
+        ) {
+          setActiveSection(section.id);
+          foundSection = true;
+          return;
         }
       }
+    }
 
-      // If no section is in view, clear the active section
-      if (!foundSection) {
-        setActiveSection(null);
-      }
-    };
+    // If no section is in view, clear the active section
+    if (!foundSection) {
+      setActiveSection(null);
+    }
+  }, [sections]);
 
-    handleScroll(); // Check on mount
+  useEffect(() => {
+    // Use requestAnimationFrame to defer the initial check
+    const frameId = requestAnimationFrame(handleScroll);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   const handleClick = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -55,10 +59,11 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
   };
 
   return (
-    <div className="fixed z-[9998] top-0 left-0 bottom-0 h-screen ml-6 w-[45px] flex items-center justify-center pointer-events-auto">
-      <nav className="flex flex-col gap-10">
+    <div className="fixed z-[9998] top-0 left-0 bottom-0 h-screen ml-6 w-[60px] flex items-center justify-center pointer-events-auto">
+      <nav className="flex flex-col gap-14 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
         {sections.map((section) => {
           const isActive = activeSection === section.id;
+          const baseSize = section.size ?? 56;
           return (
             <button
               key={section.id}
@@ -67,19 +72,20 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
               aria-label={`Navigate to ${section.label}`}
             >
               <motion.div
-                className="relative rounded-full overflow-hidden"
+                className="relative overflow-hidden"
+                style={{ backgroundColor: section.bgColor }}
                 initial={{
-                  width: 36,
-                  height: 36,
+                  width: baseSize,
+                  height: baseSize,
                   scale: 1,
                 }}
                 animate={{
-                  width: 36,
-                  height: 36,
-                  scale: isActive ? 1.8 : 1,
+                  width: baseSize,
+                  height: baseSize,
+                  scale: isActive ? 1.4 : 1,
                 }}
                 whileHover={{
-                  scale: isActive ? 1.7 : 1.6,
+                  scale: isActive ? 1.4 : 1.3,
                   opacity: 1,
                 }}
                 whileTap={{
@@ -95,9 +101,9 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
                   <Image
                     src={section.src}
                     alt={section.label ?? section.id}
-                    width={36}
-                    height={36}
-                    className="object-cover"
+                    width={96}
+                    height={96}
+                    className="object-contain w-full h-full"
                   />
                 ) : (
                   <motion.div className="w-16 h-16 bg-white/40" />
@@ -106,7 +112,7 @@ export default function ScrollNav({ sections }: ScrollNavProps) {
 
               {/* Tooltip on hover */}
               {section.label && (
-                <span className="absolute left-full ml-4 px-3 py-1 bg-white/90 text-black text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                <span className="absolute left-full ml-4 px-4 py-2 bg-white/10 backdrop-blur-md text-white text-base font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap border border-white/20">
                   {section.label}
                 </span>
               )}

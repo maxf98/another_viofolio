@@ -2,24 +2,37 @@
 import { GalleryItem, LetterItem } from "./model";
 
 // Gallery images
-import angels from "../../public/gallery/angels.png";
-import beach from "../../public/gallery/beach.png";
-import bird from "../../public/gallery/bird.png";
-import bottle from "../../public/gallery/bottle.png";
-import chat from "../../public/gallery/chat.png";
-import couple from "../../public/gallery/couple.png";
-import dogs from "../../public/gallery/dogs.png";
-import field from "../../public/gallery/field.png";
-import ghosts from "../../public/gallery/ghosts.png";
-import grandpa from "../../public/gallery/grandpa2.png";
-import looking from "../../public/gallery/looking.png";
-import memories from "../../public/gallery/memories.png";
-import shame from "../../public/gallery/shame.png";
-import sunburn from "../../public/gallery/sunburn.png";
-import surrealdude from "../../public/gallery/surrealdude.png";
-import treeudude from "../../public/gallery/treeudude.png";
-import vogue from "../../public/gallery/vogue.png";
-import wood from "../../public/gallery/wood.png";
+import angels from "../../public/gallery/angels.webp";
+import beach from "../../public/gallery/beach.webp";
+import bird from "../../public/gallery/bird.webp";
+import bottle from "../../public/gallery/bottle.webp";
+import chat from "../../public/gallery/chat.webp";
+import field from "../../public/gallery/field.webp";
+import ghosts from "../../public/gallery/ghosts.webp";
+import grandpa from "../../public/gallery/grandpa2.webp";
+import looking from "../../public/gallery/looking.webp";
+import memories from "../../public/gallery/memories.webp";
+import shame from "../../public/gallery/shame.webp";
+import sunburn from "../../public/gallery/sunburn.webp";
+import surrealdude from "../../public/gallery/surrealdude.webp";
+import treeudude from "../../public/gallery/treeudude.webp";
+import vogue from "../../public/gallery/vogue.webp";
+import wood from "../../public/gallery/wood.webp";
+import thoughts from "../../public/gallery/thoughts.webp";
+import monster from "../../public/gallery/monster.webp";
+import ship from "../../public/gallery/ship.webp";
+import view from "../../public/gallery/view.webp";
+import eye from "../../public/gallery/eye.png";
+import girl from "../../public/gallery/girl.png";
+import strange from "../../public/gallery/strange.png";
+
+// Art therapy images
+import stone2 from "../../public/arttherapy/stone/stone2.png";
+import flower3 from "../../public/arttherapy/flowers/flower3.png";
+import rain3 from "../../public/arttherapy/rain/rain3.png";
+import felt2 from "../../public/arttherapy/felt/felt2.png";
+import hand1 from "../../public/arttherapy/handpainting/hand1.png";
+import floral from "../../public/arttherapy/flowers/floral_converted.png";
 
 // Letter V images
 import vMe from "../../public/letters/V/me.png";
@@ -46,8 +59,6 @@ export const gallery_graph: GalleryItem[] = [
   { index: 2, image: bird, alt: "Vio's gallery, number 2" },
   { index: 3, image: bottle, alt: "Vio's gallery, number 3" },
   { index: 4, image: chat, alt: "Vio's gallery, number 4" },
-  { index: 5, image: couple, alt: "Vio's gallery, number 5" },
-  { index: 6, image: dogs, alt: "Vio's gallery, number 6" },
   { index: 7, image: field, alt: "Vio's gallery, number 7" },
   { index: 8, image: ghosts, alt: "Vio's gallery, number 8" },
   { index: 9, image: grandpa, alt: "Vio's gallery, number 9" },
@@ -55,10 +66,76 @@ export const gallery_graph: GalleryItem[] = [
   { index: 11, image: memories, alt: "Vio's gallery, number 11" },
   { index: 12, image: shame, alt: "Vio's gallery, number 12" },
   { index: 13, image: sunburn, alt: "Vio's gallery, number 13" },
-  { index: 14, image: surrealdude, alt: "Vio's gallery, number 14" },
+  { index: 14, image: wood, alt: "Vio's gallery, number 14" },
   { index: 15, image: treeudude, alt: "Vio's gallery, number 15" },
   { index: 16, image: vogue, alt: "Vio's gallery, number 16" },
-  { index: 17, image: wood, alt: "Vio's gallery, number 17" },
+  { index: 17, image: surrealdude, alt: "Vio's gallery, number 17" },
+  { index: 18, image: thoughts, alt: "Vio's gallery, number 18" },
+  { index: 22, image: monster, alt: "Vio's gallery, number 22" },
+  { index: 23, image: ship, alt: "Vio's gallery, number 23" },
+  { index: 24, image: view, alt: "Vio's gallery, number 24" },
+];
+
+export interface GallerySection {
+  id: string;
+  title: string;
+  description: string;
+  images: GalleryItem[];
+}
+
+export const gallery_sections: GallerySection[] = [
+  {
+    id: "illustrated-photography",
+    title: "Illustrated Photography",
+    description: "Transforming photographs into surreal narratives—blending reality with imagination.",
+    images: [
+      { index: 0, image: ship, alt: "ship", title: "Ship", description: "A voyage through dreams and memories." },
+      { index: 1, image: bird, alt: "bird", title: "Bird", description: "Freedom takes flight in unexpected forms." },
+      { index: 2, image: looking, alt: "looking", title: "Looking", description: "Searching for meaning in the everyday." },
+      { index: 3, image: view, alt: "view", title: "View", description: "A window into another world." },
+      { index: 4, image: wood, alt: "wood", title: "Wood", description: "Nature's textures meet imagination." },
+      { index: 5, image: treeudude, alt: "treeudude", title: "Tree Dude", description: "Where humans and nature intertwine." },
+      { index: 6, image: ghosts, alt: "ghosts", title: "Ghosts", description: "Echoes of presence lingering in space." },
+      { index: 7, image: sunburn, alt: "sunburn", title: "Sunburn", description: "The warmth that leaves its mark." },
+      { index: 8, image: monster, alt: "monster", title: "Monster", description: "Friendly creatures from the imagination." },
+      { index: 10, image: grandpa, alt: "grandpa", title: "Grandpa", description: "A tribute to cherished memories." },
+      { index: 11, image: chat, alt: "chat", title: "Chat", description: "Conversations that shape who we are." },
+      { index: 12, image: shame, alt: "shame", title: "Shame", description: "Emotions laid bare through visual poetry." },
+      { index: 13, image: bottle, alt: "bottle", title: "Bottle", description: "Messages waiting to be discovered." },
+      { index: 14, image: angels, alt: "angels", title: "Angels", description: "Guardians watching from above." },
+    ],
+  },
+  {
+    id: "digital-drawing",
+    title: "Digital Drawing",
+    description: "Original works created entirely from imagination using digital tools.",
+    images: [
+      { index: 0, image: vogue, alt: "vogue", title: "Vogue", description: "Fashion meets artistic expression." },
+      { index: 1, image: memories, alt: "memories", title: "Memories", description: "Fragments of the past reimagined." },
+      { index: 2, image: eye, alt: "eye", title: "Eye", description: "Windows to the soul in digital form." },
+      { index: 4, image: girl, alt: "girl", title: "Girl", description: "A portrait of inner worlds." },
+      { index: 5, image: strange, alt: "strange", title: "Strange", description: "Embracing the beautifully unusual." },
+    ],
+  },
+  {
+    id: "traditional-media",
+    title: "Traditional Media",
+    description: "Handmade works created with traditional materials and techniques.",
+    images: [],
+  },
+  {
+    id: "art-therapy",
+    title: "Analogue Process Driven Explorations",
+    description: "Process-driven techniques from my art therapy studies—focusing on the creative journey rather than the outcome.",
+    images: [
+      { index: 0, image: stone2, alt: "stone painting", title: "Stone Painting", description: "Finding art in nature's surfaces." },
+      { index: 1, image: flower3, alt: "botanical work", title: "Botanical Work", description: "Capturing the essence of growth." },
+      { index: 2, image: rain3, alt: "weather collaboration", title: "Weather Collaboration", description: "Art created with the elements." },
+      { index: 3, image: felt2, alt: "felt work", title: "Felt Work", description: "Texture and color in tactile form." },
+      { index: 4, image: hand1, alt: "hand painting", title: "Hand Painting", description: "Direct expression through touch." },
+      { index: 5, image: floral, alt: "floral", title: "Floral", description: "Celebrating natural beauty." },
+    ],
+  },
 ];
 
 export const letters: Record<"V" | "I" | "O", LetterItem[]> = {
