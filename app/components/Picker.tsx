@@ -21,7 +21,7 @@ export default function Picker({
   alt,
   isSelected,
   onClick,
-  className = "w-32 h-32",
+  className = "w-[clamp(48px,18vw,96px)] h-[clamp(48px,18vw,96px)] shrink-0",
   animatesScale = false,
 }: PickerProps) {
   return (

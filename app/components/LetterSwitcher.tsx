@@ -28,6 +28,13 @@ export default function LetterSwitcher() {
   const lastChangedLetterRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [layout, setLayout] = useState<{
+    direction: "horizontal" | "vertical";
+    size: number;
+  }>({
+    direction: "horizontal",
+    size: 0,
+  });
   const { state, setLetterLoaded } = useLoadState();
 
   // Track visibility with IntersectionObserver
@@ -74,10 +81,52 @@ export default function LetterSwitcher() {
     return () => clearInterval(interval);
   }, [state.allLettersReady, isVisible]);
 
+  // Decide layout orientation and item size based on container space
+  useEffect(() => {
+    const computeLayout = (width: number, height: number) => {
+      if (width <= 0 || height <= 0) {
+        return { direction: "horizontal" as const, size: 0 };
+      }
+      // If taller than wide, stack vertically; size limited by min(width, height/3)
+      if (height > width) {
+        const dim = Math.min(width, height / 3);
+        return { direction: "vertical" as const, size: dim };
+      }
+      // Horizontal: three squares side by side. Width constrains if narrower than height*3.
+      const widthConstrains = width < height * 3;
+      const dim = widthConstrains ? width / 3 : height;
+      return { direction: "horizontal" as const, size: dim };
+    };
+
+    const updateLayout = () => {
+      const el = containerRef.current;
+      if (!el) return;
+      const { width, height } = el.getBoundingClientRect();
+      setLayout(computeLayout(width, height));
+    };
+
+    updateLayout();
+    const observer = new ResizeObserver(updateLayout);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    window.addEventListener("resize", updateLayout);
+    window.addEventListener("orientationchange", updateLayout);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateLayout);
+      window.removeEventListener("orientationchange", updateLayout);
+    };
+  }, []);
+
   return (
     <div
       ref={containerRef}
-      className="flex flex-col md:flex-row items-center justify-center md:items-start md:pt-16 h-full w-full max-w-4xl md:max-w-5xl mx-auto gap-4 md:gap-0"
+      className={`flex md:pt-16 ${
+        layout.direction === "horizontal"
+          ? "flex-row items-start gap-0"
+          : "flex-col items-center gap-0"
+      } justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto`}
     >
       <LetterStack
         letters={vs}
@@ -85,6 +134,7 @@ export default function LetterSwitcher() {
         position={0}
         canStart={true}
         onLoad={() => setLetterLoaded(0)}
+        size={layout.size}
       />
       <LetterStack
         letters={is}
@@ -92,6 +142,7 @@ export default function LetterSwitcher() {
         position={1}
         canStart={true}
         onLoad={() => setLetterLoaded(1)}
+        size={layout.size}
       />
       <LetterStack
         letters={os}
@@ -99,6 +150,7 @@ export default function LetterSwitcher() {
         position={2}
         canStart={true}
         onLoad={() => setLetterLoaded(2)}
+        size={layout.size}
       />
     </div>
   );
@@ -110,6 +162,7 @@ interface LetterStackProps {
   position: 0 | 1 | 2;
   canStart: boolean;
   onLoad: () => void;
+  size: number;
 }
 
 // Initial delay before letters start appearing (after "Hey I'm" appears)
@@ -123,6 +176,7 @@ function LetterStack({
   position,
   canStart,
   onLoad,
+  size,
 }: LetterStackProps) {
   const [loaded, setLoaded] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -155,12 +209,26 @@ function LetterStack({
   // Empty placeholder while loading or waiting for stagger
   if (!visible) {
     return (
-      <div className="relative flex-1 aspect-square max-w-[70%] max-h-[70%] md:max-h-full md:max-w-[40%]" />
+      <div
+        className="relative"
+        style={{
+          width: size || undefined,
+          height: size || undefined,
+          flex: "0 0 auto",
+        }}
+      />
     );
   }
 
   return (
-    <div className="relative flex-1 aspect-square max-w-[70%] max-h-[70%] md:max-h-full md:max-w-[40%]">
+    <div
+      className="relative"
+      style={{
+        width: size || undefined,
+        height: size || undefined,
+        flex: "0 0 auto",
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}

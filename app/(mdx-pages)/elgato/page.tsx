@@ -132,9 +132,9 @@ export default function Page() {
             style={{ objectPosition: "center 70%" }}
           />
         </div>
-        <div className="flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
+        <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
           <div id="customs">
-            <div className="content-container mb-24">
+            <div className="mb-24">
               <h1>Product Customs</h1>
               <p>
                 I designed custom faceplates for Elgato&apos;s Stream Deck and
@@ -148,14 +148,13 @@ export default function Page() {
               onXlrClick={handleXlrClick}
             />
           </div>
-
-          <InfiniteScrollGallery
-            images={customsWebShotsImages}
-            altPrefix="Customs web shot"
-            onImageClick={handleCustomsWebShotsClick}
-            cropLeftHalf={[]}
-          />
         </div>
+        <InfiniteScrollGallery
+          images={customsWebShotsImages}
+          altPrefix="Customs web shot"
+          onImageClick={handleCustomsWebShotsClick}
+          cropLeftHalf={[]}
+        />
       </div>
 
       {/* Collaborations Section */}

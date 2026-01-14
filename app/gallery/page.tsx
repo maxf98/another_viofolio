@@ -41,7 +41,6 @@ function WorkGallery() {
     <div className="flex flex-col relative min-h-screen bg-[#1a1a1f]">
       <Navigation sections={[
         { id: "illustrated-photography", label: "Illustrated Photography", src: "/icons/photo.png" },
-        { id: "digital-drawing", label: "Digital Drawing", src: "/icons/drawing.png" },
         { id: "art-therapy", label: "Analogue Explorations", src: "/icons/art-icon.png" },
         { id: "monkeybrain", label: "Monkeybrain Magazine", src: "/icons/mag-icon.png" },
       ]} />

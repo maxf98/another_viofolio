@@ -24,15 +24,16 @@ import ship from "../../public/gallery/ship.webp";
 import view from "../../public/gallery/view.webp";
 import eye from "../../public/gallery/eye.png";
 import girl from "../../public/gallery/girl.png";
-import strange from "../../public/gallery/strange.png";
 
-// Art therapy images
-import stone2 from "../../public/arttherapy/stone/stone2.png";
-import flower3 from "../../public/arttherapy/flowers/flower3.png";
-import rain3 from "../../public/arttherapy/rain/rain3.png";
-import felt2 from "../../public/arttherapy/felt/felt2.png";
-import hand1 from "../../public/arttherapy/handpainting/hand1.png";
-import floral from "../../public/arttherapy/flowers/floral_converted.png";
+// Art therapy images (from gallery folder)
+import cat2 from "../../public/gallery/cat2.png";
+import chalk2 from "../../public/gallery/chalk2.png";
+import chalk3 from "../../public/gallery/chalk 3.png";
+import felt1 from "../../public/gallery/felt1.png";
+import flo from "../../public/gallery/flo.png";
+import pic from "../../public/gallery/pic.png";
+import rain from "../../public/gallery/rain.png";
+import stone2Gallery from "../../public/gallery/stone2.png";
 
 // Letter V images
 import vMe from "../../public/letters/V/me.png";
@@ -106,18 +107,6 @@ export const gallery_sections: GallerySection[] = [
     ],
   },
   {
-    id: "digital-drawing",
-    title: "Digital Drawing",
-    description: "Original works created entirely from imagination using digital tools.",
-    images: [
-      { index: 0, image: vogue, alt: "vogue", title: "Vogue", description: "Fashion meets artistic expression." },
-      { index: 1, image: memories, alt: "memories", title: "Memories", description: "Fragments of the past reimagined." },
-      { index: 2, image: eye, alt: "eye", title: "Eye", description: "Windows to the soul in digital form." },
-      { index: 4, image: girl, alt: "girl", title: "Girl", description: "A portrait of inner worlds." },
-      { index: 5, image: strange, alt: "strange", title: "Strange", description: "Embracing the beautifully unusual." },
-    ],
-  },
-  {
     id: "traditional-media",
     title: "Traditional Media",
     description: "Handmade works created with traditional materials and techniques.",
@@ -128,12 +117,14 @@ export const gallery_sections: GallerySection[] = [
     title: "Analogue Process Driven Explorations",
     description: "Process-driven techniques from my art therapy studies—focusing on the creative journey rather than the outcome.",
     images: [
-      { index: 0, image: stone2, alt: "stone painting", title: "Stone Painting", description: "Finding art in nature's surfaces." },
-      { index: 1, image: flower3, alt: "botanical work", title: "Botanical Work", description: "Capturing the essence of growth." },
-      { index: 2, image: rain3, alt: "weather collaboration", title: "Weather Collaboration", description: "Art created with the elements." },
-      { index: 3, image: felt2, alt: "felt work", title: "Felt Work", description: "Texture and color in tactile form." },
-      { index: 4, image: hand1, alt: "hand painting", title: "Hand Painting", description: "Direct expression through touch." },
-      { index: 5, image: floral, alt: "floral", title: "Floral", description: "Celebrating natural beauty." },
+      { index: 0, image: felt1, alt: "felt work", title: "Felt Work", description: "Texture and color in tactile form." },
+      { index: 1, image: pic, alt: "pic", title: "Pic", description: "Moments captured in process." },
+      { index: 2, image: cat2, alt: "cat", title: "Cat", description: "Playful exploration in form." },
+      { index: 3, image: rain, alt: "rain painting", title: "Rain Painting", description: "Collaborating with the elements." },
+      { index: 4, image: stone2Gallery, alt: "stone painting", title: "Stone Painting", description: "Finding art in nature's surfaces." },
+      { index: 5, image: chalk3, alt: "chalk work", title: "Chalk Work", description: "Exploring texture through chalk." },
+      { index: 6, image: flo, alt: "floral", title: "Floral", description: "Celebrating natural beauty." },
+      { index: 7, image: chalk2, alt: "chalk drawing", title: "Chalk Drawing", description: "Soft textures and bold strokes." },
     ],
   },
 ];

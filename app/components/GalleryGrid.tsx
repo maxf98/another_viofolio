@@ -11,7 +11,7 @@ interface GalleryGridProps {
 
 function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
   return (
-    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2">
+    <div className="w-full grid grid-cols-3 gap-2">
       {images.map((item: GalleryItem, idx: number) => (
         <div
           key={item.index || idx}
@@ -22,7 +22,7 @@ function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
             src={item.image}
             alt={item.alt ?? "A Gallery Image"}
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 768px) 33vw, 25vw"
             className="object-cover"
             placeholder="blur"
           />

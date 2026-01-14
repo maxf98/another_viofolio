@@ -64,13 +64,27 @@ button {
 
 /* Content container styles - outside @layer for higher specificity */
 .content-container {
-  max-width: min(56rem, 100%);
+  max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   z-index: 2;
   box-sizing: border-box;
+}
+
+/* Mobile landscape sizing */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .content-container {
+    max-width: 80%;
+  }
+}
+
+/* Mobile portrait sizing */
+@media (max-width: 1024px) and (orientation: portrait) {
+  .content-container {
+    max-width: 95%;
+  }
 }
 
 .content-container h1 {
@@ -94,6 +108,34 @@ button {
   .content-container p {
     font-size: 1rem;
   }
+}
+
+@keyframes tap-hint {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes arrow-bounce {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+.animate-tap-hint {
+  animation: tap-hint 2s ease-in-out infinite;
+}
+
+.animate-arrow-bounce {
+  animation: arrow-bounce 1s ease-in-out infinite;
 }
 
 @layer utilities {

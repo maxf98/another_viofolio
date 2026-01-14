@@ -60,32 +60,31 @@ export default function FlipBook({ images }: FlipBookProps) {
     <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative px-4 overflow-hidden">
       {/* Click through indicator - visible on page 1, hidden behind pages otherwise */}
       <div
-        className={`absolute left-[5%] md:left-[15%] top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none transition-opacity duration-300 ${
+        className={`absolute left-[5%] md:left-[10%] top-1/2 -translate-y-1/2 flex items-center gap-4 pointer-events-none transition-opacity duration-500 ${
           currentPage === 0 ? "z-10 opacity-100" : "-z-10 opacity-0"
         }`}
       >
-        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center animate-pulse bg-[#F5E6A3]">
-          <span className="text-[#24242e] text-sm md:text-base font-medium text-center leading-tight px-4">
-            tap the
-            <br />
-            magazine to
-            <br />
-            click through
+        <div className="flex flex-col items-end">
+          <span className="text-[#F5E6A3] text-2xl md:text-4xl font-black tracking-tight animate-tap-hint">
+            tap the magazine
           </span>
+          <span className="text-white/70 text-lg md:text-2xl font-medium mt-1">
+            to flip through
+          </span>
+          <svg
+            className="w-10 h-10 md:w-14 md:h-14 text-[#F5E6A3] animate-arrow-bounce mt-2 self-end"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"
+            />
+          </svg>
         </div>
-        <svg
-          className="w-16 h-8 md:w-24 md:h-10 text-[#F5E6A3] -ml-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 48 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M38 6l6 6m0 0l-6 6m6-6H2"
-          />
-        </svg>
       </div>
       <HTMLFlipBook
         key={bookKey}
@@ -95,7 +94,7 @@ export default function FlipBook({ images }: FlipBookProps) {
         showCover={true}
         mobileScrollSupport={true}
         className="flipbook"
-        startPage={0}
+        startPage={currentPage}
         drawShadow={false}
         flippingTime={1000}
         usePortrait={false}

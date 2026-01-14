@@ -86,7 +86,9 @@ export default function Home() {
       <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
 
         {/* Gallery */}
-        <div id="gallery">
+        <div id="gallery" className="relative">
+          <div className="absolute inset-0 bg-[#1a1a1f]/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-[#B8E0C8]/30 mix-blend-multiply pointer-events-none" />
           <ScrollLinkSection
             href="/gallery"
             imageSrc={chatImg}

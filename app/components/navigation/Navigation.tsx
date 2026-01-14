@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import RotateOnHover from "../animations/RotateOnHover";
 import { useLoadState } from "@/app/context/LoadContext";
 
@@ -24,6 +24,7 @@ export default function Navigation({ sections }: NavigationProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait");
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state } = useLoadState();
   const pathname = usePathname();
   const isHomepage = pathname === "/";
@@ -87,106 +88,110 @@ export default function Navigation({ sections }: NavigationProps) {
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    setIsMenuOpen(false);
   };
 
   if (!showNav) {
     return null;
   }
 
-  const isMobilePortrait = isMobile && orientation === "portrait";
-  const isMobileLandscape = isMobile && orientation === "landscape";
+  const showMobileMenu = isMobile && isMenuOpen;
 
   return (
     <>
-      {/* Mobile portrait: horizontal top bar */}
-      {isMobilePortrait ? (
-        <header className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-center pointer-events-auto bg-black/20 backdrop-blur-md">
-          <div className="flex items-center justify-center gap-3 px-4 py-2">
-            <Link href="/" className="inline-block p-1">
-              <RotateOnHover rotation={8}>
-                <Image src="/logo.png" alt="Logo" width={32} height={32} priority />
-              </RotateOnHover>
-            </Link>
-
-            {/* Mobile icons */}
-            {sections.length > 0 &&
-              sections.map((section) => {
-                const isActive = activeSection === section.id;
-                return section.src ? (
-                  <motion.button
-                    key={section.id}
-                    onClick={() => handleClick(section.id)}
-                    className="p-1"
-                    animate={{
-                      scale: isActive ? 1 : 0.7,
-                      opacity: isActive ? 1 : 0.6,
-                    }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <Image
-                      src={section.src}
-                      alt={section.label ?? section.id}
-                      width={52}
-                      height={52}
-                      className="object-contain"
-                    />
-                  </motion.button>
-                ) : null;
-              })}
-          </div>
-        </header>
-      ) : null}
-
-      {/* Mobile landscape: vertical stack (no blur) */}
-      {isMobileLandscape ? (
-        <div className="fixed top-0 left-0 z-[9999] flex flex-col items-center px-4 py-6 pointer-events-auto">
-          <Link href="/" className="inline-block mb-6">
+      {/* Mobile: horizontal top bar (portrait & landscape) */}
+      {isMobile ? (
+        <header className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between pointer-events-auto px-4 py-3">
+          <Link href="/" className="inline-block p-1">
             <RotateOnHover rotation={8}>
               <Image src="/logo.png" alt="Logo" width={32} height={32} priority />
             </RotateOnHover>
           </Link>
-          <nav className="flex flex-col gap-6">
-            {sections.map((section) => {
-              const isActive = activeSection === section.id;
-              return section.src ? (
-                <motion.button
-                  key={section.id}
-                  onClick={() => handleClick(section.id)}
-                  className="group relative flex items-center justify-center cursor-pointer"
-                  aria-label={`Navigate to ${section.label}`}
-                >
-                  <motion.div
-                    className="relative"
-                    animate={{
-                      scale: isActive ? 1.2 : 1,
-                      opacity: isActive ? 1 : 0.7,
-                    }}
-                    whileHover={{ scale: 1.15, opacity: 1 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <Image
-                      src={section.src}
-                      alt={section.label ?? section.id}
-                      width={52}
-                      height={52}
-                      className="object-contain"
-                    />
-                  </motion.div>
-
-                  {/* Tooltip on hover */}
-                  {section.label && (
-                    <span className="absolute left-full ml-3 px-2.5 py-1 bg-white/10 text-white text-xs font-medium rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap border border-white/15">
-                      {section.label}
-                    </span>
-                  )}
-                </motion.button>
-              ) : null;
-            })}
-          </nav>
-        </div>
+          {sections.length > 0 && (
+            <button
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              className="p-2 text-white focus:outline-none"
+              aria-label="Toggle navigation"
+            >
+              <motion.div
+                className="w-6 space-y-1.5"
+                animate={{
+                  rotate: isMenuOpen ? 90 : 0,
+                  scale: isMenuOpen ? 1.05 : 1,
+                }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              >
+                <span className="block h-0.5 bg-white origin-center" />
+                <span className="block h-0.5 bg-white origin-center" />
+                <span className="block h-0.5 bg-white origin-center" />
+              </motion.div>
+            </button>
+          )}
+        </header>
       ) : null}
+
+      {/* Fullscreen slide-in menu for mobile portrait & landscape */}
+      <AnimatePresence>
+        {showMobileMenu && sections.length > 0 && (
+          <div className="fixed inset-0 z-[9998] pointer-events-auto">
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.25 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsMenuOpen(false)}
+              aria-hidden
+            />
+            <motion.div
+              className="absolute inset-y-0 right-0 w-full sm:w-[70%] text-white flex flex-col bg-white/10 backdrop-blur-lg border-l border-white/15"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 260, damping: 26 }}
+              aria-label="Navigation menu"
+            >
+              <motion.nav
+                className="flex-1 flex flex-col justify-evenly px-6 py-12"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+                  },
+                }}
+              >
+                {sections.map((section) =>
+                  section.src ? (
+                    <motion.button
+                      key={section.id}
+                      onClick={() => handleClick(section.id)}
+                      className="flex items-center gap-4 text-2xl font-semibold"
+                      variants={{
+                        hidden: { opacity: 0, x: 20 },
+                        visible: { opacity: 1, x: 0 },
+                      }}
+                      transition={{ type: "spring", stiffness: 280, damping: 24 }}
+                    >
+                      <Image
+                        src={section.src}
+                        alt={section.label ?? section.id}
+                        width={60}
+                        height={60}
+                        className="object-contain"
+                      />
+                      <span>{section.label ?? section.id}</span>
+                    </motion.button>
+                  ) : null
+                )}
+              </motion.nav>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Desktop */}
       {!isMobile && (
@@ -215,10 +220,10 @@ export default function Navigation({ sections }: NavigationProps) {
                     <motion.div
                       className="relative"
                       animate={{
-                        scale: isActive ? 1.3 : 1,
-                        opacity: isActive ? 1 : 0.7,
+                        scale: isActive ? 1.5 : 1,
+                        opacity: 1,
                       }}
-                      whileHover={{ scale: 1.2, opacity: 1 }}
+                      whileHover={{ scale: isActive ? 1.5 : 1.2, opacity: 1 }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >

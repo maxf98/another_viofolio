@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import CTAButton from "./CTAButton";
 
 interface AboutMeSectionProps {
@@ -42,37 +43,23 @@ export default function AboutMeSection({
           transition={{ delay: 0.2, type: "spring" }}
         >
           {/* Roles */}
-          <div className={`flex flex-col items-center gap-3 ${SECTION_SPACING}`}>
-            <motion.span
-              className="text-[#F5E6A3] font-black text-5xl md:text-6xl"
-              style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Illustrator
-            </motion.span>
-            <motion.span
-              className="text-[#D4B8E0] font-black text-5xl md:text-6xl"
-              style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          <div className={`flex flex-col items-center gap-4 ${SECTION_SPACING}`}>
+            <motion.div
+              className="w-full max-w-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Designer
-            </motion.span>
-            <motion.span
-              className="text-[#B8E0C8] font-black text-5xl md:text-6xl"
-              style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              Artist
-            </motion.span>
+              <Image
+                src="/IDA2.png"
+                alt="Illustrator Designer Artist"
+                width={1600}
+                height={320}
+                className="w-full h-auto object-contain"
+                priority
+              />
+            </motion.div>
           </div>
 
           {/* Description */}
@@ -82,12 +69,14 @@ export default function AboutMeSection({
 
           {/* Let's Create Together */}
           <div className="flex flex-col items-center gap-4 pb-16">
-            <h2
-              className="text-3xl md:text-5xl font-black mb-1 leading-tight text-white"
-              style={{ textShadow: '2px 2px 0 rgba(0,0,0,0.3)' }}
-            >
-              Let&apos;s Create Together!
-            </h2>
+            <Image
+              src="/lets.png"
+              alt="Let's create together"
+              width={800}
+              height={200}
+              className="w-full max-w-3xl h-auto object-contain"
+              priority
+            />
             <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
               Open for freelance projects, collaborations, and creative adventures.
             </p>
