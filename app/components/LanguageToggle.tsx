@@ -8,13 +8,15 @@ export default function LanguageToggle() {
   const { lang, setLang } = useLang();
 
   return (
-    <div className="flex items-center gap-1 text-xs font-medium tracking-wide">
+    <div className="flex items-center gap-1 text-base md:text-sm font-medium tracking-wide">
       {LANGS.map((l, i) => (
         <span key={l} className="flex items-center gap-1">
           <button
             onClick={() => setLang(l)}
-            className={`uppercase transition-opacity ${
-              lang === l ? "text-white opacity-100" : "text-white/40 hover:text-white/70"
+            className={`uppercase px-1 py-1 md:px-0 md:py-0 transition-all ${
+              lang === l
+                ? "text-white underline underline-offset-2 decoration-white/50"
+                : "text-white/40 hover:text-white/70"
             }`}
           >
             {l}

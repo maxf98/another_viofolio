@@ -87,7 +87,8 @@ export default function Navigation({ sections }: NavigationProps) {
   const handleClick = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const block = isHomepage ? "center" : "start";
+      element.scrollIntoView({ behavior: "smooth", block });
     }
     setIsMenuOpen(false);
   };
