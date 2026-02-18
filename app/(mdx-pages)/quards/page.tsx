@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import QuardSwitcher from "./QuardSwitcher";
@@ -8,66 +10,55 @@ import ParallaxImage from "./ParallaxImage";
 import Image from "next/image";
 import NextProjectButton from "@/app/components/NextProjectButton";
 import "@/app/styles/backgrounds.css";
+import { QuardsTextProvider, useQuardsText } from "@/app/translations/quards";
 
 // Static import for hero image
 import heroImg from "@/public/projects/quards/featureArtNoBG.png";
 
-const navs: NavSection[] = [
-  {
-    id: "app",
-    label: "App Design",
-    src: "/icons/q1.png",
-  },
-  {
-    id: "visual-identity",
-    label: "Visual Identity",
-    src: "/icons/q2.png",
-  },
-];
+function QuardsInner() {
+  const t = useQuardsText();
 
-export default function Page() {
+  const navs: NavSection[] = [
+    {
+      id: "app",
+      label: t.navApp,
+      src: "/icons/q1.png",
+    },
+    {
+      id: "visual-identity",
+      label: t.navVisualIdentity,
+      src: "/icons/q2.png",
+    },
+  ];
+
   return (
     <div className="bg-[#24242e]">
       <Navigation sections={navs} />
       <ProjectHeroSection
         src={heroImg}
         alt="Quards"
-        title="WORKING ON ^QUARDS^"
-        description="Quards is an indie iPad app for creating handdrawn flashcards, for which I developed the visual identity and created all assets.
-        As the only designer, working with a single developer, that meant I was responsible for a wide variety of big and small tasks, from designing button icons, to logo design, colors, app store screenshots and themed artworks."
+        title={t.heroTitle}
+        description={t.heroDescription}
       />
 
       <div className="flex flex-col gap-32 bg-dotted pt-16 md:pt-24">
         <div id="app">
           <div className="content-container flex flex-col gap-8">
-            <h1>App Design</h1>
-            <p>
-              When I joined the project, the app had no visual design—just basic
-              functionality. I helped transform it into what you see today,
-              bringing the builder&apos;s vision to life together with my own
-              additions.
-            </p>
+            <h1>{t.appDesignTitle}</h1>
+            <p>{t.appDesignP1}</p>
           </div>
           <div className="my-16">
             <BeforeAfter />
           </div>
           <div className="content-container flex flex-col gap-8">
-            <p>
-              What makes Quards unique is that instead of having two sides like
-              a regular flashcard, a Quard has <i>layers</i>—a question layer
-              and an answer layer, a decision inspired by digital illustration
-              programs.
-            </p>
+            <p>{t.appDesignP2}</p>
             <QuardSwitcher />
           </div>
         </div>
         <div id="visual-identity">
           <div className="content-container flex flex-col gap-8">
-            <h1>Visual Identity</h1>
-            <p>
-              The app consists of two basic elements: the circle (folder) and
-              the rounded rectangle (quard), which together form the logo.
-            </p>
+            <h1>{t.visualIdentityTitle}</h1>
+            <p>{t.visualIdentityP1}</p>
             <Image
               src="/projects/quards/QUARDS-empty.png"
               alt="Circles and squares artwork elements"
@@ -76,11 +67,7 @@ export default function Page() {
               className="w-full h-auto"
             />
             <LogoEquation />
-            <p className="mb-16">
-              I developed the visual identity around this concept of squares and
-              circles—cards and folders orbiting in a personal knowledge
-              universe, with the learner at the center.
-            </p>
+            <p className="mb-16">{t.visualIdentityP2}</p>
           </div>
           <div className="my-16">
             {/* Full width version on mobile, parallax on desktop */}
@@ -110,11 +97,7 @@ export default function Page() {
             />
           </div>
           <div className="content-container flex flex-col gap-8 mt-32 mb-16">
-            <p>
-              This idea of space and floating elements was carried through to
-              the website, showing the unique and representative elements of the
-              app—cards, folders, drawings—floating in space.
-            </p>
+            <p>{t.visualIdentityP3}</p>
           </div>
           <Image
             src="/projects/quards/WebLandingPage.png"
@@ -124,14 +107,7 @@ export default function Page() {
             height={1080}
           />
           <div className="content-container flex flex-col gap-8 mt-16 mb-8">
-            <p>
-              Quards is about drawing instead of typing, about feeling free and
-              having fun and putting your soul into something that can otherwise
-              feel kind of rigid and boring: studying. The design reflects this
-              through its use of color and handdrawn visual assets.
-              <br /> <br />I created these visuals for the app store and
-              onboarding to showcase what using the app feels like:
-            </p>
+            <p style={{ whiteSpace: "pre-line" }}>{t.visualIdentityP4}</p>
           </div>
           <QuardExamplesCarousel />
         </div>
@@ -148,12 +124,7 @@ export default function Page() {
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">
-          <p className="max-w-2xl text-lg">
-            Being the sole designer on this project taught me to wear many
-            hats—from icon design to brand strategy, from app store assets to
-            marketing materials. It was a rewarding challenge that pushed me to
-            grow in every direction.
-          </p>
+          <p className="max-w-2xl text-lg">{t.summaryText}</p>
         </div>
       </div>
 
@@ -166,6 +137,14 @@ export default function Page() {
         />
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <QuardsTextProvider>
+      <QuardsInner />
+    </QuardsTextProvider>
   );
 }
 

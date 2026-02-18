@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import LetterSwitcher from "./LetterSwitcher";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -12,16 +11,16 @@ export default function Hero() {
     >
       {/* Hello image */}
       <motion.div
-        className="relative w-56 h-20 md:w-72 md:h-28"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1 }}
       >
         <Image
-          src="/heyi.png"
-          alt="Heyi"
-          fill
-          className="object-contain"
+          src="/heyo.png"
+          alt="Heyo"
+          width={288}
+          height={112}
+          className="w-36 h-14 md:w-72 md:h-28 -translate-y-4 md:translate-y-0 object-contain"
         />
       </motion.div>
 

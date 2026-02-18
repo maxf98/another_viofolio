@@ -9,44 +9,47 @@ import { NavSection } from "./components/navigation/Navigation";
 import { useLoadState } from "./context/LoadContext";
 import AboutMeSection from "./components/AboutMeOverlay";
 import CTAButton from "./components/CTAButton";
+import { HomeTextProvider, useHomeText } from "./translations/home";
 
 // Static imports for ScrollLinkSection images
-import coverNoPeople from "../public/coverNoPeople.png";
 import chatImg from "../public/gallery/chat.webp";
 import elgatoImg from "../public/projects/elgato/gato3.png";
 import quardsImg from "../public/covers/quards/quards.png";
 import maschaImg from "../public/covers/mascha/m3.png";
+import archiveImg from "../public/archive.png";
+import coverNoPeopleImg from "../public/coverNoPeople.png";
+import workingImg from "../public/working.png";
+import companyImg from "../public/company.png";
+import startupImg from "../public/startup.png";
+import artImg from "../public/art.png";
+import letsImg from "../public/lets.png";
 
-const navs: NavSection[] = [
-  {
-    id: "about-me",
-    label: "about me",
-    src: "/icons/bout-icon.png",
-  },
-  {
-    id: "gallery",
-    label: "personal archive",
-    src: "/icons/drawing.png",
-  },
-  {
-    id: "elgato-project",
-    label: "elgato",
-    src: "/icons/sd.png",
-  },
-  {
-    id: "quards-project",
-    label: "quards",
-    src: "/icons/q1.png",
-  },
-  {
-    id: "mascha-project",
-    label: "mascha",
-    src: "/icons/pink.png",
-  },
-];
-
-export default function Home() {
+function HomeInner() {
   const { state } = useLoadState();
+  const t = useHomeText();
+
+  const navs: NavSection[] = [
+    {
+      id: "gallery",
+      label: t.navGallery,
+      src: "/icons/bout-icon.png",
+    },
+    {
+      id: "elgato-project",
+      label: t.navElgato,
+      src: "/icons/sd.png",
+    },
+    {
+      id: "quards-project",
+      label: t.navQuards,
+      src: "/icons/q1.png",
+    },
+    {
+      id: "mascha-project",
+      label: t.navMascha,
+      src: "/icons/pink.png",
+    },
+  ];
 
   return (
     <main className="z-[5] bg-[#24242e]">
@@ -63,7 +66,7 @@ export default function Home() {
         >
           {state.allLettersReady && (
             <Image
-              src={coverNoPeople}
+              src={coverNoPeopleImg}
               alt="Background"
               fill
               placeholder="blur"
@@ -71,8 +74,8 @@ export default function Home() {
             />
           )}
         </motion.div>
-        {/* Dark overlay for Hero */}
-        <div className="fixed inset-0 -z-[5] bg-[#1a1a1f]/60 pointer-events-none" />
+        {/* Dark overlay for Hero (local to hero area) */}
+        <div className="absolute inset-0 -z-[5] bg-[#1a1a1f]/60 pointer-events-none" />
         {/* Hero Section */}
         <Hero />
 
@@ -84,21 +87,21 @@ export default function Home() {
 
       {/* Cover to hide fixed background when scrolling to other sections */}
       <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
-
         {/* Gallery */}
         <div id="gallery" className="relative">
-          <div className="absolute inset-0 bg-[#1a1a1f]/40 pointer-events-none" />
-          <div className="absolute inset-0 bg-[#B8E0C8]/30 mix-blend-multiply pointer-events-none" />
           <ScrollLinkSection
             href="/gallery"
             imageSrc={chatImg}
             imageAlt="Gallery"
             label="Personal Archive"
-            description="A collection of personal projects and explorations"
+            overlayImage={archiveImg}
+            overlayImageAlt="Archive"
             objectPosition="center bottom"
             imageOpacity={100}
             darkOverlay={false}
             textColor="text-white"
+            overlayColor="#1a1a1f"
+            overlayOpacity={60}
           />
         </div>
 
@@ -110,9 +113,16 @@ export default function Home() {
               imageSrc={elgatoImg}
               imageAlt="Elgato"
               label="Working with a Company"
+              overlayImage={workingImg}
+              overlayImageAlt="Working"
+              secondaryImage={companyImg}
+              secondaryImageAlt="Company placeholder"
               description="Custom designs and illustrations for Elgato"
               objectPosition="center bottom"
               mobileObjectPosition="left"
+              imageOpacity={100}
+              overlayColor="#1a1a1f"
+              overlayOpacity={60}
             />
           </div>
           <div id="quards-project">
@@ -121,6 +131,10 @@ export default function Home() {
               imageSrc={quardsImg}
               imageAlt="Quards"
               label="Working with a Startup"
+              overlayImage={workingImg}
+              overlayImageAlt="Working"
+              secondaryImage={startupImg}
+              secondaryImageAlt="Startup placeholder"
               description="Branding and app design for Quards"
             />
           </div>
@@ -130,53 +144,54 @@ export default function Home() {
               imageSrc={maschaImg}
               imageAlt="Mascha"
               label="Working with an Artist"
+              overlayImage={workingImg}
+              overlayImageAlt="Working"
+              secondaryImage={artImg}
+              secondaryImageAlt="Art placeholder"
               description="Album artwork and visuals for Mascha"
             />
           </div>
         </section>
 
         {/* Footer CTA Section */}
-        <section className="relative py-32 md:py-48 px-8 overflow-hidden">
-          {/* Decorative background elements */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-full pointer-events-none"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="absolute top-1/4 -left-20 w-40 h-40 rounded-full bg-[#F5E6A3]/10 blur-3xl" />
-            <div className="absolute bottom-1/4 -right-20 w-60 h-60 rounded-full bg-[#D4B8E0]/10 blur-3xl" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#B8E0C8]/5 blur-3xl" />
-          </motion.div>
-
+        <section className="relative py-32 md:py-48 px-8 overflow-hidden bg-[#1c1b1b]">
           <div className="max-w-4xl mx-auto text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex flex-col items-center gap-4 mb-8"
             >
-              <h2
-                className="text-4xl md:text-6xl font-black mb-6"
-                style={{ textShadow: '3px 3px 0 rgba(0,0,0,0.3)' }}
-              >
-                <span className="text-[#F5E6A3]">Interested</span>{' '}
-                <span className="text-white">in</span>{' '}
-                <span className="text-[#D4B8E0]">Working</span>{' '}
-                <span className="text-[#B8E0C8]">Together?</span>
-              </h2>
-              <p className="text-white/60 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
-                Whether you&apos;re looking for illustration, branding, or creative direction—let&apos;s explore how we can bring your vision to life.
-              </p>
+              <Image
+                src={letsImg}
+                alt="Let's create together"
+                width={1200}
+                height={300}
+                className="w-full max-w-3xl h-auto object-contain"
+                priority
+              />
             </motion.div>
 
-            <CTAButton href="mailto:hello@vio.art">
-              Get in Touch
-            </CTAButton>
+            <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-8">
+              Open for freelance projects, collaborations, and creative
+              adventures.
+            </p>
+
+            <div className="mt-6 flex justify-center">
+              <CTAButton href="mailto:hello@vio.art">{t.ctaLabel}</CTAButton>
+            </div>
           </div>
         </section>
-
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <HomeTextProvider>
+      <HomeInner />
+    </HomeTextProvider>
   );
 }

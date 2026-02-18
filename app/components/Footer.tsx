@@ -1,8 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import { FaTiktok, FaInstagram, FaEnvelope } from "react-icons/fa";
 import RotateOnHover from "./animations/RotateOnHover";
+import { useLang } from "@/app/context/LanguageContext";
+
+const footerText = {
+  en: { impressum: "Impressum" },
+  de: { impressum: "Impressum" },
+  ru: { impressum: "Impressum" },
+} as const;
 
 export default function Footer() {
+  const { lang } = useLang();
+  const t = footerText[lang];
   return (
     <footer className="w-full border-t border-gray-200 dark:border-gray-700 bg-body">
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -50,7 +61,7 @@ export default function Footer() {
               href="/impressum"
               className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
-              Impressum
+              {t.impressum}
             </Link>
           </div>
 

@@ -1,33 +1,135 @@
 "use client";
 
-import React from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { GalleryItem } from "@/app/data/model";
 
 interface GalleryGridProps {
   images: GalleryItem[];
   clickedImage: (image: GalleryItem) => void;
+  maxColumns?: number;
 }
 
-function GalleryGrid({ images, clickedImage }: GalleryGridProps) {
+interface ImageLayout {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [layouts, setLayouts] = useState<ImageLayout[]>([]);
+  const [containerHeight, setContainerHeight] = useState(0);
+
+  // Generate stable random properties for each image
+  const imageProps = useMemo(() => {
+    return images.map((_, idx) => {
+      const seed = idx * 9301 + 49297;
+      const random1 = (seed % 233280) / 233280;
+      const random2 = ((seed * 2) % 233280) / 233280;
+      const random3 = ((seed * 3) % 233280) / 233280;
+
+      return {
+        offsetX: (random1 - 0.5) * 30, // -15% to 15%
+        offsetY: (random2 - 0.5) * 20, // -10% to 10%
+        scale: 0.85 + random3 * 0.3, // 0.85 to 1.15
+      };
+    });
+  }, [images]);
+
+  useEffect(() => {
+    const calculateLayout = () => {
+      if (!containerRef.current) return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+
+      // Determine columns based on screen width
+      let columns = 2;
+      if (containerWidth >= 1024) columns = Math.min(maxColumns, 4);
+      else if (containerWidth >= 768) columns = Math.min(maxColumns, 3);
+
+      // Gap sizes
+      let gap = 48;
+      if (containerWidth >= 1024) gap = 64;
+      else if (containerWidth >= 768) gap = 56;
+
+      // Calculate column width
+      const availableWidth = containerWidth - 32; // 32 for padding
+      const columnWidth = (availableWidth - gap * (columns - 1)) / columns;
+
+      // Track column heights
+      const columnHeights = new Array(columns).fill(0);
+      const newLayouts: ImageLayout[] = [];
+
+      images.forEach((item, idx) => {
+        // Find shortest column
+        const shortestColumn = columnHeights.indexOf(Math.min(...columnHeights));
+
+        // Calculate aspect ratio and apply scale
+        const aspectRatio = item.image.height / item.image.width;
+        const props = imageProps[idx];
+
+        const scaledWidth = columnWidth * props.scale;
+        const scaledHeight = scaledWidth * aspectRatio;
+
+        // Calculate base position in column
+        const baseX = 16 + shortestColumn * (columnWidth + gap) + (columnWidth - scaledWidth) / 2;
+        const baseY = columnHeights[shortestColumn];
+
+        newLayouts.push({
+          x: baseX,
+          y: baseY,
+          width: scaledWidth,
+          height: scaledHeight,
+        });
+
+        // Update column height
+        columnHeights[shortestColumn] = baseY + scaledHeight + gap;
+      });
+
+      setLayouts(newLayouts);
+      setContainerHeight(Math.max(...columnHeights));
+    };
+
+    calculateLayout();
+
+    const resizeObserver = new ResizeObserver(calculateLayout);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [images, imageProps, maxColumns]);
+
   return (
-    <div className="w-full grid grid-cols-3 gap-2">
-      {images.map((item: GalleryItem, idx: number) => (
-        <div
-          key={item.index || idx}
-          className="relative aspect-[3/4] overflow-hidden cursor-pointer"
-          onClick={() => clickedImage(item)}
-        >
-          <Image
-            src={item.image}
-            alt={item.alt ?? "A Gallery Image"}
-            fill
-            sizes="(max-width: 768px) 33vw, 25vw"
-            className="object-cover"
-            placeholder="blur"
-          />
-        </div>
-      ))}
+    <div ref={containerRef} className="w-full relative py-8 px-4" style={{ height: containerHeight }}>
+      {layouts.map((layout, idx) => {
+        const item = images[idx];
+
+        return (
+          <div
+            key={item.index || idx}
+            className="absolute cursor-pointer transition-transform duration-300 hover:scale-105 hover:z-10"
+            style={{
+              left: layout.x,
+              top: layout.y,
+              width: layout.width,
+              height: layout.height,
+            }}
+            onClick={() => clickedImage(item)}
+          >
+            <Image
+              src={item.image}
+              alt={item.alt ?? "A Gallery Image"}
+              fill
+              sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+              className="object-cover rounded-sm shadow-lg"
+              placeholder="blur"
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

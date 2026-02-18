@@ -5,6 +5,7 @@ import "./styles/backgrounds.css";
 import "./styles/prose.css";
 import Footer from "./components/Footer";
 import { LoadProvider } from "./context/LoadContext";
+import { LanguageProvider } from "./context/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,15 +35,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <LoadProvider>
-          <div className="min-h-screen">
-            <div className="relative z-[10]">
-              {children}
-              <Footer />
+        <LanguageProvider>
+          <LoadProvider>
+            <div className="min-h-screen">
+              <div className="relative z-[10]">
+                {children}
+                <Footer />
+              </div>
             </div>
-          </div>
-          <div id="modal-root" />
-        </LoadProvider>
+            <div id="modal-root" />
+          </LoadProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

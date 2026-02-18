@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Picker from "@/app/components/Picker";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { useQuardsText } from "@/app/translations/quards";
 
 const BEFORE_AFTER_COUNT = 7;
 
@@ -18,13 +19,31 @@ const descriptions = [
   "Description 7",
 ];
 
+const FADE_DURATION = 200; // ms
+
 export default function BeforeAfter() {
+  const t = useQuardsText();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
   const [beforeOnTop, setBeforeOnTop] = useState(false);
+
+  useEffect(() => {
+    if (selectedIndex === displayIndex) return;
+    const t1 = setTimeout(() => setVisible(false), 0);
+    const t2 = setTimeout(() => {
+      setDisplayIndex(selectedIndex);
+      setVisible(true);
+    }, FADE_DURATION);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [selectedIndex, displayIndex]);
 
   const handleSelectIndex = (index: number) => {
     setSelectedIndex(index);
-    setBeforeOnTop(false); // Reset to After on top when switching
+    setBeforeOnTop(false);
   };
 
   const oldImages = Array.from(
@@ -41,15 +60,7 @@ export default function BeforeAfter() {
     <div className="flex flex-col-reverse sm:flex-row justify-center items-center sm:items-stretch gap-12 sm:gap-4 my-18">
       {/* Side-by-side Preview */}
       <div className="relative">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={selectedIndex}
-            className="flex justify-center items-end gap-0 sm:gap-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
+        <div className="flex justify-center items-end gap-0 sm:gap-8">
             {/* Old (Before) */}
             <motion.div
               className="flex flex-col items-center justify-end cursor-pointer"
@@ -58,24 +69,26 @@ export default function BeforeAfter() {
             >
               <motion.span
                 className="text-white !text-2xl font-semibold mb-2 pointer-events-none"
-                initial={{
-                  opacity: 0.3,
-                }}
-                animate={{
-                  opacity: beforeOnTop ? 1 : 0.3,
-                }}
+                initial={{ opacity: 0.3 }}
+                animate={{ opacity: beforeOnTop ? 1 : 0.3 }}
               >
-                Before
+                {t.beforeLabel}
               </motion.span>
-              <Image
-                src={oldImages[selectedIndex]}
-                alt="Before"
-                width={300}
-                height={400}
-                className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto ipad-border"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
-              />
+              <div className="ipad-border overflow-hidden rounded-2xl">
+                <Image
+                  src={oldImages[displayIndex]}
+                  alt="Before"
+                  width={300}
+                  height={400}
+                  className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto block"
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transition: `opacity ${FADE_DURATION}ms ease-in-out`,
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
+                />
+              </div>
             </motion.div>
 
             {/* New (After) */}
@@ -86,24 +99,27 @@ export default function BeforeAfter() {
             >
               <motion.span
                 className="text-white !text-2xl font-semibold mb-2 pointer-events-none"
-                animate={{
-                  opacity: beforeOnTop ? 0.3 : 1,
-                }}
+                animate={{ opacity: beforeOnTop ? 0.3 : 1 }}
               >
-                After
+                {t.afterLabel}
               </motion.span>
-              <Image
-                src={newImages[selectedIndex]}
-                alt="After"
-                width={300}
-                height={400}
-                className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto ipad-border"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
-              />
+              <div className="ipad-border overflow-hidden rounded-2xl">
+                <Image
+                  src={newImages[displayIndex]}
+                  alt="After"
+                  width={300}
+                  height={400}
+                  className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto block"
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transition: `opacity ${FADE_DURATION}ms ease-in-out`,
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
+                />
+              </div>
             </motion.div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
 
         {/* Hint to tap the other image */}
         <motion.div
@@ -114,13 +130,13 @@ export default function BeforeAfter() {
         >
           {beforeOnTop ? (
             <>
-              <span>Tap to see after</span>
+              <span>{t.tapToSeeAfter}</span>
               <MdArrowForward size={16} />
             </>
           ) : (
             <>
               <MdArrowBack size={16} />
-              <span>Tap to see before</span>
+              <span>{t.tapToSeeBefore}</span>
             </>
           )}
         </motion.div>

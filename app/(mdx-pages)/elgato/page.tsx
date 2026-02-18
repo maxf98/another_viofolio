@@ -10,6 +10,7 @@ import Lightbox from "@/app/components/Lightbox";
 import NextProjectButton from "@/app/components/NextProjectButton";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
+import workingImg from "@/public/working.png";
 import {
   customsWebShotsImages,
   dImages,
@@ -19,36 +20,38 @@ import {
   winter23Images,
 } from "@/app/data/elgato";
 import { pairImages, sdImages, xlrImages } from "./CustomsGallery";
+import { ElgatoTextProvider, useElgatoText } from "@/app/translations/elgato";
 
 // Static import for hero image
 import heroImg from "@/public/projects/elgato/gato3.png";
 
-const navs: NavSection[] = [
-  {
-    id: "customs",
-    label: "Product Customs",
-    src: "/icons/sd.png",
-  },
-  {
-    id: "w22",
-    label: "Dreamville",
-    src: "/icons/D.png",
-  },
-  {
-    id: "anniversary",
-    label: "Anniversary",
-    src: "/icons/ex.png",
-  },
-  {
-    id: "w21",
-    label: "Giftboxes",
-    src: "/icons/gift.png",
-  },
-];
-
-export default function Page() {
+function ElgatoInner() {
+  const t = useElgatoText();
   const [lightboxImages, setLightboxImages] = useState<ImageItem[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const navs: NavSection[] = [
+    {
+      id: "customs",
+      label: t.customsTitle,
+      src: "/icons/sd.png",
+    },
+    {
+      id: "w22",
+      label: t.dreamvilleTitle,
+      src: "/icons/D.png",
+    },
+    {
+      id: "anniversary",
+      label: t.anniversaryTitle,
+      src: "/icons/ex.png",
+    },
+    {
+      id: "w21",
+      label: t.giftboxesTitle,
+      src: "/icons/gift.png",
+    },
+  ];
 
   const handleDreamvilleClick = (imageIndex: number) => {
     const images = dImages.map((img, i) => ({
@@ -117,8 +120,8 @@ export default function Page() {
       <ProjectHeroSection
         src={heroImg}
         alt="Elgato Poster"
-        title="WORKING WITH ^ELGATO^"
-        description="Elgato is a leading creator of hardware and software for content creators, known for products like the Stream Deck, capture cards, microphones, and lighting tools used by streamers and creatives worldwide. I had the opportunity to collaborate with their teams globally on custom product designs and illustrated brand assets, contributing to the visual identity of several releases and campaigns."
+        title={t.heroTitle}
+        description={t.heroDescription}
       />
 
       {/* Product Customs Section */}
@@ -135,12 +138,8 @@ export default function Page() {
         <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
           <div id="customs">
             <div className="mb-24">
-              <h1>Product Customs</h1>
-              <p>
-                I designed custom faceplates for Elgato&apos;s Stream Deck and
-                Wave XLR, including the first versions released in their store
-                and various partner collaborations.
-              </p>
+              <h1>{t.customsTitle}</h1>
+              <p>{t.customsDescription}</p>
             </div>
             <CustomsGallery
               onPairClick={handlePairClick}
@@ -169,7 +168,7 @@ export default function Page() {
         </div>
         <div className="flex flex-col justify-center items-center gap-16 py-32 md:py-16">
           <div id="w22" className="content-container pt-16 md:pt-0">
-            <h1>Dreamville x Elgato </h1>
+            <h1>{t.dreamvilleTitle}</h1>
             <div className="flex flex-col-reverse md:flex-col-reverse gap-4">
               <Image
                 src="/covers/elgato+/ville.png"
@@ -178,12 +177,7 @@ export default function Page() {
                 height={1080}
                 className="w-full"
               />
-              <p>
-                I helped bring the first Dreamville x Elgato Wave 3 microphone
-                to life by crafting its visual identity, exploring color
-                directions, and creating assets used throughout the
-                collaboration&apos;s launch.
-              </p>
+              <p>{t.dreamvilleDescription}</p>
             </div>
           </div>
           <InfiniteScrollGallery
@@ -210,7 +204,7 @@ export default function Page() {
           className="flex flex-col justify-center items-center gap-16 py-24 md:py-16"
         >
           <div className="content-container pt-16 md:pt-0">
-            <h1>Anniversary Designs</h1>
+            <h1>{t.anniversaryTitle}</h1>
             <div className="flex flex-col-reverse md:flex-col-reverse gap-4">
               <Image
                 src="/covers/elgato+/x2.png"
@@ -219,12 +213,7 @@ export default function Page() {
                 height={1080}
                 className="w-full"
               />
-              <p>
-                For Elgato&apos;s 10-year anniversary, I developed the
-                event&apos;s visual identity, creating limited-edition products
-                featuring a custom pattern, two color palettes, and the Elgato X
-                event logo.
-              </p>
+              <p>{t.anniversaryDescription}</p>
             </div>
           </div>
           <InfiniteScrollGallery
@@ -261,17 +250,12 @@ export default function Page() {
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">
-          <p className="max-w-2xl text-lg">
-            Throughout these projects, I faced many challenges and learned a
-            great deal—working across a wide variety of specifications,
-            experimenting with new ideas, and always keeping the brand feeling
-            consistent.
-          </p>
+          <p className="max-w-2xl text-lg">{t.summaryText}</p>
         </div>
       </div>
 
-      {/* Next Project Button - on blank background */}
-      <div className="bg-[#1c1b1b]">
+      {/* Next Project Button - match page background */}
+      <div className="bg-[#24242e]">
         <NextProjectButton
           href="/quards"
           label="Quards"
@@ -283,7 +267,16 @@ export default function Page() {
         images={lightboxImages}
         selectedIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
+        showText={false}
       />
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <ElgatoTextProvider>
+      <ElgatoInner />
+    </ElgatoTextProvider>
   );
 }

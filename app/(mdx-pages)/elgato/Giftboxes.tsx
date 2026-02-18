@@ -7,6 +7,7 @@ import Lightbox from "@/app/components/Lightbox";
 import { winter23Images, ofestImages, winter22Images } from "@/app/data/elgato";
 import { StaticImageData } from "next/image";
 import { ImageItem } from "@/app/data/model";
+import { useElgatoText } from "@/app/translations/elgato";
 
 import box1 from "@/public/projects/elgato/boxes/box1.png";
 import box2 from "@/public/projects/elgato/boxes/box2.png";
@@ -15,42 +16,18 @@ import bg1 from "@/public/projects/elgato/brand-illustration/winter23/1.png";
 import bg2 from "@/public/projects/elgato/brand-illustration/winter22/8.png";
 import bg3 from "@/public/projects/elgato/brand-illustration/ofest/6.png";
 
-const boxes: {
-  image: StaticImageData;
-  title: string;
-  description: string;
-  galleryImages: StaticImageData[];
-  backgroundImage?: StaticImageData;
-}[] = [
-  {
-    image: box2,
-    title: "Winter Holidays 2022",
-    description:
-      "For Elgato's 2022 Holiday Gift Box, I developed two visual narratives: reimagining the Stream Deck as illuminated winter-night windows, and creating an Elgato-inspired gingerbread house.",
-    galleryImages: winter23Images,
-    backgroundImage: bg1,
-  },
-  {
-    image: box3,
-    title: "Winter Holidays 2021",
-    description:
-      "This gift box brought together a wide range of custom illustrations I developed over time—from Elgato winter-themed stickers to branded posters—all coming together in one cheerful, festive box.",
-    galleryImages: winter22Images,
-    backgroundImage: bg2,
-  },
-  {
-    image: box1,
-    title: "Oktoberfest Gift Box",
-    description:
-      "Inspired by Munich's Oktoberfest, I created an illustrated gift box combining classic festival elements with Elgato's playful, creative identity.",
-    galleryImages: ofestImages,
-    backgroundImage: bg3,
-  },
+const boxImages: { image: StaticImageData; galleryImages: StaticImageData[]; backgroundImage: StaticImageData }[] = [
+  { image: box2, galleryImages: winter23Images, backgroundImage: bg1 },
+  { image: box3, galleryImages: winter22Images, backgroundImage: bg2 },
+  { image: box1, galleryImages: ofestImages, backgroundImage: bg3 },
 ];
 
 export default function Giftboxes() {
+  const t = useElgatoText();
   const [lightboxImages, setLightboxImages] = useState<ImageItem[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const boxes = boxImages.map((b, i) => ({ ...b, title: t.boxes[i].title, description: t.boxes[i].description }));
 
   const handleImageClick = (boxIndex: number, imageIndex: number) => {
     const images = boxes[boxIndex].galleryImages.map((img, i) => ({
@@ -65,12 +42,8 @@ export default function Giftboxes() {
   return (
     <div id="w21">
       <div className="content-container pt-24 md:pt-16">
-        <h1>Partner Gift Boxes</h1>
-        <p>
-          I created a series of playful visual narratives for Elgato’s partner
-          gift boxes, building imaginative worlds around their brand by working
-          with their logo and products.
-        </p>
+        <h1>{t.giftboxesTitle}</h1>
+        <p>{t.giftboxesDescription}</p>
       </div>
 
       <div className="flex flex-col mt-24">
@@ -125,6 +98,7 @@ export default function Giftboxes() {
         images={lightboxImages}
         selectedIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
+        showText={false}
       />
     </div>
   );

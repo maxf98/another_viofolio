@@ -6,22 +6,28 @@ import { MdClose, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { ImageItem } from "@/app/data/model";
+import CTAButton from "./CTAButton";
 
 type LightboxProps = {
   images: ImageItem[];
   selectedIndex: number | null;
   onClose: () => void;
   imageClassName?: string;
+  showText?: boolean;
 };
+
+const WRAP_FADE_MS = 200;
 
 export default function Lightbox({
   images,
   selectedIndex,
   onClose,
   imageClassName = "",
+  showText = true,
 }: LightboxProps) {
   const isOpen = selectedIndex !== null;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex ?? 0);
+  const [wrapVisible, setWrapVisible] = useState(true);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
@@ -58,6 +64,7 @@ export default function Lightbox({
       const slides = emblaApi.slideNodes();
       const selected = emblaApi.selectedScrollSnap();
 
+      // Style all real slides
       slides.forEach((slide, i) => {
         const distance = Math.abs(i - selected);
         let opacity = 0.1;
@@ -76,6 +83,7 @@ export default function Lightbox({
         slide.style.transition =
           "opacity 0.3s ease-out, transform 0.3s ease-out";
       });
+
     };
 
     applyStyles();
@@ -87,8 +95,31 @@ export default function Lightbox({
     };
   }, [emblaApi]);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(() => {
+    if (!emblaApi) return;
+    if (emblaApi.selectedScrollSnap() === 0) {
+      setWrapVisible(false);
+      setTimeout(() => {
+        emblaApi.scrollTo(images.length - 1, true);
+        setWrapVisible(true);
+      }, WRAP_FADE_MS);
+    } else {
+      emblaApi.scrollPrev();
+    }
+  }, [emblaApi, images.length]);
+
+  const scrollNext = useCallback(() => {
+    if (!emblaApi) return;
+    if (emblaApi.selectedScrollSnap() === images.length - 1) {
+      setWrapVisible(false);
+      setTimeout(() => {
+        emblaApi.scrollTo(0, true);
+        setWrapVisible(true);
+      }, WRAP_FADE_MS);
+    } else {
+      emblaApi.scrollNext();
+    }
+  }, [emblaApi, images.length]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -122,44 +153,90 @@ export default function Lightbox({
           onClick={onClose}
         >
           {/* Close button */}
-          <motion.button
-            className="absolute top-4 right-4 z-30 text-white/70"
-            onClick={onClose}
-            whileHover={{ color: "purple", rotate: "90deg" }}
-          >
-            <MdClose size={36} />
-          </motion.button>
+          <div className="fixed top-4 right-4 z-30">
+            <CTAButton
+              onClick={onClose}
+              size="sm"
+              bgColor="#7a9b76"
+              className="!p-3"
+            >
+              <MdClose size={24} />
+            </CTAButton>
+          </div>
 
-          {/* Navigation arrows */}
+          {/* Navigation arrows - Desktop only (hidden on mobile) */}
           {images.length > 1 && (
             <>
-              <motion.button
-                className="absolute left-4 md:left-8 z-30 text-white/50 hover:text-white transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  scrollPrev();
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <MdChevronLeft size={48} />
-              </motion.button>
-              <motion.button
-                className="absolute right-4 md:right-8 z-30 text-white/50 hover:text-white transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  scrollNext();
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <MdChevronRight size={48} />
-              </motion.button>
+              <div className="hidden md:block fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-30">
+                <CTAButton
+                  onClick={(e) => {
+                    e?.stopPropagation();
+                    scrollPrev();
+                  }}
+                  size="sm"
+                  bgColor="#1a1a1f"
+                  blobIntensity="medium"
+                  className="!p-3"
+                >
+                  <MdChevronLeft size={28} />
+                </CTAButton>
+              </div>
+              <div className="hidden md:block fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-30">
+                <CTAButton
+                  onClick={(e) => {
+                    e?.stopPropagation();
+                    scrollNext();
+                  }}
+                  size="sm"
+                  bgColor="#1a1a1f"
+                  blobIntensity="medium"
+                  className="!p-3"
+                >
+                  <MdChevronRight size={28} />
+                </CTAButton>
+              </div>
             </>
           )}
 
+          {/* Mobile navigation buttons - Fixed at bottom */}
+          {images.length > 1 && (
+            <div className="md:hidden fixed bottom-8 left-0 right-0 flex justify-center items-center gap-4 z-30 px-4">
+              <CTAButton
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  scrollPrev();
+                }}
+                size="sm"
+                bgColor="#1a1a1f"
+                blobIntensity="medium"
+                className="!p-3"
+              >
+                <MdChevronLeft size={24} />
+              </CTAButton>
+              <CTAButton
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  scrollNext();
+                }}
+                size="sm"
+                bgColor="#1a1a1f"
+                blobIntensity="medium"
+                className="!p-3"
+              >
+                <MdChevronRight size={24} />
+              </CTAButton>
+            </div>
+          )}
+
           {/* Embla Carousel */}
-          <div className="w-full h-full overflow-hidden" ref={emblaRef}>
+          <div
+            className="w-full h-full overflow-hidden"
+            ref={emblaRef}
+            style={{
+              opacity: wrapVisible ? 1 : 0,
+              transition: `opacity ${WRAP_FADE_MS}ms ease-in-out`,
+            }}
+          >
             <div className="flex h-full items-center">
               {images.map((image, i) => (
                 <div
@@ -181,19 +258,22 @@ export default function Lightbox({
                       placeholder="blur"
                       sizes="(max-width: 768px) 90vw, 70vw"
                       draggable={false}
+                      priority
                     />
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left md:max-w-[300px]">
-                      {(image.title || image.alt) && (
-                        <h3 className="text-white text-xl md:text-2xl font-medium capitalize">
-                          {image.title || image.alt}
-                        </h3>
-                      )}
-                      {image.description && (
-                        <p className="mt-2 text-white/60 text-sm md:text-base leading-relaxed">
-                          {image.description}
-                        </p>
-                      )}
-                    </div>
+                    {showText && (
+                      <div className="flex flex-col items-center md:items-start text-center md:text-left md:max-w-[300px] w-full">
+                        {(image.title || image.alt) && (
+                          <h3 className="text-white text-xl md:text-2xl font-medium capitalize">
+                            {image.title || image.alt}
+                          </h3>
+                        )}
+                        {image.description && (
+                          <p className="mt-2 text-white/60 text-base md:text-base leading-relaxed">
+                            {image.description}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

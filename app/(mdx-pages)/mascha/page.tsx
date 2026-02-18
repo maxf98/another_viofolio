@@ -4,29 +4,32 @@ import Image from "next/image";
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import NextProjectButton from "@/app/components/NextProjectButton";
+import { MaschaTextProvider, useMaschaText } from "@/app/translations/mascha";
 
 // Static import for hero image
 import heroImg from "@/public/covers/mascha/m3.png";
 
-const navs: NavSection[] = [
-  {
-    id: "breathe",
-    label: "Breathe",
-    src: "/icons/yellow.png",
-  },
-  {
-    id: "kundalini",
-    label: "Kundalini",
-    src: "/icons/blue.png",
-  },
-  {
-    id: "feelloved",
-    label: "Feel Loved",
-    src: "/icons/pink.png",
-  },
-];
+function MaschaInner() {
+  const t = useMaschaText();
 
-export default function Page() {
+  const navs: NavSection[] = [
+    {
+      id: "breathe",
+      label: t.navBreathe,
+      src: "/icons/yellow.png",
+    },
+    {
+      id: "kundalini",
+      label: t.navKundalini,
+      src: "/icons/blue.png",
+    },
+    {
+      id: "feelloved",
+      label: t.navFeelLoved,
+      src: "/icons/pink.png",
+    },
+  ];
+
   return (
     <div className="bg-[#24242e]">
       <Navigation sections={navs} />
@@ -34,8 +37,8 @@ export default function Page() {
       <ProjectHeroSection
         src={heroImg}
         alt="Mascha"
-        title="WORKING WITH ^MASCHA^"
-        description="In collaboration with musician Mascha, I created three album covers that translate the themes of her music into visual form. Using a mixed-media process, I combined AI-generated imagery, photography, hand-painted illustration, and digital editing to craft layered, cohesive artworks that reflect the depth and atmosphere of her sound."
+        title={t.heroTitle}
+        description={t.heroDescription}
       />
 
       <div
@@ -61,11 +64,7 @@ export default function Page() {
           />
 
           <div className="my-16 max-w-2xl text-center">
-            <p>
-              This cover explores breath as a force. My work involved
-              illustration and collage, designing a hand-drawn title, a
-              frame-by-frame animation in Procreate, and a full CD design.
-            </p>
+            <p>{t.breatheDescription}</p>
           </div>
 
           <Image
@@ -77,7 +76,7 @@ export default function Page() {
           />
 
           <h2 className="text-lg font-light mb-8 opacity-70">
-            Animation & CD Design
+            {t.breatheSubtitle}
           </h2>
           <div className="flex flex-col md:flex-row gap-8 w-full items-center md:items-center md:justify-center">
             <video
@@ -101,7 +100,7 @@ export default function Page() {
             />
           </div>
 
-          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">Listen</h2>
+          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">{t.breatheListen}</h2>
           <iframe
             data-testid="embed-iframe"
             className="rounded-2xl w-full"
@@ -136,11 +135,7 @@ export default function Page() {
           />
 
           <div className="my-16 max-w-2xl text-center">
-            <p>
-              This cover design involved bringing Mascha into a calm underwater
-              world. Working with photographs, this cover involved mainly photo
-              editing and collage work.
-            </p>
+            <p>{t.kundaliniDescription}</p>
           </div>
 
           <Image
@@ -150,7 +145,7 @@ export default function Page() {
             height={800}
           />
 
-          <h2 className="text-lg font-light mt-8 mb-4 opacity-70">Listen</h2>
+          <h2 className="text-lg font-light mt-8 mb-4 opacity-70">{t.kundaliniListen}</h2>
           <iframe
             data-testid="embed-iframe"
             className="rounded-2xl w-full"
@@ -185,11 +180,7 @@ export default function Page() {
           />
 
           <div className="my-16 max-w-2xl text-center">
-            <p>
-              This cover design wrapped Mascha in a warm, glowing floral
-              blanket. The work combined photo editing, collage, and
-              illustration, along with hand-drawn lettering for the title.
-            </p>
+            <p>{t.feelLovedDescription}</p>
           </div>
 
           <Image
@@ -200,7 +191,7 @@ export default function Page() {
             className="w-[75vw] max-w-[1200px] h-auto"
           />
 
-          <h2 className="text-lg font-light mb-4 opacity-70">Album Design</h2>
+          <h2 className="text-lg font-light mb-4 opacity-70">{t.feelLovedSubtitle}</h2>
           <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1200px] items-center md:items-center md:justify-center">
             <Image
               src="/projects/mascha/loved/feelloved-cover.png"
@@ -218,7 +209,7 @@ export default function Page() {
             />
           </div>
 
-          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">Listen</h2>
+          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">{t.feelLovedListen}</h2>
           <iframe
             data-testid="embed-iframe"
             className="rounded-2xl w-full max-w-[900px]"
@@ -242,11 +233,7 @@ export default function Page() {
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">
-          <p className="max-w-2xl text-lg">
-            Working with Mascha allowed me to explore the intersection of music
-            and visual art, translating emotion and sound into imagery through a
-            blend of traditional and digital techniques.
-          </p>
+          <p className="max-w-2xl text-lg">{t.summaryText}</p>
         </div>
       </div>
 
@@ -259,5 +246,13 @@ export default function Page() {
         />
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <MaschaTextProvider>
+      <MaschaInner />
+    </MaschaTextProvider>
   );
 }

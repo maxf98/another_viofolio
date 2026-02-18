@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface ScrollLinkSectionProps {
   href: string;
@@ -16,6 +17,13 @@ interface ScrollLinkSectionProps {
   imageOpacity?: number;
   darkOverlay?: boolean;
   textColor?: string;
+  overlayImage?: StaticImageData;
+  overlayImageAlt?: string;
+  secondaryImage?: StaticImageData;
+  secondaryImageAlt?: string;
+  overlayColor?: string;
+  overlayOpacity?: number; // 0-100
+  overlayBlendMode?: React.CSSProperties["mixBlendMode"];
 }
 
 export default function ScrollLinkSection({
@@ -30,6 +38,13 @@ export default function ScrollLinkSection({
   imageOpacity = 60,
   darkOverlay = false,
   textColor = "text-white",
+  overlayImage,
+  overlayImageAlt,
+  secondaryImage,
+  secondaryImageAlt,
+  overlayColor = "",
+  overlayOpacity = 0,
+  overlayBlendMode = "normal",
 }: ScrollLinkSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -84,9 +99,20 @@ export default function ScrollLinkSection({
               }`}
               style={{ objectPosition, opacity: imageOpacity / 100 }}
             />
+            {/* Custom overlay tint above images */}
+            {overlayOpacity > 0 && overlayColor && (
+              <div
+                className="absolute inset-0 z-[2] pointer-events-none"
+                style={{
+                  backgroundColor: overlayColor,
+                  opacity: overlayOpacity / 100,
+                  mixBlendMode: overlayBlendMode,
+                }}
+              />
+            )}
             {/* Dark overlay */}
             {darkOverlay && (
-              <div className="absolute inset-0 bg-[#1a1a1f]/60" />
+              <div className="absolute inset-0 z-[3] bg-[#1a1a1f]/60" />
             )}
           </>
         )}
@@ -96,19 +122,40 @@ export default function ScrollLinkSection({
           href={href}
           className="group"
         >
-          <div className="relative px-8 py-6 md:px-16 md:py-12 text-center">
-            <span
-              className={`relative text-5xl md:text-7xl font-black ${textColor} uppercase tracking-[0.05em] group-hover:tracking-[-0.02em] transition-[letter-spacing] duration-300 ease-out block`}
-              style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
+          {overlayImage ? (
+            <motion.div
+              className="relative flex flex-col items-center gap-4 w-72 md:w-[26rem]"
+              whileHover={{ scale: 1.05, rotate: 1.5 }}
+              transition={{ type: "spring", stiffness: 240, damping: 18 }}
             >
-              {label}
-            </span>
-            {description && (
-              <span className={`relative ${textColor} opacity-80 text-lg md:text-xl font-bold normal-case tracking-normal block mt-3`}>
-                {description}
+              <Image
+                src={overlayImage}
+                alt={overlayImageAlt ?? label}
+                className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.45)]"
+              />
+              {secondaryImage && (
+                <Image
+                  src={secondaryImage}
+                  alt={secondaryImageAlt ?? `${overlayImageAlt ?? label} secondary`}
+                  className="w-10/12 md:w-full h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.35)]"
+                />
+              )}
+            </motion.div>
+          ) : (
+            <div className="relative px-8 py-6 md:px-16 md:py-12 text-center">
+              <span
+                className={`relative text-5xl md:text-7xl font-black ${textColor} uppercase tracking-[0.05em] group-hover:tracking-[-0.02em] transition-[letter-spacing] duration-300 ease-out block`}
+                style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
+              >
+                {label}
               </span>
-            )}
-          </div>
+              {description && (
+                <span className={`relative ${textColor} opacity-80 text-lg md:text-xl font-bold normal-case tracking-normal block mt-3`}>
+                  {description}
+                </span>
+              )}
+            </div>
+          )}
         </Link>
       </div>
     </div>

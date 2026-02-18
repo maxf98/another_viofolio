@@ -65,10 +65,10 @@ export default function FlipBook({ images }: FlipBookProps) {
         }`}
       >
         <div className="flex flex-col items-end">
-          <span className="text-[#F5E6A3] text-2xl md:text-4xl font-black tracking-tight animate-tap-hint">
+          <span className="text-[#F5E6A3] text-xl md:text-4xl font-black tracking-tight animate-tap-hint">
             tap the magazine
           </span>
-          <span className="text-white/70 text-lg md:text-2xl font-medium mt-1">
+          <span className="text-white/70 text-base md:text-2xl font-medium mt-1">
             to flip through
           </span>
           <svg

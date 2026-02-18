@@ -3,14 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
-
-const navs: NavSection[] = [
-  { id: "nature", label: "Nature" },
-  { id: "sensory", label: "Sensory" },
-  { id: "chance", label: "Chance" },
-  { id: "fragments", label: "Fragments" },
-  { id: "imagination", label: "Imagination" },
-];
+import { ArtTherapyTextProvider, useArtTherapyText } from "@/app/translations/art-therapy";
 
 // Define subsection data
 interface ImageGroup {
@@ -198,8 +191,41 @@ const sections: Section[] = [
   },
 ];
 
-export default function Page() {
+function ArtTherapyInner() {
+  const t = useArtTherapyText();
   const [activeOverlay, setActiveOverlay] = useState<{ subsection: Subsection; section: Section; subsectionIndex: number } | null>(null);
+
+  // Merge translated text into static section data (images/thumbnails stay in sections)
+  const translatedSections: Section[] = sections.map((section, si) => {
+    const tSection = t.sections[si] as Record<string, unknown> | undefined;
+    return {
+      ...section,
+      title: (tSection?.title as string | undefined) ?? section.title,
+      description: (tSection?.description as string | undefined) ?? section.description,
+      subsections: section.subsections.map((sub, ssi) => {
+        const tSub = (tSection?.subsections as Record<string, unknown>[] | undefined)?.[ssi];
+        const tGroups = (tSub?.imageGroups as { title: string }[] | undefined);
+        return {
+          ...sub,
+          title: (tSub?.title as string | undefined) ?? sub.title,
+          description: (tSub?.description as string | undefined) ?? sub.description,
+          secondaryDescription: (tSub?.secondaryDescription as string | undefined) ?? sub.secondaryDescription,
+          imageGroups: sub.imageGroups?.map((group, gi) => ({
+            ...group,
+            title: tGroups?.[gi]?.title ?? group.title,
+          })),
+        };
+      }),
+    };
+  });
+
+  const navs: NavSection[] = [
+    { id: "nature", label: t.navNature },
+    { id: "sensory", label: t.navSensory },
+    { id: "chance", label: t.navChance },
+    { id: "fragments", label: t.navFragments },
+    { id: "imagination", label: t.navImagination },
+  ];
 
   const navigateOverlay = (direction: "prev" | "next") => {
     if (!activeOverlay) return;
@@ -231,17 +257,17 @@ export default function Page() {
         <div className="content-container py-16 md:py-24">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-5xl font-light text-white tracking-wide">
-              Art Therapy Exercises
+              {t.pageTitle}
             </h2>
             <p className="text-xl md:text-2xl leading-relaxed opacity-90 max-w-4xl">
-              Art therapy uses creative expression as a pathway to healing, self-discovery, and emotional well-being. Through various exercises and techniques, we can access parts of ourselves that words alone cannot reach. The medium we choose fundamentally transforms our creative experience—working with clay grounds us in the body, while watercolors invite us to surrender control. Each material carries its own language, its own resistance, its own way of meeting us. I&apos;ve started exploring different exercises myself—you can see some of them below.
+              {t.pageIntro}
             </p>
           </div>
         </div>
       </div>
 
       <div id="work">
-        {sections.map((section) => (
+        {translatedSections.map((section) => (
           <div key={section.id} className="relative" style={{ clipPath: "inset(0)" }}>
             {/* Fixed background color per section */}
             {section.backgroundColor && (
@@ -460,7 +486,7 @@ export default function Page() {
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm opacity-50 italic">Images coming soon</p>
+                        <p className="text-sm opacity-50 italic">{t.imagesComingSoon}</p>
                       )}
                     </div>
                   ))}
@@ -484,5 +510,13 @@ export default function Page() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <ArtTherapyTextProvider>
+      <ArtTherapyInner />
+    </ArtTherapyTextProvider>
   );
 }

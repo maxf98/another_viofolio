@@ -7,6 +7,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import RotateOnHover from "../animations/RotateOnHover";
 import { useLoadState } from "@/app/context/LoadContext";
+import LanguageToggle from "@/app/components/LanguageToggle";
 
 export interface NavSection {
   id: string;
@@ -188,6 +189,9 @@ export default function Navigation({ sections }: NavigationProps) {
                   ) : null
                 )}
               </motion.nav>
+              <div className="px-6 pb-8">
+                <LanguageToggle />
+              </div>
             </motion.div>
           </div>
         )}
@@ -204,6 +208,11 @@ export default function Navigation({ sections }: NavigationProps) {
               </RotateOnHover>
             </Link>
           </header>
+
+          {/* Desktop: Language toggle top right */}
+          <div className="fixed top-0 right-0 z-[9999] flex items-center px-6 py-10 pointer-events-auto">
+            <LanguageToggle />
+          </div>
 
           {/* Desktop: Side navigation */}
           <div className="fixed z-[9998] top-0 left-0 bottom-0 h-screen ml-6 w-[60px] flex items-center justify-center pointer-events-auto">

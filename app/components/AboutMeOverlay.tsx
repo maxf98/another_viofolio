@@ -1,8 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
+import { createPortal } from "react-dom";
 import CTAButton from "./CTAButton";
+import vBackground from "../../public/gallery/painting.png";
+import { useHomeText } from "@/app/translations/home";
 
 interface AboutMeSectionProps {
   isOpen?: boolean;
@@ -13,9 +18,30 @@ interface AboutMeSectionProps {
 const SECTION_SPACING = "mb-32"; // ~8rem / 128px
 const SECTION_PADDING = "py-16 px-6 md:px-12"; // Padding around the entire section
 
-export default function AboutMeSection({
-  isOpen = true,
-}: AboutMeSectionProps) {
+export default function AboutMeSection({ isOpen = true }: AboutMeSectionProps) {
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+  const t = useHomeText();
+
+  // Ensure portal target is available in browser
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
+
+  // Lock body scroll when overlay is open
+  useEffect(() => {
+    if (showOverlay) {
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalBodyOverflow;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+      };
+    }
+  }, [showOverlay]);
+
   if (!isOpen) return null;
 
   return (
@@ -43,48 +69,84 @@ export default function AboutMeSection({
           transition={{ delay: 0.2, type: "spring" }}
         >
           {/* Roles */}
-          <div className={`flex flex-col items-center gap-4 ${SECTION_SPACING}`}>
-            <motion.div
-              className="w-full max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+          <div
+              className={`flex flex-col items-center gap-4 ${SECTION_SPACING}`}
             >
+              <motion.div
+                className="w-full max-w-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
               <Image
                 src="/IDA2.png"
                 alt="Illustrator Designer Artist"
                 width={1600}
                 height={320}
-                className="w-full h-auto object-contain"
+                className="w-4/5 md:w-full h-auto object-contain mx-auto"
                 priority
               />
+              <div className="mt-6 flex justify-center">
+                <CTAButton onClick={() => setShowOverlay(true)}>
+                  {t.aboutButton}
+                </CTAButton>
+              </div>
             </motion.div>
           </div>
-
-          {/* Description */}
-          <p className={`text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed ${SECTION_SPACING}`}>
-            Hi, I&apos;m Vio, based in Munich, Germany. I create colorful, expressive illustrations and designs with a playful, character-driven style. From brand illustration and visual identities to editorial and personal projects—I love bringing ideas to life with bold colors and storytelling. Working freelance since graduating from NABA Milan, and currently training in art therapy at Campus Naturalis.
-          </p>
-
-          {/* Let's Create Together */}
-          <div className="flex flex-col items-center gap-4 pb-16">
-            <Image
-              src="/lets.png"
-              alt="Let's create together"
-              width={800}
-              height={200}
-              className="w-full max-w-3xl h-auto object-contain"
-              priority
-            />
-            <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-              Open for freelance projects, collaborations, and creative adventures.
-            </p>
-            <CTAButton href="mailto:hello@vio.art">
-              Say Hello
-            </CTAButton>
-          </div>
         </motion.div>
+
+        {portalTarget
+          ? createPortal(
+              <AnimatePresence>
+                {showOverlay && (
+                  <motion.div
+                    className="fixed inset-0 z-[20000] flex items-stretch justify-center px-0 md:px-6"
+                    onClick={() => setShowOverlay(false)}
+                    role="presentation"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="fixed inset-0 -z-10">
+                      <Image
+                        src={vBackground}
+                        alt="About me background"
+                        fill
+                        className="object-cover object-[center_40%]"
+                        placeholder="blur"
+                      />
+                      <div className="absolute inset-0 bg-black/60" />
+                    </div>
+                    <div
+                      className="relative w-full max-w-3xl h-full md:h-auto my-16 md:my-16 p-5 md:p-10 overflow-y-auto flex items-center justify-center"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="fixed top-4 right-4 z-[30000]">
+                        <CTAButton
+                          onClick={() => setShowOverlay(false)}
+                          size="sm"
+                          bgColor="#7a9b76"
+                          className="!p-3"
+                        >
+                          <MdClose size={24} />
+                        </CTAButton>
+                      </div>
+                      <div className="flex flex-col items-center text-center gap-8 relative z-10 justify-start md:justify-center pt-6 md:pt-0">
+                        <div className="text-white/90 text-lg md:text-xl leading-relaxed space-y-4 max-w-3xl font-normal">
+                          {t.aboutParagraphs.map((para: string, idx: number) => (
+                            <p key={idx}>{para}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>,
+              portalTarget
+            )
+          : null}
       </div>
     </div>
   );
