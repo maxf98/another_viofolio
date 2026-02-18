@@ -212,7 +212,7 @@ const translations = {
   },
 } as const;
 
-type GalleryText = typeof translations.en;
+type GalleryText = typeof translations[keyof typeof translations];
 
 const GalleryTextContext = createContext<GalleryText | null>(null);
 

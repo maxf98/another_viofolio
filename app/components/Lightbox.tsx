@@ -255,7 +255,7 @@ export default function Lightbox({
                       className={`object-contain select-none max-h-[60vh] md:max-h-[85vh] w-auto h-auto ${imageClassName}`}
                       src={image.image}
                       alt={image.alt ?? "Gallery image"}
-                      placeholder="blur"
+                      {...(typeof image.image !== "string" && { placeholder: "blur" })}
                       sizes="(max-width: 768px) 90vw, 70vw"
                       draggable={false}
                       priority

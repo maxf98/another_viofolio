@@ -381,7 +381,7 @@ const translations = {
   },
 } as const;
 
-type ArtTherapyText = typeof translations.en;
+type ArtTherapyText = typeof translations[keyof typeof translations];
 
 const ArtTherapyTextContext = createContext<ArtTherapyText | null>(null);
 

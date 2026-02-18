@@ -54,7 +54,7 @@ const translations = {
   },
 } as const;
 
-type MaschaText = typeof translations.en;
+type MaschaText = typeof translations[keyof typeof translations];
 
 const MaschaTextContext = createContext<MaschaText | null>(null);
 

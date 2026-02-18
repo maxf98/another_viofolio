@@ -91,6 +91,11 @@ export default function FlipBook({ images }: FlipBookProps) {
         width={pageWidth}
         height={pageHeight}
         size="fixed"
+        style={{}}
+        minWidth={0}
+        maxWidth={pageWidth}
+        minHeight={0}
+        maxHeight={pageHeight}
         showCover={true}
         mobileScrollSupport={true}
         className="flipbook"

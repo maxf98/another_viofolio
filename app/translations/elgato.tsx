@@ -87,7 +87,7 @@ const translations = {
   },
 } as const;
 
-type ElgatoText = typeof translations.en;
+type ElgatoText = typeof translations[keyof typeof translations];
 
 const ElgatoTextContext = createContext<ElgatoText | null>(null);
 

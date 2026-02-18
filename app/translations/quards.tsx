@@ -63,7 +63,7 @@ const translations = {
   },
 } as const;
 
-type QuardsText = typeof translations.en;
+type QuardsText = typeof translations[keyof typeof translations];
 
 const QuardsTextContext = createContext<QuardsText | null>(null);
 

@@ -42,7 +42,7 @@ const translations = {
   },
 } as const;
 
-type HomeText = typeof translations.en;
+type HomeText = typeof translations[keyof typeof translations];
 
 const HomeTextContext = createContext<HomeText | null>(null);
 

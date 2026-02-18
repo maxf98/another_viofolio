@@ -67,7 +67,8 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
         const shortestColumn = columnHeights.indexOf(Math.min(...columnHeights));
 
         // Calculate aspect ratio and apply scale
-        const aspectRatio = item.image.height / item.image.width;
+        const img = item.image as import("next/image").StaticImageData;
+        const aspectRatio = img.height / img.width;
         const props = imageProps[idx];
 
         const scaledWidth = columnWidth * props.scale;
