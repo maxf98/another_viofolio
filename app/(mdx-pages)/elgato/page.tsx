@@ -133,6 +133,8 @@ function ElgatoInner() {
             fill
             className="object-cover opacity-20"
             style={{ objectPosition: "center 70%" }}
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
@@ -164,6 +166,8 @@ function ElgatoInner() {
             alt=""
             fill
             className="object-cover opacity-5"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="flex flex-col justify-center items-center gap-16 py-32 md:py-16">
@@ -197,6 +201,8 @@ function ElgatoInner() {
             alt=""
             fill
             className="object-cover opacity-5"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div
@@ -232,6 +238,8 @@ function ElgatoInner() {
             alt=""
             fill
             className="object-cover opacity-5"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="">
@@ -247,6 +255,8 @@ function ElgatoInner() {
             alt=""
             fill
             className="object-cover opacity-20"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">

@@ -76,6 +76,8 @@ export default function InfiniteScrollGallery({
                       ? "object-right [clip-path:inset(0_0_0_50%)]"
                       : ""
                   } ${imageClassName}`}
+                  quality={75}
+                  loading="lazy"
                 />
               </div>
             );

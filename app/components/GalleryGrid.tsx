@@ -127,6 +127,8 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
               sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
               className="object-cover rounded-sm shadow-lg"
               placeholder="blur"
+              quality={80}
+              loading="lazy"
             />
           </div>
         );

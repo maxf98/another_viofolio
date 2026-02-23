@@ -21,6 +21,7 @@ export default function Hero() {
           width={288}
           height={112}
           className="w-36 h-14 md:w-72 md:h-28 -translate-y-4 md:translate-y-0 object-contain"
+          priority
         />
       </motion.div>
 

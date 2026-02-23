@@ -53,6 +53,8 @@ export default function ProjectHeroSection({
           placeholder="blur"
           className="w-full h-full object-cover opacity-20 scale-100"
           style={{ objectPosition: "center 70%" }}
+          quality={60}
+          priority
         />
       </div>
       <motion.div

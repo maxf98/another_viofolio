@@ -28,7 +28,8 @@ export default function ScrollSection({
           alt={title}
           fill
           className="object-cover"
-          priority
+          quality={70}
+          loading="lazy"
         />
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40" />
