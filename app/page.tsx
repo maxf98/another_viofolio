@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import Hero from "./components/Hero";
 import ScrollLinkSection from "./components/ScrollLinkSection";
 import Navigation from "./components/navigation/Navigation";
@@ -14,6 +15,7 @@ import { HomeTextProvider, useHomeText } from "./translations/home";
 function HomeInner() {
   const { state } = useLoadState();
   const t = useHomeText();
+  const [heroBackgroundLoaded, setHeroBackgroundLoaded] = useState(false);
   const deferredSectionsReady = state.allLettersReady;
 
   const navs: NavSection[] = [
@@ -49,7 +51,7 @@ function HomeInner() {
         <motion.div
           className="fixed inset-0 -z-10 pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: state.allLettersReady ? 0.6 : 0 }}
+          animate={{ opacity: state.allLettersReady && heroBackgroundLoaded ? 0.6 : 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           {state.allLettersReady && (
@@ -58,6 +60,7 @@ function HomeInner() {
               alt="Background"
               fill
               className="object-cover object-bottom"
+              onLoad={() => setHeroBackgroundLoaded(true)}
             />
           )}
         </motion.div>
