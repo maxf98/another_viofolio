@@ -11,4 +11,12 @@ export interface ImageItem {
 
 // GalleryItem is the same as ImageItem (no extension needed)
 export type GalleryItem = ImageItem;
-export type LetterItem = ImageItem;
+
+// LetterItem uses string paths instead of StaticImageData for dynamic loading
+export interface LetterItem {
+  index: number;
+  image: string;
+  alt?: string;
+  title?: string;
+  description?: string;
+}

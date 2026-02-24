@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import CTAButton from "./CTAButton";
 import vBackground from "../../public/gallery/painting.png";
 import { useHomeText } from "@/app/translations/home";
+import { useLoadState } from "@/app/context/LoadContext";
 
 interface AboutMeSectionProps {
   isOpen?: boolean;
@@ -22,6 +23,7 @@ export default function AboutMeSection({ isOpen = true }: AboutMeSectionProps) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const t = useHomeText();
+  const { state } = useLoadState();
 
   // Ensure portal target is available in browser
   useEffect(() => {
@@ -79,14 +81,15 @@ export default function AboutMeSection({ isOpen = true }: AboutMeSectionProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-              <Image
-                src="/IDA2.png"
-                alt="Illustrator Designer Artist"
-                width={1600}
-                height={320}
-                className="w-4/5 md:w-full h-auto object-contain mx-auto"
-                priority
-              />
+              {state.allLettersReady && (
+                <Image
+                  src="/IDA2.png"
+                  alt="Illustrator Designer Artist"
+                  width={1600}
+                  height={320}
+                  className="w-4/5 md:w-full h-auto object-contain mx-auto"
+                />
+              )}
               <div className="mt-6 flex justify-center">
                 <CTAButton onClick={() => setShowOverlay(true)}>
                   {t.aboutButton}

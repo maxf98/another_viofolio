@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 
-import workingImg from "@/public/working.png";
+const workingImg = "/working.webp";
 
 interface ProjectHeroSectionProps {
   src: StaticImageData;

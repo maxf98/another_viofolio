@@ -13,7 +13,7 @@ import "@/app/styles/backgrounds.css";
 import { QuardsTextProvider, useQuardsText } from "@/app/translations/quards";
 
 // Static import for hero image
-import heroImg from "@/public/projects/quards/featureArtNoBG.png";
+import heroImg from "@/public/projects/quards/featureArtNoBG.webp";
 
 function QuardsInner() {
   const t = useQuardsText();
@@ -65,6 +65,7 @@ function QuardsInner() {
               width={1200}
               height={600}
               className="w-full h-auto"
+              loading="lazy"
             />
             <LogoEquation />
             <p className="mb-16">{t.visualIdentityP2}</p>
@@ -72,15 +73,16 @@ function QuardsInner() {
           <div className="my-16">
             {/* Full width version on mobile, parallax on desktop */}
             <Image
-              src="/projects/quards/fullFeature.png"
+              src="/projects/quards/fullFeature.webp"
               alt="Quards feature artwork"
               width={1600}
               height={412}
               className="w-full h-auto sm:hidden"
+              loading="lazy"
             />
             <div className="hidden sm:block">
               <ParallaxImage
-                src="/projects/quards/fullFeature.png"
+                src="/projects/quards/fullFeature.webp"
                 alt="Quards feature artwork"
                 width={1600}
                 height={412}
@@ -89,22 +91,24 @@ function QuardsInner() {
           </div>
           <div className="content-container flex justify-center">
             <Image
-              src="/projects/quards/feature.png"
+              src="/projects/quards/feature.webp"
               alt="Quards featured artwork"
               width={800}
               height={533}
               className="w-full max-w-md h-auto"
+              loading="lazy"
             />
           </div>
           <div className="content-container flex flex-col gap-8 mt-32 mb-16">
             <p>{t.visualIdentityP3}</p>
           </div>
           <Image
-            src="/projects/quards/WebLandingPage.png"
+            src="/projects/quards/WebLandingPage.webp"
             alt="Quards landing page"
             className="rounded-lg mb-16"
             width={1920}
             height={1080}
+            loading="lazy"
           />
           <div className="content-container flex flex-col gap-8 mt-16 mb-8">
             <p style={{ whiteSpace: "pre-line" }}>{t.visualIdentityP4}</p>
@@ -117,10 +121,12 @@ function QuardsInner() {
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/projects/quards/featureArtNoBG.png"
+            src="/projects/quards/featureArtNoBG.webp"
             alt=""
             fill
             className="object-cover opacity-20"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">
@@ -133,7 +139,7 @@ function QuardsInner() {
         <NextProjectButton
           href="/mascha"
           label="Mascha"
-          imageSrc="/covers/mascha/m3.png"
+          imageSrc="/covers/mascha/m3.webp"
         />
       </div>
     </div>

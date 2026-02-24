@@ -72,7 +72,7 @@ export default function PagePreview({
             <Image
               src={imageSrc}
               alt={imageAlt || title}
-              priority={true}
+              loading="lazy"
               fill
               className="object-cover"
               style={{

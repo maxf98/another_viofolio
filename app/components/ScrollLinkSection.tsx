@@ -1,13 +1,12 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 interface ScrollLinkSectionProps {
   href: string;
-  imageSrc: StaticImageData;
+  imageSrc: StaticImageData | string;
   imageAlt: string;
   label: string;
   description?: string;
@@ -17,9 +16,9 @@ interface ScrollLinkSectionProps {
   imageOpacity?: number;
   darkOverlay?: boolean;
   textColor?: string;
-  overlayImage?: StaticImageData;
+  overlayImage?: StaticImageData | string;
   overlayImageAlt?: string;
-  secondaryImage?: StaticImageData;
+  secondaryImage?: StaticImageData | string;
   secondaryImageAlt?: string;
   overlayColor?: string;
   overlayOpacity?: number; // 0-100
@@ -46,75 +45,45 @@ export default function ScrollLinkSection({
   overlayOpacity = 0,
   overlayBlendMode = "normal",
 }: ScrollLinkSectionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
-
-  // Preload image when section is 1.5 viewports away
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoad(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "150% 0px" }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div
-      ref={sectionRef}
-      className={`relative ${height} w-full`}
-      style={{ clipPath: "inset(0)" }}
-    >
+    <div className={`relative ${height} w-full`} style={{ clipPath: "inset(0)" }}>
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        {shouldLoad && (
-          <>
-            {/* Mobile image */}
-            {mobileObjectPosition && (
-              <Image
-                src={imageSrc}
-                alt={imageAlt}
-                fill
-                placeholder="blur"
-                className={`object-cover object-${mobileObjectPosition} md:hidden`}
-                style={{ opacity: imageOpacity / 100 }}
-              />
-            )}
-            {/* Desktop image (or only image if no mobileObjectPosition) */}
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              fill
-              placeholder="blur"
-              className={`object-cover ${
-                mobileObjectPosition ? "hidden md:block" : ""
-              }`}
-              style={{ objectPosition, opacity: imageOpacity / 100 }}
-            />
-            {/* Custom overlay tint above images */}
-            {overlayOpacity > 0 && overlayColor && (
-              <div
-                className="absolute inset-0 z-[2] pointer-events-none"
-                style={{
-                  backgroundColor: overlayColor,
-                  opacity: overlayOpacity / 100,
-                  mixBlendMode: overlayBlendMode,
-                }}
-              />
-            )}
-            {/* Dark overlay */}
-            {darkOverlay && (
-              <div className="absolute inset-0 z-[3] bg-[#1a1a1f]/60" />
-            )}
-          </>
+        {/* Mobile image */}
+        {mobileObjectPosition && (
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            loading="eager"
+            fetchPriority="high"
+            className={`object-cover object-${mobileObjectPosition} md:hidden`}
+            style={{ opacity: imageOpacity / 100 }}
+          />
+        )}
+        {/* Desktop image (or only image if no mobileObjectPosition) */}
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          loading="eager"
+          fetchPriority="high"
+          className={`object-cover ${mobileObjectPosition ? "hidden md:block" : ""}`}
+          style={{ objectPosition, opacity: imageOpacity / 100 }}
+        />
+        {/* Custom overlay tint above images */}
+        {overlayOpacity > 0 && overlayColor && (
+          <div
+            className="absolute inset-0 z-[2] pointer-events-none"
+            style={{
+              backgroundColor: overlayColor,
+              opacity: overlayOpacity / 100,
+              mixBlendMode: overlayBlendMode,
+            }}
+          />
+        )}
+        {/* Dark overlay */}
+        {darkOverlay && (
+          <div className="absolute inset-0 z-[3] bg-[#1a1a1f]/60" />
         )}
       </div>
       <div className="absolute inset-0 flex items-center justify-center h-full px-0 md:px-4">
@@ -131,12 +100,20 @@ export default function ScrollLinkSection({
               <Image
                 src={overlayImage}
                 alt={overlayImageAlt ?? label}
+                width={2048}
+                height={2048}
+                loading="eager"
+                fetchPriority="high"
                 className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.45)]"
               />
               {secondaryImage && (
                 <Image
                   src={secondaryImage}
                   alt={secondaryImageAlt ?? `${overlayImageAlt ?? label} secondary`}
+                  width={2000}
+                  height={500}
+                  loading="eager"
+                  fetchPriority="high"
                   className="w-10/12 md:w-full h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.35)]"
                 />
               )}

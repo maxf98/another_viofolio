@@ -16,7 +16,7 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 1 }}
       >
         <Image
-          src="/heyo.png"
+          src="/heyo.webp"
           alt="Heyo"
           width={288}
           height={112}

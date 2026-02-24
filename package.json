@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "audit:images": "node scripts/audit-images.mjs",
     "generate:letters": "node scripts/generate-letters.js",
     "split:pages": "node scripts/split-pages.js",
     "crop:images": "node scripts/crop-images.js"

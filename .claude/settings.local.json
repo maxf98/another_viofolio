@@ -5,7 +5,8 @@
       "Bash(for:*)",
       "Bash(do mv \"$f\" \"$f%.PNG.png\")",
       "Bash(done)",
-      "Bash(sips:*)"
+      "Bash(sips:*)",
+      "Bash(cwebp:*)"
     ],
     "deny": [],
     "ask": []

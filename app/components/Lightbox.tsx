@@ -238,7 +238,13 @@ export default function Lightbox({
             }}
           >
             <div className="flex h-full items-center">
-              {images.map((image, i) => (
+              {images.map((image, i) => {
+                const isCurrent = i === currentIndex;
+                const isPrev = i === (currentIndex - 1 + images.length) % images.length;
+                const isNext = i === (currentIndex + 1) % images.length;
+                const shouldPrioritize = isCurrent || isPrev || isNext;
+
+                return (
                 <div
                   key={i}
                   className={`flex-[0_0_95%] md:flex-[0_0_90%] min-w-0 flex items-center justify-center px-4 md:px-8 ${
@@ -258,7 +264,8 @@ export default function Lightbox({
                       {...(typeof image.image !== "string" && { placeholder: "blur" })}
                       sizes="(max-width: 768px) 90vw, 70vw"
                       draggable={false}
-                      priority
+                      priority={shouldPrioritize}
+                      loading={shouldPrioritize ? "eager" : "lazy"}
                     />
                     {showText && (
                       <div className="flex flex-col items-center md:items-start text-center md:text-left md:max-w-[300px] w-full">
@@ -276,7 +283,8 @@ export default function Lightbox({
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </motion.div>

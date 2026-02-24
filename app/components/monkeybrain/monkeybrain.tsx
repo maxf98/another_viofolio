@@ -35,7 +35,7 @@ export default function Monkeybrain() {
         }`}
       >
         <Image
-          src="/projects/MONKEYBRAIN/pages/FINALPATTERNS_left.png"
+          src="/projects/MONKEYBRAIN/pages/FINALPATTERNS_left.webp"
           alt="Monkeybrain background pattern"
           fill
           className="object-cover opacity-30"

@@ -2,19 +2,33 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { StaticImageData } from "next/image";
 import { letters } from "@/app/data/graph";
 import { LetterItem } from "@/app/data/model";
 import { useLoadState } from "@/app/context/LoadContext";
 
-function getImageSrc(image: StaticImageData | string): string {
-  return typeof image === "string" ? image : image.src;
-}
+// Image cache to track loaded images
+const imageCache = new Map<string, boolean>();
 
-function preloadImages(images: (StaticImageData | string)[]) {
-  images.forEach((image) => {
+function preloadImage(
+  src: string,
+  fetchPriority: "high" | "low" | "auto" = "auto"
+): Promise<void> {
+  if (imageCache.has(src)) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
     const img = new Image();
-    img.src = getImageSrc(image);
+    if ("fetchPriority" in img) {
+      img.fetchPriority = fetchPriority;
+    }
+    img.decoding = "async";
+    img.onload = () => {
+      imageCache.set(src, true);
+      resolve();
+    };
+    img.onerror = reject;
+    img.src = src;
   });
 }
 
@@ -25,6 +39,7 @@ const os = letters.O;
 
 export default function LetterSwitcher() {
   const [selectedLetters, setSelectedLetters] = useState([0, 0, 0]);
+  const selectedLettersRef = useRef<[number, number, number]>([0, 0, 0]);
   const lastChangedLetterRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -60,26 +75,47 @@ export default function LetterSwitcher() {
     const getNextIndex = (currentIndex: number, letterArray: LetterItem[]) =>
       (currentIndex + 1) % letterArray.length;
 
-    const interval = setInterval(() => {
+    let cancelled = false;
+
+    const tick = async () => {
       let randomPosition = lastChangedLetterRef.current;
       do {
         randomPosition = Math.floor(Math.random() * 3);
       } while (randomPosition === lastChangedLetterRef.current);
       lastChangedLetterRef.current = randomPosition;
 
-      setSelectedLetters((prev) => {
-        const newLetters = [...prev];
-        const letterArray =
-          randomPosition === 0 ? vs : randomPosition === 1 ? is : os;
-        const currentIndex = prev[randomPosition];
-        const newIndex = getNextIndex(currentIndex, letterArray);
-        newLetters[randomPosition] = newIndex;
-        return newLetters;
-      });
-    }, 1000);
+      const prev = selectedLettersRef.current;
+      const newLetters = [...prev] as [number, number, number];
+      const letterArray =
+        randomPosition === 0 ? vs : randomPosition === 1 ? is : os;
+      const currentIndex = prev[randomPosition];
+      const newIndex = getNextIndex(currentIndex, letterArray);
+      newLetters[randomPosition] = newIndex;
 
-    return () => clearInterval(interval);
+      try {
+        // Fetch the upcoming letter with high priority before switching.
+        await preloadImage(letterArray[newIndex].image, "high");
+      } catch {
+        // Continue transition even if preload fails.
+      }
+
+      if (cancelled) return;
+      selectedLettersRef.current = newLetters;
+      setSelectedLetters(newLetters);
+
+      window.setTimeout(tick, 1000);
+    };
+
+    const timer = window.setTimeout(tick, 1000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
   }, [state.allLettersReady, isVisible]);
+
+  useEffect(() => {
+    selectedLettersRef.current = selectedLetters as [number, number, number];
+  }, [selectedLetters]);
 
   // Decide layout orientation and item size based on container space
   useEffect(() => {
@@ -140,7 +176,7 @@ export default function LetterSwitcher() {
         letters={is}
         selectedLetter={selectedLetters[1]}
         position={1}
-        canStart={true}
+        canStart={state.lettersLoaded[0]}
         onLoad={() => setLetterLoaded(1)}
         size={layout.size}
       />
@@ -148,7 +184,7 @@ export default function LetterSwitcher() {
         letters={os}
         selectedLetter={selectedLetters[2]}
         position={2}
-        canStart={true}
+        canStart={state.lettersLoaded[1]}
         onLoad={() => setLetterLoaded(2)}
         size={layout.size}
       />
@@ -165,10 +201,10 @@ interface LetterStackProps {
   size: number;
 }
 
-// Initial delay before letters start appearing (after "Hey I'm" appears)
-const INITIAL_DELAY = 1200;
-// Stagger delay between each letter appearing (in ms)
-const STAGGER_DELAY = 450;
+// Delay before first letter appears after "Hey I'm"
+const INITIAL_DELAY = 100;
+// Stagger delay between each letter appearing
+const STAGGER_DELAY = 150;
 
 function LetterStack({
   letters,
@@ -182,31 +218,36 @@ function LetterStack({
   const [visible, setVisible] = useState(false);
   const hasStartedLoading = useRef(false);
 
-  // Load first image when canStart becomes true
+  // Load first image sequentially: wait for previous letter to load
   useEffect(() => {
     if (!canStart || hasStartedLoading.current) return;
     hasStartedLoading.current = true;
 
-    const img = new Image();
-    img.onload = () => {
+    // Load the first image
+    preloadImage(letters[0].image, "high").then(() => {
       setLoaded(true);
-      // Add stagger delay before showing the letter
-      setTimeout(() => {
-        setVisible(true);
-        onLoad();
-      }, INITIAL_DELAY + position * STAGGER_DELAY);
-    };
-    img.src = getImageSrc(letters[0].image);
+      onLoad();
+    }).catch((error) => {
+      console.error(`Failed to load letter at position ${position}:`, error);
+      // Show anyway on error to avoid blocking the UI
+      setLoaded(true);
+      onLoad();
+    });
   }, [canStart, letters, onLoad, position]);
 
-  // Preload remaining images after first is loaded
+  // Show letter after stagger delay once it's loaded
   useEffect(() => {
-    if (loaded) {
-      preloadImages(letters.slice(1).map((letter) => letter.image));
-    }
-  }, [loaded, letters]);
+    if (!loaded) return;
 
-  // Empty placeholder while loading or waiting for stagger
+    const delay = INITIAL_DELAY + position * STAGGER_DELAY;
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [loaded, position]);
+
+  // Empty placeholder while loading
   if (!visible) {
     return (
       <div
@@ -232,8 +273,9 @@ function LetterStack({
       <AnimatePresence mode="wait">
         <motion.img
           key={letters[selectedLetter].index}
-          src={getImageSrc(letters[selectedLetter].image)}
+          src={letters[selectedLetter].image}
           alt={letters[selectedLetter].alt}
+          fetchPriority="high"
           initial={{ rotateY: -90 }}
           animate={{ rotateY: 0 }}
           exit={{ rotateY: 90 }}

@@ -11,22 +11,10 @@ import AboutMeSection from "./components/AboutMeOverlay";
 import CTAButton from "./components/CTAButton";
 import { HomeTextProvider, useHomeText } from "./translations/home";
 
-// Static imports for ScrollLinkSection images
-import chatImg from "../public/gallery/chat.webp";
-import elgatoImg from "../public/projects/elgato/gato3.png";
-import quardsImg from "../public/covers/quards/quards.png";
-import maschaImg from "../public/covers/mascha/m3.png";
-import archiveImg from "../public/archive.png";
-import coverNoPeopleImg from "../public/coverNoPeople.png";
-import workingImg from "../public/working.png";
-import companyImg from "../public/company.png";
-import startupImg from "../public/startup.png";
-import artImg from "../public/art.png";
-import letsImg from "../public/lets.png";
-
 function HomeInner() {
   const { state } = useLoadState();
   const t = useHomeText();
+  const deferredSectionsReady = state.allLettersReady;
 
   const navs: NavSection[] = [
     {
@@ -66,10 +54,9 @@ function HomeInner() {
         >
           {state.allLettersReady && (
             <Image
-              src={coverNoPeopleImg}
+              src="/coverNoPeople.webp"
               alt="Background"
               fill
-              placeholder="blur"
               className="object-cover object-bottom"
             />
           )}
@@ -85,105 +72,109 @@ function HomeInner() {
         </div>
       </div>
 
-      {/* Cover to hide fixed background when scrolling to other sections */}
-      <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
-        {/* Gallery */}
-        <div id="gallery" className="relative">
-          <ScrollLinkSection
-            href="/gallery"
-            imageSrc={chatImg}
-            imageAlt="Gallery"
-            label="Personal Archive"
-            overlayImage={archiveImg}
-            overlayImageAlt="Archive"
-            objectPosition="center bottom"
-            imageOpacity={100}
-            darkOverlay={false}
-            textColor="text-white"
-            overlayColor="#1a1a1f"
-            overlayOpacity={60}
-          />
-        </div>
-
-        {/* Projects Section */}
-        <section id="projects" className="w-full">
-          <div id="elgato-project">
-            <ScrollLinkSection
-              href="/elgato"
-              imageSrc={elgatoImg}
-              imageAlt="Elgato"
-              label="Working with a Company"
-              overlayImage={workingImg}
-              overlayImageAlt="Working"
-              secondaryImage={companyImg}
-              secondaryImageAlt="Company placeholder"
-              description="Custom designs and illustrations for Elgato"
-              objectPosition="center bottom"
-              mobileObjectPosition="left"
-              imageOpacity={100}
-              overlayColor="#1a1a1f"
-              overlayOpacity={60}
-            />
-          </div>
-          <div id="quards-project">
-            <ScrollLinkSection
-              href="/quards"
-              imageSrc={quardsImg}
-              imageAlt="Quards"
-              label="Working with a Startup"
-              overlayImage={workingImg}
-              overlayImageAlt="Working"
-              secondaryImage={startupImg}
-              secondaryImageAlt="Startup placeholder"
-              description="Branding and app design for Quards"
-            />
-          </div>
-          <div id="mascha-project">
-            <ScrollLinkSection
-              href="/mascha"
-              imageSrc={maschaImg}
-              imageAlt="Mascha"
-              label="Working with an Artist"
-              overlayImage={workingImg}
-              overlayImageAlt="Working"
-              secondaryImage={artImg}
-              secondaryImageAlt="Art placeholder"
-              description="Album artwork and visuals for Mascha"
-            />
-          </div>
-        </section>
-
-        {/* Footer CTA Section */}
-        <section className="relative py-32 md:py-48 px-8 overflow-hidden bg-[#1c1b1b]">
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.5 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-col items-center gap-4 mb-8"
-            >
-              <Image
-                src={letsImg}
-                alt="Let's create together"
-                width={1200}
-                height={300}
-                className="w-full max-w-3xl h-auto object-contain"
-                priority
+      {deferredSectionsReady && (
+        <>
+          {/* Cover to hide fixed background when scrolling to other sections */}
+          <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
+            {/* Gallery */}
+            <div id="gallery" className="relative">
+              <ScrollLinkSection
+                href="/gallery"
+                imageSrc="/gallery/chat.webp"
+                imageAlt="Gallery"
+                label="Personal Archive"
+                overlayImage="/archive.webp"
+                overlayImageAlt="Archive"
+                objectPosition="center bottom"
+                imageOpacity={100}
+                darkOverlay={false}
+                textColor="text-white"
+                overlayColor="#1a1a1f"
+                overlayOpacity={60}
               />
-            </motion.div>
-
-            <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-8">
-              Open for freelance projects, collaborations, and creative
-              adventures.
-            </p>
-
-            <div className="mt-6 flex justify-center">
-              <CTAButton href="mailto:hello@vio.art">{t.ctaLabel}</CTAButton>
             </div>
+
+            {/* Projects Section */}
+            <section id="projects" className="w-full">
+              <div id="elgato-project">
+                <ScrollLinkSection
+                  href="/elgato"
+                  imageSrc="/projects/elgato/gato3.webp"
+                  imageAlt="Elgato"
+                  label="Working with a Company"
+                  overlayImage="/working.webp"
+                  overlayImageAlt="Working"
+                  secondaryImage="/company.webp"
+                  secondaryImageAlt="Company placeholder"
+                  description="Custom designs and illustrations for Elgato"
+                  objectPosition="center bottom"
+                  mobileObjectPosition="left"
+                  imageOpacity={100}
+                  overlayColor="#1a1a1f"
+                  overlayOpacity={60}
+                />
+              </div>
+              <div id="quards-project">
+                <ScrollLinkSection
+                  href="/quards"
+                  imageSrc="/covers/quards/quards.webp"
+                  imageAlt="Quards"
+                  label="Working with a Startup"
+                  overlayImage="/working.webp"
+                  overlayImageAlt="Working"
+                  secondaryImage="/startup.webp"
+                  secondaryImageAlt="Startup placeholder"
+                  description="Branding and app design for Quards"
+                />
+              </div>
+              <div id="mascha-project">
+                <ScrollLinkSection
+                  href="/mascha"
+                  imageSrc="/covers/mascha/m3.webp"
+                  imageAlt="Mascha"
+                  label="Working with an Artist"
+                  overlayImage="/working.webp"
+                  overlayImageAlt="Working"
+                  secondaryImage="/art.webp"
+                  secondaryImageAlt="Art placeholder"
+                  description="Album artwork and visuals for Mascha"
+                />
+              </div>
+            </section>
+
+            {/* Footer CTA Section */}
+            <section className="relative py-32 md:py-48 px-8 overflow-hidden bg-[#1c1b1b]">
+              <div className="max-w-4xl mx-auto text-center relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.5 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex flex-col items-center gap-4 mb-8"
+                >
+                  <Image
+                    src="/lets.webp"
+                    alt="Let's create together"
+                    width={1200}
+                    height={300}
+                    className="w-full max-w-3xl h-auto object-contain"
+                    loading="eager"
+                  />
+                </motion.div>
+
+                <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-8">
+                  Open for freelance projects, collaborations, and creative
+                  adventures.
+                </p>
+
+                <div className="mt-6 flex justify-center">
+                  <CTAButton href="mailto:hello@vio.art">{t.ctaLabel}</CTAButton>
+                </div>
+              </div>
+            </section>
           </div>
-        </section>
-      </div>
+        </>
+      )}
     </main>
   );
 }

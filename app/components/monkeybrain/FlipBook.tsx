@@ -33,7 +33,7 @@ export default function FlipBook({ images }: FlipBookProps) {
     };
   }, []);
 
-  const handleFlip = (e: any) => {
+  const handleFlip = (e: { data: number }) => {
     setCurrentPage(e.data);
   };
 
@@ -120,17 +120,34 @@ export default function FlipBook({ images }: FlipBookProps) {
           return (
             <div
               key={index}
-              className="page relative w-full h-full flex items-center justify-center"
+              className="page"
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '4px'
+              }}
             >
-              <Image
-                src={imageSrc}
-                alt={`Page ${index + 1}`}
-                width={600}
-                height={740}
-                className="object-contain w-full h-full"
-                placeholder="blur"
-                priority={isPriority}
-              />
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                maxWidth: '100%',
+                maxHeight: '100%'
+              }}>
+                <Image
+                  src={imageSrc}
+                  alt={`Page ${index + 1}`}
+                  fill
+                  style={{
+                    objectFit: 'contain'
+                  }}
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  priority={isPriority}
+                />
+              </div>
             </div>
           );
         })}

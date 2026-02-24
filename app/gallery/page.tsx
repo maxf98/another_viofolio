@@ -8,7 +8,6 @@ import Lightbox from "@/app/components/Lightbox";
 
 import { GalleryItem } from "@/app/data/model";
 import FlipBook from "@/app/components/monkeybrain/FlipBook";
-import archiveImg from "@/public/archive.png";
 import { GalleryTextProvider, useGalleryText } from "@/app/translations/gallery";
 
 function WorkGalleryInner() {
@@ -76,7 +75,7 @@ function WorkGalleryInner() {
                   {sectionIndex === 0 && (
                     <div className="mb-24 flex flex-col items-center gap-4">
                       <Image
-                        src={archiveImg}
+                        src="/archive.webp"
                         alt={t.archiveTitle}
                         width={400}
                         height={200}

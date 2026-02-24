@@ -7,7 +7,7 @@ import NextProjectButton from "@/app/components/NextProjectButton";
 import { MaschaTextProvider, useMaschaText } from "@/app/translations/mascha";
 
 // Static import for hero image
-import heroImg from "@/public/covers/mascha/m3.png";
+import heroImg from "@/public/covers/mascha/m3.webp";
 
 function MaschaInner() {
   const t = useMaschaText();
@@ -48,10 +48,12 @@ function MaschaInner() {
       >
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/projects/mascha/breathe/4.png"
+            src="/projects/mascha/breathe/4.webp"
             alt=""
             fill
             className="object-cover opacity-10"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container flex flex-col justify-center items-center">
@@ -61,6 +63,7 @@ function MaschaInner() {
             className="object-contain"
             width={400}
             height={200}
+            loading="lazy"
           />
 
           <div className="my-16 max-w-2xl text-center">
@@ -68,11 +71,12 @@ function MaschaInner() {
           </div>
 
           <Image
-            src="/projects/mascha/breathe 2.png"
+            src="/projects/mascha/breathe 2.webp"
             alt="Breathe"
             width={800}
             height={800}
             className="mb-16"
+            loading="lazy"
           />
 
           <h2 className="text-lg font-light mb-8 opacity-70">
@@ -92,11 +96,12 @@ function MaschaInner() {
               />
             </video>
             <Image
-              src="/projects/mascha/breathe/mascha-cd.png"
+              src="/projects/mascha/breathe/mascha-cd.webp"
               alt="Mascha Breathe CD Cover"
               width={500}
               height={500}
               className="h-[350px] md:h-[550px] w-auto object-contain order-1 md:order-2"
+              loading="lazy"
             />
           </div>
 
@@ -120,10 +125,12 @@ function MaschaInner() {
       >
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/covers/mascha/underwater.png"
+            src="/covers/mascha/underwater.webp"
             alt=""
             fill
             className="object-cover opacity-10"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container flex flex-col justify-center items-center gap-8">
@@ -132,6 +139,7 @@ function MaschaInner() {
             alt="Kundalini album cover text"
             width={800}
             height={200}
+            loading="lazy"
           />
 
           <div className="my-16 max-w-2xl text-center">
@@ -139,10 +147,11 @@ function MaschaInner() {
           </div>
 
           <Image
-            src="/projects/mascha/kundalini/kundalini.png"
+            src="/projects/mascha/kundalini/kundalini.webp"
             alt="Kundalini album cover"
             width={800}
             height={800}
+            loading="lazy"
           />
 
           <h2 className="text-lg font-light mt-8 mb-4 opacity-70">{t.kundaliniListen}</h2>
@@ -165,10 +174,12 @@ function MaschaInner() {
       >
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/covers/mascha/m-plants.png"
+            src="/covers/mascha/m-plants.webp"
             alt=""
             fill
             className="object-cover opacity-10"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container flex flex-col justify-center items-center gap-16">
@@ -177,6 +188,7 @@ function MaschaInner() {
             alt="Feel Loved album cover text"
             width={600}
             height={200}
+            loading="lazy"
           />
 
           <div className="my-16 max-w-2xl text-center">
@@ -184,28 +196,31 @@ function MaschaInner() {
           </div>
 
           <Image
-            src="/projects/mascha/loved/fullcover.png"
+            src="/projects/mascha/loved/fullcover.webp"
             alt="Feel Loved album cover"
             width={1400}
             height={840}
             className="w-[75vw] max-w-[1200px] h-auto"
+            loading="lazy"
           />
 
           <h2 className="text-lg font-light mb-4 opacity-70">{t.feelLovedSubtitle}</h2>
           <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1200px] items-center md:items-center md:justify-center">
             <Image
-              src="/projects/mascha/loved/feelloved-cover.png"
+              src="/projects/mascha/loved/feelloved-cover.webp"
               alt="Feel Loved Cover"
               width={400}
               height={400}
               className="h-[250px] md:h-[450px] w-auto object-contain"
+              loading="lazy"
             />
             <Image
-              src="/projects/mascha/loved/loved-mockup.png"
+              src="/projects/mascha/loved/loved-mockup.webp"
               alt="Mascha Feel Loved CD Cover"
               width={1920}
               height={1080}
               className="h-[250px] md:h-[550px] w-auto object-contain"
+              loading="lazy"
             />
           </div>
 
@@ -226,10 +241,12 @@ function MaschaInner() {
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <div className="fixed inset-0 -z-10 bg-[#24242e]">
           <Image
-            src="/covers/mascha/m3.png"
+            src="/covers/mascha/m3.webp"
             alt=""
             fill
             className="object-cover opacity-10"
+            quality={60}
+            loading="lazy"
           />
         </div>
         <div className="content-container py-32 flex flex-col items-center text-center">

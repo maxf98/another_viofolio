@@ -49,24 +49,7 @@ import m4 from "../../public/gallery/m4.png";
 import m6 from "../../public/gallery/m6.png";
 import m7 from "../../public/gallery/m7.png";
 
-// Letter V images
-import vMe from "../../public/letters/V/me.png";
-import vPants from "../../public/letters/V/pants.png";
-import vPens from "../../public/letters/V/pens.png";
-import vShape from "../../public/letters/V/shape.png";
-import vSelfPortrait from "../../public/letters/V/selfportrait.png";
-
-// Letter I images
-import iFace from "../../public/letters/I/face.png";
-import iShapes from "../../public/letters/I/shapes.png";
-import iSun from "../../public/letters/I/sun.png";
-import iWindow from "../../public/letters/I/window.png";
-
-// Letter O images
-import oFace from "../../public/letters/O/face.png";
-import oFlowerHead from "../../public/letters/O/flower head.png";
-import oKaktus from "../../public/letters/O/kaktus.png";
-import oShape from "../../public/letters/O/shape.png";
+// Letter images - using dynamic paths instead of static imports for better performance
 
 // Image-only exports (no text) — used by gallery.tsx translations provider
 export const galleryImages = {
@@ -106,22 +89,22 @@ export interface GallerySection {
 
 export const letters: Record<"V" | "I" | "O", LetterItem[]> = {
   V: [
-    // { index: 0, image: vMe, alt: "me" },
-    { index: 1, image: vPants, alt: "pants" },
-    { index: 2, image: vPens, alt: "pens" },
-    { index: 3, image: vShape, alt: "shape" },
-    { index: 4, image: vSelfPortrait, alt: "self-portrait" },
+    { index: 0, image: "/letters/V/me.webp", alt: "me" },
+    { index: 1, image: "/letters/V/pants.webp", alt: "pants" },
+    { index: 2, image: "/letters/V/pens.webp", alt: "pens" },
+    { index: 3, image: "/letters/V/shape.webp", alt: "shape" },
+    { index: 4, image: "/letters/V/selfportrait.webp", alt: "self-portrait" },
   ],
   I: [
-    { index: 0, image: iFace, alt: "face" },
-    { index: 1, image: iShapes, alt: "shapes" },
-    { index: 2, image: iSun, alt: "sun" },
-    { index: 3, image: iWindow, alt: "window" },
+    { index: 0, image: "/letters/I/face.webp", alt: "face" },
+    { index: 1, image: "/letters/I/shapes.webp", alt: "shapes" },
+    { index: 2, image: "/letters/I/sun.webp", alt: "sun" },
+    { index: 3, image: "/letters/I/window.webp", alt: "window" },
   ],
   O: [
-    { index: 0, image: oFace, alt: "face" },
-    { index: 1, image: oFlowerHead, alt: "flower head" },
-    { index: 2, image: oKaktus, alt: "kaktus" },
-    { index: 3, image: oShape, alt: "shape" },
+    { index: 3, image: "/letters/O/shape.webp", alt: "shape" },
+    { index: 0, image: "/letters/O/face.webp", alt: "face" },
+    { index: 1, image: "/letters/O/flower head.webp", alt: "flower head" },
+    { index: 2, image: "/letters/O/kaktus.webp", alt: "kaktus" },
   ],
 };
