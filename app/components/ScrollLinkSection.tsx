@@ -46,29 +46,57 @@ export default function ScrollLinkSection({
   overlayBlendMode = "normal",
 }: ScrollLinkSectionProps) {
   return (
-    <div className={`relative ${height} w-full`} style={{ clipPath: "inset(0)" }}>
-      <div className="fixed inset-0 -z-10 pointer-events-none">
+    <div
+      className={`relative ${height} w-full overflow-hidden`}
+      style={{ clipPath: "inset(0)" }}
+    >
+      <div
+        className="fixed -z-10 pointer-events-none"
+        style={{
+          left: 0,
+          right: 0,
+          top: 0,
+          width: "100vw",
+          height: "100lvh",
+          transform: "translate3d(0, 0, 0)",
+        }}
+      >
         {/* Mobile image */}
         {mobileObjectPosition && (
           <Image
             src={imageSrc}
             alt={imageAlt}
-            fill
+            width={2000}
+            height={2000}
             loading="eager"
             fetchPriority="high"
-            className={`object-cover object-${mobileObjectPosition} md:hidden`}
-            style={{ opacity: imageOpacity / 100 }}
+            className={`object-cover object-${mobileObjectPosition} md:hidden absolute`}
+            style={{
+              opacity: imageOpacity / 100,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "110lvh",
+            }}
           />
         )}
         {/* Desktop image (or only image if no mobileObjectPosition) */}
         <Image
           src={imageSrc}
           alt={imageAlt}
-          fill
+          width={2000}
+          height={2000}
           loading="eager"
           fetchPriority="high"
-          className={`object-cover ${mobileObjectPosition ? "hidden md:block" : ""}`}
-          style={{ objectPosition, opacity: imageOpacity / 100 }}
+          className={`object-cover ${mobileObjectPosition ? "hidden md:block" : ""} absolute`}
+          style={{
+            objectPosition,
+            opacity: imageOpacity / 100,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "110lvh",
+          }}
         />
         {/* Custom overlay tint above images */}
         {overlayOpacity > 0 && overlayColor && (
@@ -87,10 +115,7 @@ export default function ScrollLinkSection({
         )}
       </div>
       <div className="absolute inset-0 flex items-center justify-center h-full px-0 md:px-4">
-        <Link
-          href={href}
-          className="group"
-        >
+        <Link href={href} className="group">
           {overlayImage ? (
             <motion.div
               className="relative flex flex-col items-center gap-4 w-72 md:w-[26rem]"
@@ -109,7 +134,9 @@ export default function ScrollLinkSection({
               {secondaryImage && (
                 <Image
                   src={secondaryImage}
-                  alt={secondaryImageAlt ?? `${overlayImageAlt ?? label} secondary`}
+                  alt={
+                    secondaryImageAlt ?? `${overlayImageAlt ?? label} secondary`
+                  }
                   width={2000}
                   height={500}
                   loading="eager"
@@ -122,12 +149,17 @@ export default function ScrollLinkSection({
             <div className="relative px-8 py-6 md:px-16 md:py-12 text-center">
               <span
                 className={`relative text-5xl md:text-7xl font-black ${textColor} uppercase tracking-[0.05em] group-hover:tracking-[-0.02em] transition-[letter-spacing] duration-300 ease-out block`}
-                style={{ textShadow: '4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)' }}
+                style={{
+                  textShadow:
+                    "4px 4px 0 rgba(0,0,0,0.5), 8px 8px 16px rgba(0,0,0,0.3)",
+                }}
               >
                 {label}
               </span>
               {description && (
-                <span className={`relative ${textColor} opacity-80 text-lg md:text-xl font-bold normal-case tracking-normal block mt-3`}>
+                <span
+                  className={`relative ${textColor} opacity-80 text-lg md:text-xl font-bold normal-case tracking-normal block mt-3`}
+                >
                   {description}
                 </span>
               )}

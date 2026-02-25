@@ -268,6 +268,9 @@ function LetterStack({
         width: size || undefined,
         height: size || undefined,
         flex: "0 0 auto",
+        perspective: 1000,
+        transformStyle: "preserve-3d",
+        isolation: "isolate",
       }}
     >
       <AnimatePresence mode="wait">
@@ -280,7 +283,11 @@ function LetterStack({
           animate={{ rotateY: 0 }}
           exit={{ rotateY: 90 }}
           transition={{ duration: 0.4 }}
-          style={{ transformPerspective: 1000 }}
+          style={{
+            WebkitBackfaceVisibility: "hidden",
+            backfaceVisibility: "hidden",
+            WebkitTransform: "translate3d(0, 0, 0)",
+          }}
           className="absolute inset-0 w-full h-full object-contain"
         />
       </AnimatePresence>

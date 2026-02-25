@@ -49,10 +49,18 @@ function HomeInner() {
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         {/* Fixed background for Hero + About Me */}
         <motion.div
-          className="fixed inset-0 -z-10 pointer-events-none"
+          className="fixed -z-10 pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: state.allLettersReady && heroBackgroundLoaded ? 0.6 : 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
+          style={{
+            transform: "translate3d(0, 0, 0)",
+            left: 0,
+            right: 0,
+            top: 0,
+            width: "100vw",
+            height: "110lvh",
+          }}
         >
           {state.allLettersReady && (
             <Image
@@ -78,7 +86,10 @@ function HomeInner() {
       {deferredSectionsReady && (
         <>
           {/* Cover to hide fixed background when scrolling to other sections */}
-          <div className="relative bg-[#24242e]" style={{ clipPath: "inset(0)" }}>
+          <div
+            className="relative bg-[#24242e] overflow-hidden"
+            style={{ clipPath: "inset(0)" }}
+          >
             {/* Gallery */}
             <div id="gallery" className="relative">
               <ScrollLinkSection
