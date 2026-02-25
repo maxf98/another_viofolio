@@ -17,19 +17,10 @@ function WorkGalleryInner() {
     imageIndex: number;
   } | null>(null);
 
-  // Flatten all images for lightbox navigation
-  const allImages = useMemo(() => {
-    return t.sections.flatMap((section) => section.images);
-  }, [t.sections]);
-
-  // Get the global index for lightbox
-  const selectedIndex = useMemo(() => {
-    if (!selectedImage) return null;
-    let index = 0;
-    for (let i = 0; i < selectedImage.sectionIndex; i++) {
-      index += t.sections[i].images.length;
-    }
-    return index + selectedImage.imageIndex;
+  // Scope lightbox navigation to the currently selected section only
+  const activeSectionImages = useMemo(() => {
+    if (!selectedImage) return [];
+    return t.sections[selectedImage.sectionIndex]?.images ?? [];
   }, [selectedImage, t.sections]);
 
   function clickedImage(sectionIndex: number, image: GalleryItem) {
@@ -43,7 +34,7 @@ function WorkGalleryInner() {
   const sharedBackgroundImage = t.sections.find(s => s.id === "illustrated-photography")?.images[0]?.image;
 
   return (
-    <div className="flex flex-col relative min-h-screen">
+    <div className="flex flex-col relative min-h-screen overflow-x-hidden">
       <Navigation sections={[
         { id: "illustrated-photography", label: t.navIllustratedPhotography, src: "/icons/photo.png" },
         { id: "art-therapy", label: t.navAnalogueExplorations, src: "/icons/art-icon.png" },
@@ -167,8 +158,8 @@ function WorkGalleryInner() {
       </section>
 
       <Lightbox
-        images={allImages}
-        selectedIndex={selectedIndex}
+        images={activeSectionImages}
+        selectedIndex={selectedImage?.imageIndex ?? null}
         onClose={() => setSelectedImage(null)}
         showText={selectedImage?.sectionIndex !== 0}
       />

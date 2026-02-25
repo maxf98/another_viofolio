@@ -26,7 +26,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Letter Switcher */}
-      <div className="w-full flex-1 min-h-0 h-full flex items-center justify-center">
+      <div className="w-full flex-1 min-h-0 h-full flex items-center justify-center py-6 md:py-10">
         <LetterSwitcher />
       </div>
     </div>

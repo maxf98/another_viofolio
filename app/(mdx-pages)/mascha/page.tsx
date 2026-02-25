@@ -51,6 +51,7 @@ function MaschaInner() {
             src="/projects/mascha/breathe/4.webp"
             alt=""
             fill
+            sizes="100vw"
             className="object-cover opacity-10"
             quality={60}
             loading="lazy"
@@ -105,10 +106,9 @@ function MaschaInner() {
             />
           </div>
 
-          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">{t.breatheListen}</h2>
           <iframe
             data-testid="embed-iframe"
-            className="rounded-2xl w-full"
+            className="rounded-2xl w-full mt-16"
             src="https://open.spotify.com/embed/track/3fT6DKtpBcb66huSBr8H5c?utm_source=generator"
             width="100%"
             height="152"
@@ -128,6 +128,7 @@ function MaschaInner() {
             src="/covers/mascha/underwater.webp"
             alt=""
             fill
+            sizes="100vw"
             className="object-cover opacity-10"
             quality={60}
             loading="lazy"
@@ -154,10 +155,9 @@ function MaschaInner() {
             loading="lazy"
           />
 
-          <h2 className="text-lg font-light mt-8 mb-4 opacity-70">{t.kundaliniListen}</h2>
           <iframe
             data-testid="embed-iframe"
-            className="rounded-2xl w-full"
+            className="rounded-2xl w-full mt-8"
             src="https://open.spotify.com/embed/track/3DHo0zqSwKUCk0nEXjQuZl?utm_source=generator"
             width="100%"
             height="152"
@@ -177,6 +177,7 @@ function MaschaInner() {
             src="/covers/mascha/m-plants.webp"
             alt=""
             fill
+            sizes="100vw"
             className="object-cover opacity-10"
             quality={60}
             loading="lazy"
@@ -224,10 +225,9 @@ function MaschaInner() {
             />
           </div>
 
-          <h2 className="text-lg font-light mt-16 mb-4 opacity-70">{t.feelLovedListen}</h2>
           <iframe
             data-testid="embed-iframe"
-            className="rounded-2xl w-full max-w-[900px]"
+            className="rounded-2xl w-full max-w-[900px] mt-16"
             src="https://open.spotify.com/embed/track/6SYvsiN3KZqKIepny2UX5D?utm_source=generator"
             width="100%"
             height="152"
@@ -244,6 +244,7 @@ function MaschaInner() {
             src="/covers/mascha/m3.webp"
             alt=""
             fill
+            sizes="100vw"
             className="object-cover opacity-10"
             quality={60}
             loading="lazy"

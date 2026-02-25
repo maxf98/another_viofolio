@@ -2,7 +2,7 @@
 
 import { useLang, Lang } from "@/app/context/LanguageContext";
 
-const LANGS: Lang[] = ["en", "de", "ru"];
+const LANGS: Lang[] = ["en", "de"];
 
 export default function LanguageToggle() {
   const { lang, setLang } = useLang();

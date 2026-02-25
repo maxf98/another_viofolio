@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 
@@ -22,22 +22,6 @@ export default function ProjectHeroSection({
   children,
 }: ProjectHeroSectionProps) {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
-
-  useEffect(() => {
-    const update = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      setIsLandscapeMobile(width < 1024 && width > height);
-    };
-    update();
-    window.addEventListener("resize", update);
-    window.addEventListener("orientationchange", update);
-    return () => {
-      window.removeEventListener("resize", update);
-      window.removeEventListener("orientationchange", update);
-    };
-  }, []);
 
   return (
     <div
@@ -49,6 +33,7 @@ export default function ProjectHeroSection({
         <Image
           src={src}
           fill
+          sizes="100vw"
           alt={alt}
           placeholder="blur"
           className="w-full h-full object-cover opacity-20 scale-100"
@@ -58,15 +43,15 @@ export default function ProjectHeroSection({
         />
       </div>
       <motion.div
-        className={`absolute inset-0 flex z-10 pt-8 md:pt-8 ${
-          isLandscapeMobile ? "items-start" : "items-end"
-        }`}
+        className="absolute inset-0 flex flex-col justify-end z-10"
       >
         <div className="content-container pb-20 md:pb-32">
-          <div className="mt-6 w-48 md:w-64">
+          <div className="w-48 md:w-64">
             <Image
               src={workingImg}
               alt="Working with"
+              width={2048}
+              height={2048}
               className="w-full h-auto drop-shadow-xl"
               priority
             />

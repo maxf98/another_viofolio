@@ -15,11 +15,11 @@ body {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --bg-gradient-1: rgba(255, 194, 130, 0.35);
-  --bg-gradient-2: rgba(111, 127, 243, 0.25);
-  --bg-gradient-3: rgba(0, 0, 0, 0.12);
+  --background: #393535;
+  --foreground: #ededed;
+  --bg-gradient-1: rgba(255, 138, 92, 0.4);
+  --bg-gradient-2: rgba(124, 207, 255, 0.25);
+  --bg-gradient-3: rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
@@ -28,16 +28,6 @@ body {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --spacing-128: 32rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #393535;
-    --foreground: #ededed;
-    --bg-gradient-1: rgba(255, 138, 92, 0.4);
-    --bg-gradient-2: rgba(124, 207, 255, 0.25);
-    --bg-gradient-3: rgba(0, 0, 0, 0.55);
-  }
 }
 
 .slide-in {

@@ -76,7 +76,7 @@ export default function ScrollLinkSection({
               top: 0,
               left: 0,
               width: "100vw",
-              height: "110lvh",
+              height: "105lvh",
             }}
           />
         )}
@@ -95,7 +95,7 @@ export default function ScrollLinkSection({
             top: 0,
             left: 0,
             width: "100vw",
-            height: "110lvh",
+            height: "105lvh",
           }}
         />
         {/* Custom overlay tint above images */}

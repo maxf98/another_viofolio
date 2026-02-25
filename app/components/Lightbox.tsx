@@ -137,7 +137,8 @@ export default function Lightbox({
 
   // Lock body scroll when open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    document.body.style.overflowX = "hidden";
+    document.body.style.overflowY = isOpen ? "hidden" : "";
   }, [isOpen]);
 
   if (typeof window === "undefined") return null;
@@ -256,7 +257,7 @@ export default function Lightbox({
                     else if (i > currentIndex) scrollNext();
                   }}
                 >
-                  <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 max-w-[1400px]">
+                  <div className="flex flex-col xl:flex-row items-center xl:items-start gap-6 xl:gap-12 max-w-[1400px]">
                     <Image
                       className={`object-contain select-none max-h-[60vh] md:max-h-[85vh] w-auto h-auto ${imageClassName}`}
                       src={image.image}
@@ -268,9 +269,9 @@ export default function Lightbox({
                       loading={shouldPrioritize ? "eager" : "lazy"}
                     />
                     {showText && (
-                      <div className="flex flex-col items-center md:items-start text-center md:text-left md:max-w-[300px] w-full">
+                      <div className="flex flex-col items-center xl:items-start text-center xl:text-left xl:max-w-[300px] w-full">
                         {(image.title || image.alt) && (
-                          <h3 className="text-white text-xl md:text-2xl font-medium capitalize">
+                          <h3 className="text-white text-xl xl:text-2xl font-medium capitalize">
                             {image.title || image.alt}
                           </h3>
                         )}

@@ -33,13 +33,19 @@ export default function AboutMeSection({ isOpen = true }: AboutMeSectionProps) {
   // Lock body scroll when overlay is open
   useEffect(() => {
     if (showOverlay) {
-      const originalBodyOverflow = document.body.style.overflow;
-      const originalHtmlOverflow = document.documentElement.style.overflow;
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
+      const originalBodyOverflowX = document.body.style.overflowX;
+      const originalBodyOverflowY = document.body.style.overflowY;
+      const originalHtmlOverflowX = document.documentElement.style.overflowX;
+      const originalHtmlOverflowY = document.documentElement.style.overflowY;
+      document.body.style.overflowX = "hidden";
+      document.body.style.overflowY = "hidden";
+      document.documentElement.style.overflowX = "hidden";
+      document.documentElement.style.overflowY = "hidden";
       return () => {
-        document.body.style.overflow = originalBodyOverflow;
-        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.overflowX = originalBodyOverflowX;
+        document.body.style.overflowY = originalBodyOverflowY;
+        document.documentElement.style.overflowX = originalHtmlOverflowX;
+        document.documentElement.style.overflowY = originalHtmlOverflowY;
       };
     }
   }, [showOverlay]);

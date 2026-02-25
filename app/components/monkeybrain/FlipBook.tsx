@@ -57,7 +57,7 @@ export default function FlipBook({ images }: FlipBookProps) {
   const bookKey = `${Math.round(pageWidth)}x${Math.round(pageHeight)}`;
 
   return (
-    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative px-4 overflow-hidden">
+    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative px-4 overflow-visible">
       {/* Click through indicator - visible on page 1, hidden behind pages otherwise */}
       <div
         className={`absolute left-[5%] md:left-[10%] top-1/2 -translate-y-1/2 flex items-center gap-4 pointer-events-none transition-opacity duration-500 ${
