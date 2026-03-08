@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Picker from "@/app/components/Picker";
@@ -19,27 +19,10 @@ const descriptions = [
   "Description 7",
 ];
 
-const FADE_DURATION = 200; // ms
-
 export default function BeforeAfter() {
   const t = useQuardsText();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [displayIndex, setDisplayIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
   const [beforeOnTop, setBeforeOnTop] = useState(false);
-
-  useEffect(() => {
-    if (selectedIndex === displayIndex) return;
-    const t1 = setTimeout(() => setVisible(false), 0);
-    const t2 = setTimeout(() => {
-      setDisplayIndex(selectedIndex);
-      setVisible(true);
-    }, FADE_DURATION);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [selectedIndex, displayIndex]);
 
   const handleSelectIndex = (index: number) => {
     setSelectedIndex(index);
@@ -74,19 +57,13 @@ export default function BeforeAfter() {
               >
                 {t.beforeLabel}
               </motion.span>
-              <div className="ipad-border overflow-hidden rounded-2xl">
+              <div className="relative ipad-border overflow-hidden rounded-2xl">
                 <Image
-                  src={oldImages[displayIndex]}
+                  src={oldImages[selectedIndex]}
                   alt="Before"
                   width={300}
                   height={400}
                   className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto block"
-                  style={{
-                    opacity: visible ? 1 : 0,
-                    transition: `opacity ${FADE_DURATION}ms ease-in-out`,
-                  }}
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
                 />
               </div>
             </motion.div>
@@ -103,19 +80,13 @@ export default function BeforeAfter() {
               >
                 {t.afterLabel}
               </motion.span>
-              <div className="ipad-border overflow-hidden rounded-2xl">
+              <div className="relative ipad-border overflow-hidden rounded-2xl">
                 <Image
-                  src={newImages[displayIndex]}
+                  src={newImages[selectedIndex]}
                   alt="After"
                   width={300}
                   height={400}
                   className="h-auto w-full max-w-[240px] sm:max-w-none sm:h-[540px] sm:w-auto block"
-                  style={{
-                    opacity: visible ? 1 : 0,
-                    transition: `opacity ${FADE_DURATION}ms ease-in-out`,
-                  }}
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAJpAN4pokyXwAAAABJRU5ErkJggg=="
                 />
               </div>
             </motion.div>

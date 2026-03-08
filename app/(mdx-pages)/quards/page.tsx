@@ -1,6 +1,6 @@
 "use client";
 
-import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
+import LocalNav, { NavSection } from "@/app/components/navigation/LocalNav";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import QuardSwitcher from "./QuardSwitcher";
 import QuardExamplesCarousel from "./QuardExamplesCarousel";
@@ -8,7 +8,7 @@ import LogoEquation from "./LogoEquation";
 import BeforeAfter from "./BeforeAfter";
 import ParallaxImage from "./ParallaxImage";
 import Image from "next/image";
-import NextProjectButton from "@/app/components/NextProjectButton";
+import SectionHintsGrid from "@/app/components/SectionHintsGrid";
 import "@/app/styles/backgrounds.css";
 import { QuardsTextProvider, useQuardsText } from "@/app/translations/quards";
 
@@ -33,7 +33,7 @@ function QuardsInner() {
 
   return (
     <div className="bg-[#24242e]">
-      <Navigation sections={navs} />
+      <LocalNav sections={navs} />
       <ProjectHeroSection
         src={heroImg}
         alt="Quards"
@@ -134,14 +134,7 @@ function QuardsInner() {
         </div>
       </div>
 
-      {/* Next Project Button - on blank background */}
-      <div className="bg-[#1c1b1b]">
-        <NextProjectButton
-          href="/mascha"
-          label="Mascha"
-          imageSrc="/covers/mascha/m3.webp"
-        />
-      </div>
+      <SectionHintsGrid currentHref="/quards" />
     </div>
   );
 }

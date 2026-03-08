@@ -15,6 +15,7 @@ interface CTAButtonProps {
   textColor?: string;
   size?: "sm" | "md" | "lg";
   blobIntensity?: "low" | "medium" | "high";
+  bgOpacity?: number;
 }
 
 const sizeStyles = {
@@ -43,15 +44,26 @@ export default function CTAButton({
   onClick,
   children,
   className = "",
-  bgColor = "#7a9b76",
+  bgColor = "#b89fd4",
   borderColor = "#000",
   textColor = "text-white",
   size = "lg",
   blobIntensity = "medium",
+  bgOpacity = 0.35,
 }: CTAButtonProps) {
   const Component = href ? motion.a : motion.button;
   const props = href ? { href } : { onClick, type: "button" as const };
   const blobShape = blobShapes[blobIntensity];
+
+  // Convert hex color to rgba with opacity
+  const hexToRgba = (hex: string, opacity: number) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (!result) return hex;
+    const r = parseInt(result[1], 16);
+    const g = parseInt(result[2], 16);
+    const b = parseInt(result[3], 16);
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  };
 
   return (
     <Component
@@ -59,8 +71,7 @@ export default function CTAButton({
       className={`group relative inline-flex items-center justify-center font-semibold ${textColor} ${sizeStyles[size]} ${className}`}
       style={{
         borderRadius: blobShape.default,
-        background: bgColor,
-        border: `4px solid ${borderColor}`,
+        background: hexToRgba(bgColor, bgOpacity),
         boxShadow: "0 8px 24px rgba(0, 0, 0, 0.25)",
       }}
       whileHover={{

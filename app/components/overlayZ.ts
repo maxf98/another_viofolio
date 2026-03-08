@@ -1,0 +1,2 @@
+export const OVERLAY_ROOT_Z_INDEX = 30000;
+export const OVERLAY_CONTROL_Z_INDEX = 30010;

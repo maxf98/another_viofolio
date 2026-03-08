@@ -1,162 +1,91 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { MdClose } from "react-icons/md";
-import { createPortal } from "react-dom";
-import CTAButton from "./CTAButton";
-import vBackground from "../../public/gallery/painting.png";
-import { useHomeText } from "@/app/translations/home";
-import { useLoadState } from "@/app/context/LoadContext";
+import { useLang } from "@/app/context/LanguageContext";
+import { useGlobalNav } from "./navigation/GlobalNavContext";
+import OverlayShell from "./OverlayShell";
 
-interface AboutMeSectionProps {
-  isOpen?: boolean;
-  onClose?: () => void;
-}
+const aboutText = {
+  en: {
+    aboutParagraphs: [
+      "Hi, I'm Vio - an artist, illustrator, and designer based in Munich, Germany. I create expressive illustrations and designs with a playful, narrative-driven approach, where storytelling sits at the core of my practice.",
+      "I began my professional journey at NABA Milan, where I completed a Bachelor's degree in Graphic Design and Art Direction. Since then, I've been working as a freelance illustrator and designer, alongside studying art therapy, which has deepened my interest in intuition, emotional expression, and process-led making.",
+      "Much of my personal practice is rooted in experimentation and chance. I often begin with photographs of nature, spaces, and patterns, then reshape them into imagined narratives. My analogue process is also informed by art therapy methods, creating space for intuition, reflection, and gentle discovery.",
+    ],
+  },
+  de: {
+    aboutParagraphs: [
+      "Hallo, ich bin Vio – Künstlerin, Illustratorin und Designerin aus München. Ich schaffe ausdrucksstarke Illustrationen und Designs mit einem spielerischen, narrativen Ansatz, bei dem Geschichtenerzählen im Mittelpunkt meiner Arbeit steht.",
+      "Meine professionelle Laufbahn begann an der NABA Mailand, wo ich einen Bachelor in Grafikdesign und Art Direction abschloss. Seitdem arbeite ich als freiberufliche Illustratorin und Designerin und studiere gleichzeitig Kunsttherapie, was mein Interesse an Intuition, emotionalem Ausdruck und prozessgesteuertem Schaffen vertieft hat.",
+    ],
+  },
+  ru: {
+    aboutParagraphs: [
+      "Привет, я Вио — художница, иллюстратор и дизайнер из Мюнхена. Я создаю выразительные иллюстрации и дизайн с игривым, нарративным подходом, где рассказывание историй лежит в основе моей практики.",
+      "Я начала свой профессиональный путь в NABA Milan, где получила степень бакалавра по графическому дизайну и арт-дирекции. С тех пор я работаю как фриланс-иллюстратор и дизайнер, параллельно изучая арт-терапию, что углубило мой интерес к интуиции, эмоциональному выражению и процессному творчеству.",
+    ],
+  },
+} as const;
 
-// Reusable spacing value for section gaps - adjust this to change all spacing at once
-const SECTION_SPACING = "mb-32"; // ~8rem / 128px
-const SECTION_PADDING = "py-16 px-6 md:px-12"; // Padding around the entire section
-
-export default function AboutMeSection({ isOpen = true }: AboutMeSectionProps) {
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
-  const t = useHomeText();
-  const { state } = useLoadState();
-
-  // Ensure portal target is available in browser
-  useEffect(() => {
-    setPortalTarget(document.body);
-  }, []);
-
-  // Lock body scroll when overlay is open
-  useEffect(() => {
-    if (showOverlay) {
-      const originalBodyOverflowX = document.body.style.overflowX;
-      const originalBodyOverflowY = document.body.style.overflowY;
-      const originalHtmlOverflowX = document.documentElement.style.overflowX;
-      const originalHtmlOverflowY = document.documentElement.style.overflowY;
-      document.body.style.overflowX = "hidden";
-      document.body.style.overflowY = "hidden";
-      document.documentElement.style.overflowX = "hidden";
-      document.documentElement.style.overflowY = "hidden";
-      return () => {
-        document.body.style.overflowX = originalBodyOverflowX;
-        document.body.style.overflowY = originalBodyOverflowY;
-        document.documentElement.style.overflowX = originalHtmlOverflowX;
-        document.documentElement.style.overflowY = originalHtmlOverflowY;
-      };
-    }
-  }, [showOverlay]);
-
-  if (!isOpen) return null;
+export default function AboutMeOverlay() {
+  const { isAboutMeOpen, closeAboutMe } = useGlobalNav();
+  const { lang } = useLang();
+  const t = aboutText[lang];
 
   return (
-    <div className="relative w-full">
-      {/* Scattered background shapes */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          className="absolute top-[40%] right-[10%] w-48 h-48 rounded-full bg-purple-500/10 blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 10, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-[20%] left-[15%] w-40 h-40 rounded-full bg-blue-500/10 blur-3xl"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 7, repeat: Infinity }}
-        />
-      </div>
-
-      <div className={`relative ${SECTION_PADDING}`}>
-        <motion.div
-          className="w-full max-w-3xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, type: "spring" }}
-        >
-          {/* Roles */}
-          <div
-              className={`flex flex-col items-center gap-4 ${SECTION_SPACING}`}
-            >
-              <motion.div
-                className="w-full max-w-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-              {state.allLettersReady && (
-                <Image
-                  src="/IDA2.png"
-                  alt="Illustrator Designer Artist"
-                  width={1600}
-                  height={320}
-                  className="w-4/5 md:w-full h-auto object-contain mx-auto"
-                />
-              )}
-              <div className="mt-6 flex justify-center">
-                <CTAButton onClick={() => setShowOverlay(true)}>
-                  {t.aboutButton}
-                </CTAButton>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {portalTarget
-          ? createPortal(
-              <AnimatePresence>
-                {showOverlay && (
-                  <motion.div
-                    className="fixed inset-0 z-[20000] flex items-stretch justify-center px-0 md:px-6"
-                    onClick={() => setShowOverlay(false)}
-                    role="presentation"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
+    <OverlayShell
+      isOpen={isAboutMeOpen}
+      onClose={closeAboutMe}
+      backdropClassName="bg-[#24242e]"
+      containerClassName="w-full h-full px-2 sm:px-4 md:px-6 py-2 md:py-0 flex items-stretch justify-center"
+      closeButtonClassName="md:top-4"
+      lockScroll={false}
+    >
+      <div className="relative w-full max-w-4xl h-[100dvh] md:h-auto md:max-h-[calc(100dvh-6rem)] py-16 md:py-10 px-3 sm:px-5 md:px-10 overflow-y-auto overscroll-contain flex items-start md:items-center justify-center">
+        <div className="relative z-10 w-full max-w-5xl pt-3 md:pt-0 pb-6">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr] gap-7 md:gap-8 items-start md:items-center p-1 md:p-2">
+            <div className="w-full max-w-[250px] sm:max-w-[300px] md:max-w-none mx-auto md:mx-0">
+              <Image
+                src="/gallery/draw.jpg"
+                alt="Drawing"
+                width={900}
+                height={1200}
+                className="w-full h-48 sm:h-56 md:h-auto object-cover rounded-xl border border-white/12"
+                loading="lazy"
+              />
+            </div>
+            <div className="max-w-2xl text-left text-white/90 leading-relaxed space-y-4 px-5 sm:px-7 md:px-0 mt-1 md:mt-0">
+              {t.aboutParagraphs.map((para: string, idx: number) => {
+                if (idx === 0) {
+                  const split = para.split(/\s[-–—]\s/, 2);
+                  const intro = split[0] ?? "";
+                  const rest = split[1] ?? "";
+                  return (
+                    <p key={idx}>
+                      <span className="block text-3xl md:text-4xl font-semibold leading-tight tracking-tight">
+                        {intro}
+                      </span>
+                      {rest ? (
+                        <span className="block mt-2 text-[0.95rem] md:text-base text-white/85">
+                          {rest}
+                        </span>
+                      ) : null}
+                    </p>
+                  );
+                }
+                return (
+                  <p
+                    key={idx}
+                    className="text-[0.95rem] md:text-base text-white/88"
                   >
-                    <div className="fixed inset-0 -z-10">
-                      <Image
-                        src={vBackground}
-                        alt="About me background"
-                        fill
-                        className="object-cover object-[center_40%]"
-                        placeholder="blur"
-                      />
-                      <div className="absolute inset-0 bg-black/60" />
-                    </div>
-                    <div
-                      className="relative w-full max-w-3xl h-full md:h-auto my-16 md:my-16 p-5 md:p-10 overflow-y-auto flex items-center justify-center"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="fixed top-4 right-4 z-[30000]">
-                        <CTAButton
-                          onClick={() => setShowOverlay(false)}
-                          size="sm"
-                          bgColor="#7a9b76"
-                          className="!p-3"
-                        >
-                          <MdClose size={24} />
-                        </CTAButton>
-                      </div>
-                      <div className="flex flex-col items-center text-center gap-8 relative z-10 justify-start md:justify-center pt-6 md:pt-0">
-                        <div className="text-white/90 text-lg md:text-xl leading-relaxed space-y-4 max-w-3xl font-normal">
-                          {t.aboutParagraphs.map((para: string, idx: number) => (
-                            <p key={idx}>{para}</p>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>,
-              portalTarget
-            )
-          : null}
+                    {para}
+                  </p>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </OverlayShell>
   );
 }

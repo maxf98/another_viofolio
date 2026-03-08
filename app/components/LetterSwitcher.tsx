@@ -123,15 +123,16 @@ export default function LetterSwitcher() {
       if (width <= 0 || height <= 0) {
         return { direction: "horizontal" as const, size: 0 };
       }
-      // If taller than wide, stack vertically; size limited by min(width, height/3)
-      if (height > width) {
-        const dim = Math.min(width, height / 3);
-        return { direction: "vertical" as const, size: dim };
+
+      // Calculate how big letters can be in each orientation
+      const horizontalSize = Math.min(width / 3, height);  // 3 letters side by side
+      const verticalSize = Math.min(width, height / 3);    // 3 letters stacked
+
+      // Choose the orientation that gives us bigger letters
+      if (verticalSize > horizontalSize) {
+        return { direction: "vertical" as const, size: verticalSize };
       }
-      // Horizontal: three squares side by side. Width constrains if narrower than height*3.
-      const widthConstrains = width < height * 3;
-      const dim = widthConstrains ? width / 3 : height;
-      return { direction: "horizontal" as const, size: dim };
+      return { direction: "horizontal" as const, size: horizontalSize };
     };
 
     const updateLayout = () => {
@@ -158,11 +159,11 @@ export default function LetterSwitcher() {
   return (
     <div
       ref={containerRef}
-      className={`flex md:pt-16 ${
+      className={`flex ${
         layout.direction === "horizontal"
-          ? "flex-row items-start gap-0"
+          ? "flex-row items-center gap-0"
           : "flex-col items-center gap-0"
-      } justify-center h-full w-full max-w-4xl md:max-w-5xl mx-auto`}
+      } justify-center h-full w-full`}
     >
       <LetterStack
         letters={vs}

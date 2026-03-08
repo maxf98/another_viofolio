@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 
 export type Lang = "en" | "de" | "ru";
 
@@ -12,13 +12,15 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("vio-lang");
-      if (stored === "en" || stored === "de" || stored === "ru") return stored;
+  const [lang, setLangState] = useState<Lang>("en");
+
+  // Sync with localStorage after hydration
+  useEffect(() => {
+    const stored = localStorage.getItem("vio-lang");
+    if (stored === "en" || stored === "de" || stored === "ru") {
+      setLangState(stored);
     }
-    return "en";
-  });
+  }, []);
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l);

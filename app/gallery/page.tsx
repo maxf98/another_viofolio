@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import Navigation from "../components/navigation/Navigation";
+import LocalNav from "@/app/components/navigation/LocalNav";
 import GalleryGrid from "@/app/components/GalleryGrid";
 import Lightbox from "@/app/components/Lightbox";
 
@@ -35,30 +35,30 @@ function WorkGalleryInner() {
 
   return (
     <div className="flex flex-col relative min-h-screen overflow-x-hidden">
-      <Navigation sections={[
+      <LocalNav sections={[
         { id: "illustrated-photography", label: t.navIllustratedPhotography, src: "/icons/photo.png" },
         { id: "art-therapy", label: t.navAnalogueExplorations, src: "/icons/art-icon.png" },
         { id: "monkeybrain", label: t.navMonkeybrain, src: "/icons/mag-icon.png" },
       ]} />
-
-      {/* Shared background for all sections */}
-      {sharedBackgroundImage && (
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          <Image
-            src={sharedBackgroundImage}
-            alt=""
-            fill
-            placeholder="blur"
-            className="object-cover opacity-20"
-          />
-        </div>
-      )}
 
       {/* All Gallery Sections Stacked */}
       {t.sections.map((section, sectionIndex) => (
         <React.Fragment key={section.id}>
           {section.images.length > 0 && section.id !== "monkeybrain-gallery" && (
             <section className="relative" style={{ clipPath: "inset(0)" }}>
+              <div className="fixed inset-0 -z-10 pointer-events-none">
+                <Image
+                  src={
+                    section.id === "art-therapy"
+                      ? "/gallery/blowout.png"
+                      : (sharedBackgroundImage ?? "/gallery/chat.webp")
+                  }
+                  alt=""
+                  fill
+                  loading={section.id === "art-therapy" ? "eager" : "lazy"}
+                  className="object-cover opacity-15"
+                />
+              </div>
 
               <div id={section.id} className="pt-24 md:pt-24 pb-16">
                 <div className="max-w-7xl mx-auto px-4 md:pl-32 md:pr-8">

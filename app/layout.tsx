@@ -6,6 +6,11 @@ import "./styles/prose.css";
 import Footer from "./components/Footer";
 import { LoadProvider } from "./context/LoadContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { GlobalNavProvider } from "./components/navigation/GlobalNavContext";
+import GlobalNav from "./components/navigation/GlobalNav";
+import HamburgerButton from "./components/navigation/HamburgerButton";
+import Logo from "./components/navigation/Logo";
+import AboutMeOverlay from "./components/AboutMeOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,13 +42,18 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <LoadProvider>
-            <div className="min-h-screen">
-              <div className="relative z-[10]">
-                {children}
-                <Footer />
+            <GlobalNavProvider>
+              <Logo />
+              <HamburgerButton />
+              <GlobalNav />
+              <AboutMeOverlay />
+              <div className="min-h-screen">
+                <div className="relative z-[10]">
+                  {children}
+                  <Footer />
+                </div>
               </div>
-            </div>
-            <div id="modal-root" />
+            </GlobalNavProvider>
           </LoadProvider>
         </LanguageProvider>
       </body>

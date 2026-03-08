@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Hero from "./components/Hero";
-import ScrollLinkSection from "./components/ScrollLinkSection";
-import Navigation from "./components/navigation/Navigation";
-import { NavSection } from "./components/navigation/Navigation";
+import LocalNav from "@/app/components/navigation/LocalNav";
+import { NavSection } from "@/app/components/navigation/LocalNav";
 import { useLoadState } from "./context/LoadContext";
-import AboutMeSection from "./components/AboutMeOverlay";
+import AboutMeSection from "./components/AboutMeSection";
 import CTAButton from "./components/CTAButton";
 import { HomeTextProvider, useHomeText } from "./translations/home";
 
@@ -20,36 +20,149 @@ function HomeInner() {
 
   const navs: NavSection[] = [
     {
+      id: "about-me",
+      label: "About me",
+      src: "/icons/bout-icon.png",
+    },
+    {
       id: "gallery",
       label: t.navGallery,
-      src: "/icons/bout-icon.png",
+      src: "/icons/drawing.png",
+    },
+    {
+      id: "working",
+      label: "Working with",
+      src: "/icons/work-icon.png",
     },
     {
       id: "elgato-project",
       label: t.navElgato,
-      src: "/icons/sd.png",
     },
     {
       id: "quards-project",
       label: t.navQuards,
-      src: "/icons/q1.png",
     },
     {
       id: "mascha-project",
       label: t.navMascha,
-      src: "/icons/pink.png",
     },
   ];
 
+  const previewGridClass =
+    "w-full md:min-w-[900px] max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4";
+  const previewCardClass =
+    "relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-[#1f1f29] transition-transform duration-300 group-hover:scale-[1.1]";
+  const previewTitleClass =
+    "text-xs md:text-sm font-semibold text-white uppercase tracking-[0.04em] group-hover:tracking-[0.06em] transition-all duration-300 leading-tight";
+  const showcaseSectionClass = "relative min-h-[100vh] flex items-center justify-center py-12 md:py-14";
+  const showcaseContentClass = "content-container flex flex-col items-center gap-8 md:gap-12";
+  const showcaseHeaderImageClass = "w-64 md:w-80 h-auto drop-shadow-xl opacity-80";
+
+  const personalArchiveCards = [
+    {
+      href: "/gallery/illustrated-photography",
+      image: "/gallery/sun.png",
+      alt: "Digital Explorations",
+      title: "Digital Explorations",
+      description: "Digital image-making and narrative scenes",
+    },
+    {
+      href: "/gallery/art-therapy",
+      image: "/gallery/blowout.png",
+      alt: "Analogue Explorations",
+      title: "Analogue Explorations",
+      description: "Process-driven experiments and material play",
+    },
+    {
+      href: "/gallery/monkeybrain",
+      image: "/projects/MONKEYBRAIN/pages/monkeybrain.png",
+      alt: "Monkeybrain Magazine",
+      title: "Monkeybrain Magazine",
+      description: "Bachelor thesis magazine in mixed media",
+    },
+  ];
+
+  const workingCards = [
+    {
+      href: "/quards",
+      image: "/projects/quards/featureArtNoBG.webp",
+      alt: "Quards background preview",
+      title: "Quards",
+      defaultTitle: "A startup",
+      description: "App design and visual identity",
+    },
+    {
+      href: "/elgato",
+      image: "/projects/elgato/front1.png",
+      alt: "Elgato background preview",
+      title: "Elgato",
+      defaultTitle: "A company",
+      description: "Product customisation and brand illustration",
+    },
+    {
+      href: "/mascha",
+      image: "/covers/mascha/m3.webp",
+      alt: "Mascha background preview",
+      title: "Mascha",
+      defaultTitle: "An artist",
+      description: "Album artwork and visual storytelling",
+    },
+  ];
+
+  const renderPreviewCards = (
+    cards: {
+      href: string;
+      image: string;
+      alt: string;
+      title: string;
+      defaultTitle?: string;
+      description: string;
+    }[]
+  ) => (
+    <div className={previewGridClass}>
+      {cards.map((card) => (
+        <Link key={card.href} href={card.href} className="group block no-underline">
+          <div className={previewCardClass}>
+            <Image
+              src={card.image}
+              alt={card.alt}
+              fill
+              className="object-cover opacity-90 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+              sizes="(min-width: 768px) 33vw, 100vw"
+            />
+            <div className="absolute inset-0 bg-[#1a1a1f]/35 group-hover:bg-[#1a1a1f]/28 transition-colors duration-300" />
+            <div className="absolute bottom-0 left-0 right-0 p-3">
+              {card.defaultTitle ? (
+                <div className="relative">
+                  <h3 className={`${previewTitleClass} opacity-100 group-hover:opacity-0 transition-all duration-300`}>
+                    {card.defaultTitle}
+                  </h3>
+                  <h3 className={`${previewTitleClass} absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-all duration-300`}>
+                    {card.title}
+                  </h3>
+                </div>
+              ) : (
+                <h3 className={previewTitleClass}>{card.title}</h3>
+              )}
+              <p className="mt-1 text-[11px] md:text-xs text-white/85 leading-tight opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-16 transition-all duration-300 overflow-hidden">
+                {card.description}
+              </p>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+
   return (
     <main className="z-[5] bg-[#24242e]">
-      <Navigation sections={navs} />
+      <LocalNav sections={navs} />
 
-      {/* Hero + About Me Section */}
+      {/* Hero Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        {/* Fixed background for Hero + About Me */}
+        {/* Fixed background for Hero */}
         <motion.div
-          className="fixed -z-10 pointer-events-none"
+          className="fixed -z-10 pointer-events-none [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: state.allLettersReady && heroBackgroundLoaded ? 0.6 : 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -64,100 +177,111 @@ function HomeInner() {
         >
           {state.allLettersReady && (
             <Image
-              src="/coverNoPeople.webp"
+              src="/gallery/nobody.png"
               alt="Background"
               fill
-              className="object-cover object-bottom"
+              className="object-cover"
+              style={{ objectPosition: "center 70%" }}
               onLoad={() => setHeroBackgroundLoaded(true)}
             />
           )}
         </motion.div>
         {/* Dark overlay for Hero (local to hero area) */}
-        <div className="absolute inset-0 -z-[5] bg-[#1a1a1f]/60 pointer-events-none" />
+        <div className="absolute inset-0 -z-[5] bg-[#1a1a1f]/40 pointer-events-none" />
         {/* Hero Section */}
-        <Hero />
-
-        {/* About Me Section - Always visible */}
-        <div id="about-me" className="w-full">
-          <AboutMeSection isOpen={true} onClose={() => {}} />
+        <div className="relative z-[2]">
+          <Hero />
         </div>
+        {/* Transparent fade handled by masked hero background */}
       </div>
 
       {deferredSectionsReady && (
         <>
-          {/* Cover to hide fixed background when scrolling to other sections */}
-          <div
-            className="relative bg-[#24242e] overflow-hidden"
-            style={{ clipPath: "inset(0)" }}
-          >
-            {/* Gallery */}
-            <div id="gallery" className="relative">
-              <ScrollLinkSection
-                href="/gallery"
-                imageSrc="/gallery/chat.webp"
-                imageAlt="Gallery"
-                label="Personal Archive"
-                overlayImage="/archive.webp"
-                overlayImageAlt="Archive"
-                objectPosition="center bottom"
-                imageOpacity={100}
-                darkOverlay={false}
-                textColor="text-white"
-                overlayColor="#1a1a1f"
-                overlayOpacity={60}
-              />
+          {/* About Me Section on Gallery Background */}
+          <div className="relative overflow-hidden" style={{ clipPath: "inset(0)" }}>
+            <div id="about-me" className="relative min-h-[115vh]" style={{ clipPath: "inset(0)" }}>
+              <div
+                className="fixed -z-10 pointer-events-none"
+                style={{
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  width: "100vw",
+                  height: "110lvh",
+                  transform: "translate3d(0, 0, 0)",
+                  opacity: 0.6,
+                }}
+              >
+                <Image
+                  src="/gallery/looking.webp"
+                  alt="Gallery"
+                  fill
+                  loading="eager"
+                  fetchPriority="high"
+                  className="object-cover"
+                  style={{ objectPosition: "center 70%" }}
+                />
+              </div>
+              <div className="absolute inset-0 -z-[5] pointer-events-none bg-[#1a1a1f]/40" />
+              <div className="absolute inset-0 flex items-center justify-center translate-y-16 md:translate-y-24">
+                <AboutMeSection />
+              </div>
             </div>
 
-            {/* Projects Section */}
-            <section id="projects" className="w-full">
-              <div id="elgato-project">
-                <ScrollLinkSection
-                  href="/elgato"
-                  imageSrc="/projects/elgato/gato3.webp"
-                  imageAlt="Elgato"
-                  label="Working with a Company"
-                  overlayImage="/working.webp"
-                  overlayImageAlt="Working"
-                  secondaryImage="/company.webp"
-                  secondaryImageAlt="Company placeholder"
-                  description="Custom designs and illustrations for Elgato"
-                  objectPosition="center bottom"
-                  mobileObjectPosition="left"
-                  imageOpacity={100}
-                  overlayColor="#1a1a1f"
-                  overlayOpacity={60}
+            {/* Personal Archive Section */}
+            <div id="gallery" className={showcaseSectionClass}>
+              <div
+                className="absolute inset-0 -z-10 pointer-events-none bg-cover bg-center bg-fixed opacity-60"
+                style={{ backgroundImage: "url('/gallery/originals_backup/bird.png')" }}
+              />
+              <div className="absolute inset-0 -z-10 pointer-events-none bg-[#17181c]/24" />
+              <div className={showcaseContentClass}>
+                {/* Personal Archive Categories Section */}
+                <Image
+                  src="/archive.webp"
+                  alt="Personal Archive"
+                  width={400}
+                  height={200}
+                  className={showcaseHeaderImageClass}
+                  loading="lazy"
                 />
+                {renderPreviewCards(personalArchiveCards)}
               </div>
-              <div id="quards-project">
-                <ScrollLinkSection
-                  href="/quards"
-                  imageSrc="/covers/quards/quards.webp"
-                  imageAlt="Quards"
-                  label="Working with a Startup"
-                  overlayImage="/working.webp"
-                  overlayImageAlt="Working"
-                  secondaryImage="/startup.webp"
-                  secondaryImageAlt="Startup placeholder"
-                  description="Branding and app design for Quards"
+            </div>
+
+            {/* Working Section */}
+            <section id="working" className={showcaseSectionClass}>
+              <div
+                className="absolute inset-0 -z-10 pointer-events-none bg-cover bg-center bg-fixed opacity-60"
+                style={{ backgroundImage: "url('/gallery/originals_backup/bird.png')" }}
+              />
+              <div className="absolute inset-0 -z-10 pointer-events-none bg-[#1a1a1f]/35" />
+              <div className={showcaseContentClass}>
+                <Image
+                  src="/working.png"
+                  alt="Working with"
+                  width={2048}
+                  height={2048}
+                  className={showcaseHeaderImageClass}
+                  loading="lazy"
                 />
-              </div>
-              <div id="mascha-project">
-                <ScrollLinkSection
-                  href="/mascha"
-                  imageSrc="/covers/mascha/m3.webp"
-                  imageAlt="Mascha"
-                  label="Working with an Artist"
-                  overlayImage="/working.webp"
-                  overlayImageAlt="Working"
-                  secondaryImage="/art.webp"
-                  secondaryImageAlt="Art placeholder"
-                  description="Album artwork and visuals for Mascha"
-                />
+                {renderPreviewCards(workingCards)}
               </div>
             </section>
 
             {/* Footer CTA Section */}
-            <section className="relative py-32 md:py-48 px-8 overflow-hidden bg-[#1c1b1b]">
+            <section className="relative py-32 md:py-48 px-8 overflow-hidden" style={{ clipPath: "inset(0)" }}>
+              <div className="fixed inset-0 -z-10">
+                <Image
+                  src="/gallery/ship.webp"
+                  alt="Background"
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-[center_bottom]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-[#1a1a1f]/60" />
+              </div>
               <div className="max-w-4xl mx-auto text-center relative z-10">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}

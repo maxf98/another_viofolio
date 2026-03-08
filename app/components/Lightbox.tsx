@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useCallback, useState } from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { MdClose, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { ImageItem } from "@/app/data/model";
 import CTAButton from "./CTAButton";
+import OverlayShell from "./OverlayShell";
+import { OVERLAY_CONTROL_Z_INDEX } from "./overlayZ";
 
 type LightboxProps = {
   images: ImageItem[];
@@ -135,117 +135,95 @@ export default function Lightbox({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, scrollNext, scrollPrev]);
 
-  // Lock body scroll when open
-  useEffect(() => {
-    document.body.style.overflowX = "hidden";
-    document.body.style.overflowY = isOpen ? "hidden" : "";
-  }, [isOpen]);
-
-  if (typeof window === "undefined") return null;
-
-  return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="z-20 fixed inset-0 bg-black/80 backdrop-blur-[10px] flex flex-col justify-center items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          {/* Close button */}
-          <div className="fixed top-4 right-4 z-30">
-            <CTAButton
-              onClick={onClose}
-              size="sm"
-              bgColor="#7a9b76"
-              className="!p-3"
+  return (
+    <OverlayShell isOpen={isOpen} onClose={onClose}>
+      <div className="w-full h-full">
+        {/* Navigation arrows - Desktop only (hidden on mobile) */}
+        {images.length > 1 && (
+          <>
+            <div
+              className="hidden md:block fixed left-4 md:left-8 top-1/2 -translate-y-1/2"
+              style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
             >
-              <MdClose size={24} />
-            </CTAButton>
-          </div>
-
-          {/* Navigation arrows - Desktop only (hidden on mobile) */}
-          {images.length > 1 && (
-            <>
-              <div className="hidden md:block fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-30">
-                <CTAButton
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    scrollPrev();
-                  }}
-                  size="sm"
-                  bgColor="#1a1a1f"
-                  blobIntensity="medium"
-                  className="!p-3"
-                >
-                  <MdChevronLeft size={28} />
-                </CTAButton>
-              </div>
-              <div className="hidden md:block fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-30">
-                <CTAButton
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    scrollNext();
-                  }}
-                  size="sm"
-                  bgColor="#1a1a1f"
-                  blobIntensity="medium"
-                  className="!p-3"
-                >
-                  <MdChevronRight size={28} />
-                </CTAButton>
-              </div>
-            </>
-          )}
-
-          {/* Mobile navigation buttons - Fixed at bottom */}
-          {images.length > 1 && (
-            <div className="md:hidden fixed bottom-8 left-0 right-0 flex justify-center items-center gap-4 z-30 px-4">
               <CTAButton
                 onClick={(e) => {
                   e?.stopPropagation();
                   scrollPrev();
                 }}
                 size="sm"
-                bgColor="#1a1a1f"
                 blobIntensity="medium"
                 className="!p-3"
               >
-                <MdChevronLeft size={24} />
+                <MdChevronLeft size={28} />
               </CTAButton>
+            </div>
+            <div
+              className="hidden md:block fixed right-4 md:right-8 top-1/2 -translate-y-1/2"
+              style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
+            >
               <CTAButton
                 onClick={(e) => {
                   e?.stopPropagation();
                   scrollNext();
                 }}
                 size="sm"
-                bgColor="#1a1a1f"
                 blobIntensity="medium"
                 className="!p-3"
               >
-                <MdChevronRight size={24} />
+                <MdChevronRight size={28} />
               </CTAButton>
             </div>
-          )}
+          </>
+        )}
 
-          {/* Embla Carousel */}
+        {/* Mobile navigation buttons - Fixed at bottom */}
+        {images.length > 1 && (
           <div
-            className="w-full h-full overflow-hidden"
-            ref={emblaRef}
-            style={{
-              opacity: wrapVisible ? 1 : 0,
-              transition: `opacity ${WRAP_FADE_MS}ms ease-in-out`,
-            }}
+            className="md:hidden fixed bottom-8 left-0 right-0 flex justify-center items-center gap-4 px-4"
+            style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
           >
-            <div className="flex h-full items-center">
-              {images.map((image, i) => {
-                const isCurrent = i === currentIndex;
-                const isPrev = i === (currentIndex - 1 + images.length) % images.length;
-                const isNext = i === (currentIndex + 1) % images.length;
-                const shouldPrioritize = isCurrent || isPrev || isNext;
+            <CTAButton
+              onClick={(e) => {
+                e?.stopPropagation();
+                scrollPrev();
+              }}
+              size="sm"
+              blobIntensity="medium"
+              className="!p-3"
+            >
+              <MdChevronLeft size={24} />
+            </CTAButton>
+            <CTAButton
+              onClick={(e) => {
+                e?.stopPropagation();
+                scrollNext();
+              }}
+              size="sm"
+              blobIntensity="medium"
+              className="!p-3"
+            >
+              <MdChevronRight size={24} />
+            </CTAButton>
+          </div>
+        )}
 
-                return (
+        {/* Embla Carousel */}
+        <div
+          className="w-full h-full overflow-hidden"
+          ref={emblaRef}
+          style={{
+            opacity: wrapVisible ? 1 : 0,
+            transition: `opacity ${WRAP_FADE_MS}ms ease-in-out`,
+          }}
+        >
+          <div className="flex h-full items-center">
+            {images.map((image, i) => {
+              const isCurrent = i === currentIndex;
+              const isPrev = i === (currentIndex - 1 + images.length) % images.length;
+              const isNext = i === (currentIndex + 1) % images.length;
+              const shouldPrioritize = isCurrent || isPrev || isNext;
+
+              return (
                 <div
                   key={i}
                   className={`flex-[0_0_95%] md:flex-[0_0_90%] min-w-0 flex items-center justify-center px-4 md:px-8 ${
@@ -284,13 +262,11 @@ export default function Lightbox({
                     )}
                   </div>
                 </div>
-                );
-              })}
-            </div>
+              );
+            })}
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>,
-    document.getElementById("modal-root") ?? document.body
+        </div>
+      </div>
+    </OverlayShell>
   );
 }

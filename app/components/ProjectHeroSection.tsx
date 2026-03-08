@@ -12,6 +12,7 @@ interface ProjectHeroSectionProps {
   title: string;
   description?: string;
   children?: React.ReactNode;
+  noBackground?: boolean;
 }
 
 export default function ProjectHeroSection({
@@ -20,6 +21,7 @@ export default function ProjectHeroSection({
   title,
   description,
   children,
+  noBackground = false,
 }: ProjectHeroSectionProps) {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -27,21 +29,23 @@ export default function ProjectHeroSection({
     <div
       ref={heroRef}
       className="relative w-screen h-screen"
-      style={{ clipPath: "inset(0)" }}
+      style={noBackground ? undefined : { clipPath: "inset(0)" }}
     >
-      <div className="fixed inset-0 w-full h-full -z-10">
-        <Image
-          src={src}
-          fill
-          sizes="100vw"
-          alt={alt}
-          placeholder="blur"
-          className="w-full h-full object-cover opacity-20 scale-100"
-          style={{ objectPosition: "center 70%" }}
-          quality={60}
-          priority
-        />
-      </div>
+      {!noBackground && (
+        <div className="fixed inset-0 w-full h-full -z-10">
+          <Image
+            src={src}
+            fill
+            sizes="100vw"
+            alt={alt}
+            placeholder="blur"
+            className="w-full h-full object-cover opacity-20 scale-100"
+            style={{ objectPosition: "center 70%" }}
+            quality={60}
+            priority
+          />
+        </div>
+      )}
       <motion.div
         className="absolute inset-0 flex flex-col justify-end z-10"
       >
