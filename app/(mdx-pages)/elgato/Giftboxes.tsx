@@ -60,6 +60,7 @@ export default function Giftboxes() {
                   alt=""
                   fill
                   className="object-cover opacity-5"
+                  loading="eager"
                 />
               </div>
             )}

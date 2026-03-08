@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Navigation, { NavSection } from "@/app/components/navigation/Navigation";
+import LocalNav, { NavSection } from "@/app/components/navigation/LocalNav";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import CustomsGallery from "./CustomsGallery";
 import Giftboxes from "./Giftboxes";
 import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
 import Lightbox from "@/app/components/Lightbox";
-import NextProjectButton from "@/app/components/NextProjectButton";
+import SectionHintsGrid from "@/app/components/SectionHintsGrid";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
 import workingImg from "@/public/working.png";
@@ -115,7 +115,7 @@ function ElgatoInner() {
 
   return (
     <div className="bg-[#24242e] overflow-x-hidden">
-      <Navigation sections={navs} />
+      <LocalNav sections={navs} />
 
       <ProjectHeroSection
         src={heroImg}
@@ -134,7 +134,7 @@ function ElgatoInner() {
             className="object-cover opacity-20"
             style={{ objectPosition: "center 70%" }}
             quality={60}
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
@@ -167,7 +167,7 @@ function ElgatoInner() {
             fill
             className="object-cover opacity-5"
             quality={60}
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <div className="flex flex-col justify-center items-center gap-16 py-32 md:py-16">
@@ -202,7 +202,7 @@ function ElgatoInner() {
             fill
             className="object-cover opacity-5"
             quality={60}
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <div
@@ -239,38 +239,13 @@ function ElgatoInner() {
             fill
             className="object-cover opacity-5"
             quality={60}
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <div className="">
           <Giftboxes />
         </div>
-      </div>
-
-      {/* Summary Section */}
-      <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#24242e]">
-          <Image
-            src="/projects/elgato/gato3.png"
-            alt=""
-            fill
-            className="object-cover opacity-20"
-            quality={60}
-            loading="lazy"
-          />
-        </div>
-        <div className="content-container py-32 flex flex-col items-center text-center">
-          <p className="max-w-2xl text-lg">{t.summaryText}</p>
-        </div>
-      </div>
-
-      {/* Next Project Button - match page background */}
-      <div className="bg-[#24242e]">
-        <NextProjectButton
-          href="/quards"
-          label="Quards"
-          imageSrc="/covers/quards/quards.png"
-        />
+        <SectionHintsGrid currentHref="/elgato" />
       </div>
 
       <Lightbox
