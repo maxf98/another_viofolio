@@ -13,7 +13,7 @@ export default function HamburgerButton() {
     <AnimatePresence>
       <motion.button
         onClick={toggleGlobalNav}
-        className="fixed top-0 right-0 z-[20001] p-4 md:px-6 md:py-10 text-white focus:outline-none pointer-events-auto"
+        className="fixed top-0 right-0 z-[20001] p-5 md:px-6 md:py-10 text-white focus:outline-none pointer-events-auto"
         aria-label="Toggle navigation"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

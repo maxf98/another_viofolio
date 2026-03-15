@@ -262,6 +262,11 @@ function LetterStack({
     );
   }
 
+  const activeLetter = letters[selectedLetter] ?? letters[0];
+  if (!activeLetter) {
+    return null;
+  }
+
   return (
     <div
       className="relative"
@@ -276,9 +281,9 @@ function LetterStack({
     >
       <AnimatePresence mode="wait">
         <motion.img
-          key={letters[selectedLetter].index}
-          src={letters[selectedLetter].image}
-          alt={letters[selectedLetter].alt}
+          key={activeLetter.index}
+          src={activeLetter.image}
+          alt={activeLetter.alt}
           fetchPriority="high"
           initial={{ rotateY: -90 }}
           animate={{ rotateY: 0 }}

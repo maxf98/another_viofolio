@@ -71,17 +71,19 @@ export default function GlobalNav() {
               }}
             >
               {/* About Me */}
-              <motion.button
-                onClick={handleAboutMeClick}
-                className="px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 text-left"
+              <motion.div
                 variants={{
                   hidden: { opacity: 0, x: 20 },
                   visible: { opacity: 1, x: 0 },
                 }}
               >
-                {t.aboutMe}
-              </motion.button>
-
+                <button
+                  onClick={handleAboutMeClick}
+                  className="w-full px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 text-left"
+                >
+                  {t.aboutMe}
+                </button>
+              </motion.div>
               {/* Personal Archive Section */}
               <div className="mt-8">
                 <motion.h3
@@ -148,7 +150,6 @@ export default function GlobalNav() {
                   </Link>
                 </motion.div>
               </div>
-
               {/* Working With Section */}
               <div className="mt-8">
                 <motion.h3
@@ -222,7 +223,7 @@ export default function GlobalNav() {
               <div className="flex gap-8 justify-center">
                 <RotateOnHover rotation={15} stiffness={400} damping={8}>
                   <a
-                    href="https://tiktok.com/@yourusername"
+                    href="https://www.tiktok.com/@vioseum"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/70 hover:text-white transition-colors"
@@ -234,7 +235,7 @@ export default function GlobalNav() {
 
                 <RotateOnHover rotation={15} stiffness={400} damping={8}>
                   <a
-                    href="https://instagram.com/@yourusername"
+                    href="https://www.instagram.com/vioseum/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/70 hover:text-white transition-colors"

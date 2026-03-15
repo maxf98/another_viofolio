@@ -5,7 +5,7 @@ import { useLang } from "@/app/context/LanguageContext";
 
 const translations = {
   en: {
-    heroTitle: "^ELGATO^",
+    heroTitle: "ELGATO",
     heroDescription: "Elgato is a leading creator of hardware and software for content creators, known for products like the Stream Deck, capture cards, microphones, and lighting tools used by streamers and creatives worldwide. I had the opportunity to collaborate with their teams globally on custom product designs and illustrated brand assets, contributing to the visual identity of several releases and campaigns.",
     customsTitle: "Product Customs",
     customsDescription: "I designed custom faceplates for Elgato's Stream Deck and Wave XLR, including the first versions released in their store and various partner collaborations.",
@@ -32,7 +32,7 @@ const translations = {
     ],
   },
   de: {
-    heroTitle: "^ELGATO^",
+    heroTitle: "ELGATO",
     heroDescription: "Elgato ist ein führender Hersteller von Hardware und Software für Content Creator, bekannt für Produkte wie das Stream Deck, Capture Cards, Mikrofone und Beleuchtungstools. Ich hatte die Möglichkeit, mit ihren Teams weltweit an individuellen Produktdesigns und illustrierten Markenassets zusammenzuarbeiten.",
     customsTitle: "Produkt-Customs",
     customsDescription: "Ich entwarf individuelle Frontplatten für Elgatos Stream Deck und Wave XLR, einschließlich der ersten Versionen, die in ihrem Store veröffentlicht wurden.",
@@ -59,7 +59,7 @@ const translations = {
     ],
   },
   ru: {
-    heroTitle: "^ELGATO^",
+    heroTitle: "ELGATO",
     heroDescription: "Elgato — ведущий создатель аппаратного и программного обеспечения для контент-мейкеров, известный такими продуктами, как Stream Deck, карты захвата, микрофоны и инструменты освещения. Мне выпала возможность сотрудничать с их командами по всему миру над индивидуальными дизайнами продуктов и иллюстрированными брендовыми активами.",
     customsTitle: "Кастомизация продуктов",
     customsDescription: "Я разработала индивидуальные лицевые панели для Stream Deck и Wave XLR от Elgato, включая первые версии, выпущенные в их магазине.",

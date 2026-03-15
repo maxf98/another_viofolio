@@ -6,9 +6,9 @@ export const globalNavText = {
     analogueExplorations: "Analogue Explorations",
     monkeybrainMag: "Monkeybrain Magazine",
     workingWith: "Working With",
-    startup: "Startup",
-    company: "Company",
-    artist: "Artist",
+    startup: "a startup",
+    company: "a company",
+    artist: "an artist",
   },
   de: {
     aboutMe: "Über mich",

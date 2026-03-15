@@ -5,19 +5,15 @@ import LocalNav, { NavSection } from "@/app/components/navigation/LocalNav";
 import ProjectHeroSection from "@/app/components/ProjectHeroSection";
 import CustomsGallery from "./CustomsGallery";
 import Giftboxes from "./Giftboxes";
-import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
+import ClickThroughGallery from "@/app/components/ClickThroughGallery";
 import Lightbox from "@/app/components/Lightbox";
 import SectionHintsGrid from "@/app/components/SectionHintsGrid";
+import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
-import workingImg from "@/public/working.png";
 import {
-  customsWebShotsImages,
   dImages,
   xImages,
-  ofestImages,
-  winter22Images,
-  winter23Images,
 } from "@/app/data/elgato";
 import { pairImages, sdImages, xlrImages } from "./CustomsGallery";
 import { ElgatoTextProvider, useElgatoText } from "@/app/translations/elgato";
@@ -73,16 +69,6 @@ function ElgatoInner() {
     setLightboxIndex(imageIndex);
   };
 
-  const handleCustomsWebShotsClick = (imageIndex: number) => {
-    const images = customsWebShotsImages.map((img, i) => ({
-      index: i,
-      image: img,
-      alt: `Customs web shot ${i + 1}`,
-    }));
-    setLightboxImages(images);
-    setLightboxIndex(imageIndex);
-  };
-
   const handlePairClick = (imageIndex: number) => {
     const images = pairImages.map((img, i) => ({
       index: i,
@@ -114,7 +100,7 @@ function ElgatoInner() {
   };
 
   return (
-    <div className="bg-[#24242e] overflow-x-hidden">
+    <div className="bg-transparent overflow-x-hidden">
       <LocalNav sections={navs} />
 
       <ProjectHeroSection
@@ -122,21 +108,19 @@ function ElgatoInner() {
         alt="Elgato Poster"
         title={t.heroTitle}
         description={t.heroDescription}
+        noBackground
       />
 
       {/* Product Customs Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#24242e]">
-          <Image
-            src="/projects/elgato/gato3.png"
-            alt=""
-            fill
-            className="object-cover opacity-20"
-            style={{ objectPosition: "center 70%" }}
-            quality={60}
-            loading="eager"
-          />
-        </div>
+        <FixedBackgroundImage
+          src="/projects/elgato/gato3.png"
+          opacity={0.2}
+          objectPosition="center 70%"
+          containerClassName="-z-10 bg-[#24242e]"
+          quality={60}
+          loading="eager"
+        />
         <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
           <div id="customs">
             <div className="mb-24">
@@ -150,26 +134,17 @@ function ElgatoInner() {
             />
           </div>
         </div>
-        <InfiniteScrollGallery
-          images={customsWebShotsImages}
-          altPrefix="Customs web shot"
-          onImageClick={handleCustomsWebShotsClick}
-          cropLeftHalf={[]}
-        />
       </div>
 
       {/* Collaborations Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#1e1e28]">
-          <Image
-            src="/projects/elgato/D/8.jpg"
-            alt=""
-            fill
-            className="object-cover opacity-5"
-            quality={60}
-            loading="eager"
-          />
-        </div>
+        <FixedBackgroundImage
+          src="/projects/elgato/D/8.jpg"
+          opacity={0.05}
+          containerClassName="-z-10 bg-[#1e1e28]"
+          quality={60}
+          loading="eager"
+        />
         <div className="flex flex-col justify-center items-center gap-16 py-32 md:py-16">
           <div id="w22" className="content-container pt-16 md:pt-0">
             <h1>{t.dreamvilleTitle}</h1>
@@ -184,27 +159,32 @@ function ElgatoInner() {
               <p>{t.dreamvilleDescription}</p>
             </div>
           </div>
-          <InfiniteScrollGallery
-            images={dImages}
-            altPrefix="D collection"
-            direction="backward"
-            onImageClick={handleDreamvilleClick}
-          />
+          <div className="w-full mt-2 md:mt-4 mb-6 md:mb-10">
+            <div className="relative mx-auto w-full max-w-7xl px-3 md:px-6">
+              <div className="rounded-[26px] border border-white/12 bg-black/20 backdrop-blur-[2px] p-3 md:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+                <div className="relative">
+                  <ClickThroughGallery
+                    images={dImages}
+                    altPrefix="D collection"
+                    onImageClick={handleDreamvilleClick}
+                    height={300}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Anniversary Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#24242e]">
-          <Image
-            src="/projects/elgato/X/4.png"
-            alt=""
-            fill
-            className="object-cover opacity-5"
-            quality={60}
-            loading="eager"
-          />
-        </div>
+        <FixedBackgroundImage
+          src="/projects/elgato/X/4.png"
+          opacity={0.05}
+          containerClassName="-z-10 bg-[#24242e]"
+          quality={60}
+          loading="eager"
+        />
         <div
           id="anniversary"
           className="flex flex-col justify-center items-center gap-16 py-24 md:py-16"
@@ -222,31 +202,37 @@ function ElgatoInner() {
               <p>{t.anniversaryDescription}</p>
             </div>
           </div>
-          <InfiniteScrollGallery
-            images={xImages}
-            altPrefix="X collection"
-            onImageClick={handleXClick}
-          />
+          <div className="w-full mt-2 md:mt-4 mb-6 md:mb-10">
+            <div className="relative mx-auto w-full max-w-7xl px-3 md:px-6">
+              <div className="rounded-[26px] border border-white/12 bg-black/20 backdrop-blur-[2px] p-3 md:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+                <div className="relative">
+                  <ClickThroughGallery
+                    images={xImages}
+                    altPrefix="X collection"
+                    onImageClick={handleXClick}
+                    height={300}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Giftboxes Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#1e1e28]">
-          <Image
-            src="/projects/elgato/brand-illustration/winter23/1.png"
-            alt=""
-            fill
-            className="object-cover opacity-5"
-            quality={60}
-            loading="eager"
-          />
-        </div>
+        <FixedBackgroundImage
+          src="/projects/elgato/brand-illustration/winter23/1.png"
+          opacity={0.05}
+          containerClassName="-z-10 bg-[#1e1e28]"
+          quality={60}
+          loading="eager"
+        />
         <div className="">
           <Giftboxes />
         </div>
-        <SectionHintsGrid currentHref="/elgato" />
       </div>
+      <SectionHintsGrid currentHref="/elgato" transparentCards />
 
       <Lightbox
         images={lightboxImages}

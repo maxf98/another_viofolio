@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import InfiniteScrollGallery from "../../components/InfiniteScrollGallery";
+import ClickThroughGallery from "@/app/components/ClickThroughGallery";
 import Lightbox from "@/app/components/Lightbox";
+import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import { winter23Images, ofestImages, winter22Images } from "@/app/data/elgato";
 import { StaticImageData } from "next/image";
 import { ImageItem } from "@/app/data/model";
@@ -54,15 +55,12 @@ export default function Giftboxes() {
             style={box.backgroundImage ? { clipPath: "inset(0)" } : undefined}
           >
             {box.backgroundImage && (
-              <div className="fixed inset-0 -z-10 bg-[#1e1e28]">
-                <Image
-                  src={box.backgroundImage}
-                  alt=""
-                  fill
-                  className="object-cover opacity-5"
-                  loading="eager"
-                />
-              </div>
+              <FixedBackgroundImage
+                src={box.backgroundImage}
+                opacity={0.05}
+                containerClassName="-z-10 bg-[#1e1e28]"
+                loading="eager"
+              />
             )}
             <div className="content-container">
               <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
@@ -80,16 +78,21 @@ export default function Giftboxes() {
                 </div>
               </div>
             </div>
-            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-12 md:mt-20 mb-4 md:mb-16">
-              <InfiniteScrollGallery
-                images={box.galleryImages}
-                height={200}
-                altPrefix={box.title}
-                direction={index % 2 === 0 ? "forward" : "backward"}
-                onImageClick={(imageIndex) =>
-                  handleImageClick(index, imageIndex)
-                }
-              />
+            <div className="w-full mt-12 md:mt-20 mb-6 md:mb-20">
+              <div className="relative mx-auto w-full max-w-7xl px-3 md:px-6">
+                <div className="rounded-[26px] border border-white/12 bg-black/20 backdrop-blur-[2px] p-3 md:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+                  <div className="relative">
+                    <ClickThroughGallery
+                      images={box.galleryImages}
+                      height={300}
+                      altPrefix={box.title}
+                      onImageClick={(imageIndex) =>
+                        handleImageClick(index, imageIndex)
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         ))}

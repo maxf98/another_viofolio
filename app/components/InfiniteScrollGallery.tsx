@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { StaticImageData } from "next/image";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 interface InfiniteScrollGalleryProps {
   images: StaticImageData[];
@@ -16,6 +14,10 @@ interface InfiniteScrollGalleryProps {
   onImageClick?: (index: number) => void;
   cropLeftHalf?: number[]; // indices of images to crop left half
   imageClassName?: string;
+  className?: string;
+  viewportClassName?: string;
+  trackClassName?: string;
+  slideClassName?: string;
 }
 
 export default function InfiniteScrollGallery({
@@ -27,6 +29,10 @@ export default function InfiniteScrollGallery({
   onImageClick,
   cropLeftHalf = [],
   imageClassName = "",
+  className = "",
+  viewportClassName = "",
+  trackClassName = "",
+  slideClassName = "",
 }: InfiniteScrollGalleryProps) {
   // Duplicate images to ensure enough for looping
   const duplicatedImages = [...images, ...images, ...images];
@@ -48,14 +54,11 @@ export default function InfiniteScrollGallery({
     ]
   );
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-
   return (
-    <div className="w-full">
+    <div className={`w-full ${className}`}>
       {/* Carousel */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-4 md:gap-8" style={{ height }}>
+      <div className={`overflow-hidden ${viewportClassName}`} ref={emblaRef}>
+        <div className={`flex gap-4 md:gap-8 ${trackClassName}`} style={{ height }}>
           {duplicatedImages.map((image, index) => {
             const originalIndex = index % images.length;
             const shouldCrop = cropLeftHalf.includes(originalIndex);
@@ -64,7 +67,7 @@ export default function InfiniteScrollGallery({
                 key={index}
                 className={`flex-[0_0_auto] h-full ${
                   onImageClick ? "cursor-pointer" : ""
-                } ${shouldCrop ? "overflow-hidden" : ""}`}
+                } ${shouldCrop ? "overflow-hidden" : ""} ${slideClassName}`}
                 onClick={() => onImageClick?.(originalIndex)}
               >
                 <Image
@@ -85,21 +88,6 @@ export default function InfiniteScrollGallery({
         </div>
       </div>
 
-      {/* Navigation arrows underneath */}
-      {/* <div className="flex justify-center gap-2 mt-4">
-        <button
-          onClick={scrollPrev}
-          className="bg-black/20 hover:bg-black/40 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full p-1 transition-colors"
-        >
-          <MdChevronLeft size={28} />
-        </button>
-        <button
-          onClick={scrollNext}
-          className="bg-black/20 hover:bg-black/40 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full p-1 transition-colors"
-        >
-          <MdChevronRight size={28} />
-        </button>
-      </div> */}
     </div>
   );
 }

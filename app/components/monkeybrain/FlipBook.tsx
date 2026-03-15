@@ -36,7 +36,8 @@ function computeBookSize(
   const bookBaseWidth = isCoverMode ? basePageWidth : basePageWidth * 2;
 
   const widthScale = availableWidth > 0 ? availableWidth / bookBaseWidth : 1;
-  const heightScale = availableHeight > 0 ? availableHeight / basePageHeight : 1;
+  const heightScale =
+    availableHeight > 0 ? availableHeight / basePageHeight : 1;
   const maxScale = isOverlay ? 2 : 1;
   const scale = Math.min(maxScale, widthScale, heightScale);
 
@@ -55,8 +56,14 @@ export default function FlipBook({
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [openCycle, setOpenCycle] = useState(0);
   const [landscapeHintLocked, setLandscapeHintLocked] = useState(false);
-  const [hintViewport, setHintViewport] = useState<{ width: number; height: number } | null>(null);
-  const [overlayViewport, setOverlayViewport] = useState<{ width: number; height: number } | null>(null);
+  const [hintViewport, setHintViewport] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
+  const [overlayViewport, setOverlayViewport] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
   const [animateTransform, setAnimateTransform] = useState(false);
   const [coverShiftActive, setCoverShiftActive] = useState(false);
   const [viewport, setViewport] = useState(() => ({
@@ -120,9 +127,12 @@ export default function FlipBook({
       }, flipDelayAfterRotateMs);
     }, rotateDelayMs);
 
-    const endTransformAnimationTimer = window.setTimeout(() => {
-      setAnimateTransform(false);
-    }, rotateDelayMs + rotateDurationMs + 80);
+    const endTransformAnimationTimer = window.setTimeout(
+      () => {
+        setAnimateTransform(false);
+      },
+      rotateDelayMs + rotateDurationMs + 80,
+    );
 
     return () => {
       window.clearTimeout(rotateTimer);
@@ -163,7 +173,8 @@ export default function FlipBook({
   const bookKey = openInOverlay
     ? `overlay-${openCycle}`
     : `${Math.round(pageWidth)}x${Math.round(pageHeight)}`;
-  const coverShiftPx = currentPage === 0 && coverShiftActive ? pageWidth / 2 : 0;
+  const coverShiftPx =
+    currentPage === 0 && coverShiftActive ? pageWidth / 2 : 0;
   const widthResizeRatio =
     initialBookSize.pageWidth > 0
       ? adjustedBookSize.pageWidth / initialBookSize.pageWidth
@@ -248,27 +259,29 @@ export default function FlipBook({
               key={index}
               className="page"
               style={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '4px'
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "4px",
               }}
             >
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                maxWidth: '100%',
-                maxHeight: '100%'
-              }}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                }}
+              >
                 <Image
                   src={imageSrc}
                   alt={`Page ${index + 1}`}
                   fill
                   style={{
-                    objectFit: 'contain'
+                    objectFit: "contain",
                   }}
                   sizes="(max-width: 768px) 100vw, 400px"
                   priority={isPriority}
@@ -344,14 +357,28 @@ export default function FlipBook({
         <div
           className="absolute left-1/2 top-1/2"
           style={{
-            transition: animateTransform ? "transform 700ms ease-in-out" : "none",
+            transition: animateTransform
+              ? "transform 700ms ease-in-out"
+              : "none",
             transform: `translate(calc(-50% - ${coverShiftPx}px), -50%) rotate(${applyLandscapeHint ? 90 : 0}deg) scale(${resizeScale})`,
-            width: `${(applyLandscapeHint
-              ? hintViewport?.width ?? Math.max(baseOverlayViewport.width, baseOverlayViewport.height)
-              : baseOverlayViewport.width) ?? 0}px`,
-            height: `${(applyLandscapeHint
-              ? hintViewport?.height ?? Math.min(baseOverlayViewport.width, baseOverlayViewport.height)
-              : baseOverlayViewport.height) ?? 0}px`,
+            width: `${
+              (applyLandscapeHint
+                ? (hintViewport?.width ??
+                  Math.max(
+                    baseOverlayViewport.width,
+                    baseOverlayViewport.height,
+                  ))
+                : baseOverlayViewport.width) ?? 0
+            }px`,
+            height: `${
+              (applyLandscapeHint
+                ? (hintViewport?.height ??
+                  Math.min(
+                    baseOverlayViewport.width,
+                    baseOverlayViewport.height,
+                  ))
+                : baseOverlayViewport.height) ?? 0
+            }px`,
           }}
         >
           {flipbookContent(false)}

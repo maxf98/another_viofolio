@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Picker from "@/app/components/Picker";
+import InteractionHint from "@/app/components/InteractionHint";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import { useQuardsText } from "@/app/translations/quards";
 
@@ -114,18 +115,21 @@ export default function BeforeAfter() {
       </div>
 
       {/* Picker - row on mobile, column on desktop */}
-      <div className="flex flex-row sm:flex-col justify-between sm:justify-end gap-1 w-[352px] sm:w-auto">
-        {newImages.map((image, index) => (
-          <Picker
-            key={index}
-            src={image}
-            alt={`Before/After comparison ${index + 1}`}
-            isSelected={selectedIndex === index}
-            onClick={() => handleSelectIndex(index)}
-            animatesScale={false}
-            className="h-20 w-14 sm:h-20 sm:w-15 ipad-border-thin"
-          />
-        ))}
+      <div className="flex flex-col items-center">
+        <InteractionHint text={t.tapPreviewToChange} className="mb-2 sm:mb-3" />
+        <div className="flex flex-row sm:flex-col justify-between sm:justify-end gap-1 w-[352px] sm:w-auto">
+          {newImages.map((image, index) => (
+            <Picker
+              key={index}
+              src={image}
+              alt={`Before/After comparison ${index + 1}`}
+              isSelected={selectedIndex === index}
+              onClick={() => handleSelectIndex(index)}
+              animatesScale={false}
+              className="h-20 w-14 sm:h-20 sm:w-15 ipad-border-thin"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

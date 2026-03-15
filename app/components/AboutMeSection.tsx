@@ -27,12 +27,12 @@ export default function AboutMeSection() {
           />
         </div>
 
-        <div className="relative flex flex-col items-center gap-6">
+        <div className="relative flex flex-col items-center gap-6 pb-16 max-lg:landscape:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.35, delay: 0 }}
           >
             <Image
               src="/IDA2.png"
@@ -48,10 +48,15 @@ export default function AboutMeSection() {
             className="flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ delay: 0.2, type: "spring" }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ delay: 0.05, type: "spring", stiffness: 220, damping: 22 }}
           >
-            <CTAButton onClick={openAboutMe}>
+            <CTAButton
+              onClick={openAboutMe}
+              bgColor="#ffffff"
+              textColor="text-[#10363a]"
+              bgOpacity={0.98}
+            >
               {t.aboutButton}
             </CTAButton>
           </motion.div>

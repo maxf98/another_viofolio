@@ -18,6 +18,7 @@ type OverlayShellProps = {
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;
   lockScroll?: boolean;
+  stopContainerPropagation?: boolean;
 };
 
 export default function OverlayShell({
@@ -31,6 +32,7 @@ export default function OverlayShell({
   closeOnBackdrop = true,
   closeOnEscape = true,
   lockScroll = true,
+  stopContainerPropagation = true,
 }: OverlayShellProps) {
   const portalTarget = useMemo(() => {
     if (typeof window === "undefined") return null;
@@ -39,9 +41,16 @@ export default function OverlayShell({
 
   useEffect(() => {
     if (!lockScroll) return;
-    document.body.style.overflowY = isOpen ? "hidden" : "";
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
     return () => {
-      document.body.style.overflowY = "";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isOpen, lockScroll]);
 
@@ -83,7 +92,10 @@ export default function OverlayShell({
             </div>
           )}
 
-          <div className={containerClassName} onClick={(event) => event.stopPropagation()}>
+          <div
+            className={containerClassName}
+            onClick={stopContainerPropagation ? (event) => event.stopPropagation() : undefined}
+          >
             {children}
           </div>
         </motion.div>

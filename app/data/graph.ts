@@ -127,21 +127,17 @@ export interface GallerySection {
 
 export const letters: Record<"V" | "I" | "O", LetterItem[]> = {
   V: [
-    { index: 0, image: "/letters/V/pants.webp", alt: "pants" },
-    { index: 1, image: "/letters/V/pens.webp", alt: "pens" },
-    { index: 2, image: "/letters/V/shape.webp", alt: "shape" },
-    { index: 3, image: "/letters/V/selfportrait.webp", alt: "self-portrait" },
+    { index: 2, image: "/letters/V/4v.png", alt: "4v" },
+    { index: 6, image: "/letters/V/blip.png", alt: "blip" },
+    { index: 1, image: "/letters/V/pp.png", alt: "pp" },
   ],
   I: [
-    { index: 0, image: "/letters/I/face.webp", alt: "face" },
     { index: 1, image: "/letters/I/shapes.webp", alt: "shapes" },
-    { index: 2, image: "/letters/I/sun.webp", alt: "sun" },
-    { index: 3, image: "/letters/I/window.webp", alt: "window" },
+    { index: 4, image: "/letters/I/plants.png", alt: "plants" },
   ],
   O: [
-    { index: 3, image: "/letters/O/shape.webp", alt: "shape" },
-    { index: 0, image: "/letters/O/face.webp", alt: "face" },
-    { index: 1, image: "/letters/O/flower head.webp", alt: "flower head" },
-    { index: 2, image: "/letters/O/kaktus.webp", alt: "kaktus" },
+    { index: 9, image: "/letters/O/7o.png", alt: "7o" },
+    { index: 4, image: "/letters/O/1o.png", alt: "1o" },
+    { index: 7, image: "/letters/O/4o.png", alt: "4o" },
   ],
 };

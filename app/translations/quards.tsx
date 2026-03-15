@@ -5,7 +5,7 @@ import { useLang } from "@/app/context/LanguageContext";
 
 const translations = {
   en: {
-    heroTitle: "^QUARDS^",
+    heroTitle: "QUARDS",
     heroDescription: "Quards is an indie iPad app for creating handdrawn flashcards, for which I developed the visual identity and created all assets. As the only designer, working with a single developer, that meant I was responsible for a wide variety of big and small tasks, from designing button icons, to logo design, colors, app store screenshots and themed artworks.",
     appDesignTitle: "App Design",
     appDesignP1: "When I joined the project, the app had no visual design—just basic functionality. I helped transform it into what you see today, bringing the builder's vision to life together with my own additions.",
@@ -20,11 +20,13 @@ const translations = {
     afterLabel: "After",
     tapToSeeAfter: "Tap to see after",
     tapToSeeBefore: "Tap to see before",
+    tapToSwitch: "Tap to switch",
+    tapPreviewToChange: "Tap a preview to change",
     navApp: "App Design",
     navVisualIdentity: "Visual Identity",
   },
   de: {
-    heroTitle: "^QUARDS^",
+    heroTitle: "QUARDS",
     heroDescription: "Quards ist eine Indie-iPad-App zum Erstellen handgezeichneter Lernkarten, für die ich die visuelle Identität entwickelt und alle Assets erstellt habe. Als einzige Designerin war ich für eine breite Palette von Aufgaben verantwortlich – von Button-Icons über Logo-Design bis hin zu App-Store-Screenshots.",
     appDesignTitle: "App Design",
     appDesignP1: "Als ich dem Projekt beitrat, hatte die App kein visuelles Design – nur grundlegende Funktionalität. Ich half dabei, sie in das zu verwandeln, was man heute sieht.",
@@ -39,11 +41,13 @@ const translations = {
     afterLabel: "Nachher",
     tapToSeeAfter: "Tippen, um Nachher zu sehen",
     tapToSeeBefore: "Tippen, um Vorher zu sehen",
+    tapToSwitch: "Tippen zum Wechseln",
+    tapPreviewToChange: "Vorschau antippen zum Wechseln",
     navApp: "App Design",
     navVisualIdentity: "Visuelle Identität",
   },
   ru: {
-    heroTitle: "^QUARDS^",
+    heroTitle: "QUARDS",
     heroDescription: "Quards — независимое iPad-приложение для создания рукописных карточек, для которого я разработала визуальную идентичность и создала все ресурсы. Будучи единственным дизайнером, работающим с одним разработчиком, я отвечала за широкий спектр задач — от иконок кнопок до логотипа, цветов, скриншотов для App Store и тематических иллюстраций.",
     appDesignTitle: "Дизайн приложения",
     appDesignP1: "Когда я присоединилась к проекту, приложение не имело визуального дизайна — только базовая функциональность. Я помогла превратить его в то, что вы видите сегодня.",
@@ -58,6 +62,8 @@ const translations = {
     afterLabel: "После",
     tapToSeeAfter: "Нажмите, чтобы увидеть после",
     tapToSeeBefore: "Нажмите, чтобы увидеть до",
+    tapToSwitch: "Нажмите, чтобы переключить",
+    tapPreviewToChange: "Нажмите превью для смены",
     navApp: "Дизайн приложения",
     navVisualIdentity: "Визуальная идентичность",
   },

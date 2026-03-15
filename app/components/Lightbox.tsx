@@ -136,7 +136,7 @@ export default function Lightbox({
   }, [isOpen, onClose, scrollNext, scrollPrev]);
 
   return (
-    <OverlayShell isOpen={isOpen} onClose={onClose}>
+    <OverlayShell isOpen={isOpen} onClose={onClose} stopContainerPropagation={false}>
       <div className="w-full h-full">
         {/* Navigation arrows - Desktop only (hidden on mobile) */}
         {images.length > 1 && (
@@ -230,26 +230,33 @@ export default function Lightbox({
                     i !== currentIndex ? "cursor-pointer" : ""
                   }`}
                   onClick={(e) => {
-                    e.stopPropagation();
-                    if (i < currentIndex) scrollPrev();
-                    else if (i > currentIndex) scrollNext();
+                    if (i < currentIndex) {
+                      e.stopPropagation();
+                      scrollPrev();
+                    } else if (i > currentIndex) {
+                      e.stopPropagation();
+                      scrollNext();
+                    }
+                    // Current slide: allow propagation to close lightbox
                   }}
                 >
-                  <div className="flex flex-col xl:flex-row items-center xl:items-start gap-6 xl:gap-12 max-w-[1400px]">
-                    <Image
-                      className={`object-contain select-none max-h-[60vh] md:max-h-[85vh] w-auto h-auto ${imageClassName}`}
-                      src={image.image}
-                      alt={image.alt ?? "Gallery image"}
-                      {...(typeof image.image !== "string" && { placeholder: "blur" })}
-                      sizes="(max-width: 768px) 90vw, 70vw"
-                      draggable={false}
-                      priority={shouldPrioritize}
-                      loading={shouldPrioritize ? "eager" : "lazy"}
-                    />
+                  <div className={`flex flex-col md:flex-row items-center gap-6 md:gap-12 max-w-[1400px] w-full ${showText ? 'md:items-start' : 'md:items-center'}`}>
+                    <div className={`flex-shrink min-w-0 ${!showText ? 'mx-auto' : ''}`}>
+                      <Image
+                        className={`object-contain select-none max-h-[60vh] md:max-h-[85vh] w-auto h-auto max-w-full ${imageClassName}`}
+                        src={image.image}
+                        alt={image.alt ?? "Gallery image"}
+                        {...(typeof image.image !== "string" && { placeholder: "blur" })}
+                        sizes="(max-width: 768px) 90vw, 70vw"
+                        draggable={false}
+                        priority={shouldPrioritize}
+                        loading={shouldPrioritize ? "eager" : "lazy"}
+                      />
+                    </div>
                     {showText && (
-                      <div className="flex flex-col items-center xl:items-start text-center xl:text-left xl:max-w-[300px] w-full">
+                      <div className="flex-shrink-0 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto md:min-w-[280px] md:max-w-[320px]">
                         {(image.title || image.alt) && (
-                          <h3 className="text-white text-xl xl:text-2xl font-medium capitalize">
+                          <h3 className="text-white text-xl md:text-2xl font-medium capitalize">
                             {image.title || image.alt}
                           </h3>
                         )}

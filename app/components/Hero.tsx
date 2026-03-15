@@ -144,9 +144,10 @@ export default function Hero() {
         };
       }
 
-      const gap = 16;
+      const gap = 20;
       const availableHeight = containerHeight - heyoHeight - gap;
-      const maxLetterSize = 400; // Maximum size for a single letter
+      const isCompactLandscape = containerWidth > containerHeight && containerHeight < 700;
+      const maxLetterSize = isCompactLandscape ? 400 : 340;
 
       // Try horizontal letters: 3 letters side by side
       const horizontalLetterSize = Math.min(containerWidth / 3, availableHeight, maxLetterSize);
@@ -215,12 +216,13 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center p-24 md:p-32">
-      <div
-        ref={containerRef}
-        className="w-full h-full flex items-center justify-center"
-      >
-        <div className="flex flex-col items-center gap-4">
+    <div className="w-full h-[110lvh] relative">
+      <div className="absolute inset-x-0 top-0 h-screen flex items-center justify-center p-32 md:p-40 max-lg:landscape:p-14">
+        <div
+          ref={containerRef}
+          className="w-full h-full flex items-center justify-center"
+        >
+          <div className="flex flex-col items-center gap-4">
           {/* Hey I'm image - always on top */}
           <motion.div
             ref={heyoRef}
@@ -279,6 +281,7 @@ export default function Hero() {
               onLoad={() => setLetterLoaded(2)}
               size={layout.letterSize}
             />
+          </div>
           </div>
         </div>
       </div>
@@ -350,6 +353,11 @@ function LetterStack({
     );
   }
 
+  const activeLetter = letters[selectedLetter] ?? letters[0];
+  if (!activeLetter) {
+    return null;
+  }
+
   return (
     <div
       className="relative"
@@ -364,9 +372,9 @@ function LetterStack({
     >
       <AnimatePresence mode="wait">
         <motion.img
-          key={letters[selectedLetter].index}
-          src={letters[selectedLetter].image}
-          alt={letters[selectedLetter].alt}
+          key={activeLetter.index}
+          src={activeLetter.image}
+          alt={activeLetter.alt}
           fetchPriority="high"
           initial={{ rotateY: -90 }}
           animate={{ rotateY: 0 }}

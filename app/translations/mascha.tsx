@@ -5,7 +5,7 @@ import { useLang } from "@/app/context/LanguageContext";
 
 const translations = {
   en: {
-    heroTitle: "^MASCHA^",
+    heroTitle: "MASCHA",
     heroDescription: "In collaboration with musician Mascha, I created three album covers that translate the themes of her music into visual form. Using a mixed-media process, I combined AI-generated imagery, photography, hand-painted illustration, and digital editing to craft layered, cohesive artworks that reflect the depth and atmosphere of her sound.",
     breatheDescription: "This cover explores breath as a force. My work involved illustration and collage, designing a hand-drawn title, a frame-by-frame animation in Procreate, and a full CD design.",
     breatheSubtitle: "Animation & CD Design",
@@ -21,7 +21,7 @@ const translations = {
     navFeelLoved: "Feel Loved",
   },
   de: {
-    heroTitle: "^MASCHA^",
+    heroTitle: "MASCHA",
     heroDescription: "In Zusammenarbeit mit der Musikerin Mascha schuf ich drei Albumcover, die die Themen ihrer Musik in visuelle Form übersetzen. Mit einem Mixed-Media-Prozess kombinierte ich KI-generierte Bilder, Fotografie, handgemalte Illustration und digitale Bearbeitung.",
     breatheDescription: "Dieses Cover erkundet Atem als Kraft. Meine Arbeit umfasste Illustration und Collage, einen handgezeichneten Titel, eine Einzelbild-Animation in Procreate und ein vollständiges CD-Design.",
     breatheSubtitle: "Animation & CD Design",
@@ -37,7 +37,7 @@ const translations = {
     navFeelLoved: "Feel Loved",
   },
   ru: {
-    heroTitle: "^MASCHA^",
+    heroTitle: "MASCHA",
     heroDescription: "В сотрудничестве с музыкантом Машей я создала три обложки альбомов, переводящих темы её музыки в визуальную форму. Используя смешанные медиа, я объединила изображения, созданные ИИ, фотографию, иллюстрацию и цифровую обработку.",
     breatheDescription: "Эта обложка исследует дыхание как силу. Моя работа включала иллюстрацию и коллаж, разработку рукописного названия, покадровую анимацию в Procreate и полный дизайн CD.",
     breatheSubtitle: "Анимация и дизайн CD",

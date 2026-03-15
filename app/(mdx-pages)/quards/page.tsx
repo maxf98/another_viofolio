@@ -9,6 +9,7 @@ import BeforeAfter from "./BeforeAfter";
 import ParallaxImage from "./ParallaxImage";
 import Image from "next/image";
 import SectionHintsGrid from "@/app/components/SectionHintsGrid";
+import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import "@/app/styles/backgrounds.css";
 import { QuardsTextProvider, useQuardsText } from "@/app/translations/quards";
 
@@ -119,22 +120,28 @@ function QuardsInner() {
 
       {/* Summary Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <div className="fixed inset-0 -z-10 bg-[#24242e]">
-          <Image
-            src="/projects/quards/featureArtNoBG.webp"
-            alt=""
-            fill
-            className="object-cover opacity-20"
-            quality={60}
-            loading="lazy"
-          />
-        </div>
+        <FixedBackgroundImage
+          src="/projects/quards/featureArtNoBG.webp"
+          opacity={0.2}
+          containerClassName="-z-10 bg-[#24242e]"
+          quality={60}
+          loading="lazy"
+        />
         <div className="content-container py-32 flex flex-col items-center text-center">
           <p className="max-w-2xl text-lg">{t.summaryText}</p>
         </div>
       </div>
 
-      <SectionHintsGrid currentHref="/quards" />
+      <div className="relative" style={{ clipPath: "inset(0)" }}>
+        <FixedBackgroundImage
+          src="/projects/quards/featureArtNoBG.webp"
+          opacity={0.2}
+          containerClassName="-z-10"
+          quality={60}
+          loading="lazy"
+        />
+        <SectionHintsGrid currentHref="/quards" transparentCards centered />
+      </div>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   title: "Vioseum",
   description: "Vio's portfolio",
   icons: {
-    icon: "/logo.png",
+    icon: "/favicon.png",
   },
 };
 

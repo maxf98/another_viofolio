@@ -1,12 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import LocalNav from "@/app/components/navigation/LocalNav";
 import GalleryGrid from "@/app/components/GalleryGrid";
 import Lightbox from "@/app/components/Lightbox";
 import FlipBook from "@/app/components/monkeybrain/FlipBook";
 import SectionHintsGrid from "@/app/components/SectionHintsGrid";
+import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import { GalleryItem } from "@/app/data/model";
 import { useGalleryText } from "@/app/translations/gallery";
 
@@ -48,7 +48,7 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
       : t.sections.find((s) => s.id === sectionId);
 
   const backgroundImage = useMemo(() => {
-    if (sectionId === "illustrated-photography") return "/gallery/sun.png";
+    if (sectionId === "illustrated-photography") return "/gallery/bird.webp";
     if (sectionId === "art-therapy") return "/gallery/Frottage.png";
     if (sectionId === "monkeybrain") return "/gallery/m2%202.png";
     if (section?.images?.length) return section.images[0].image;
@@ -84,20 +84,16 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
       />
 
       {backgroundImage && (
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          <Image
-            src={backgroundImage}
-            alt=""
-            fill
-            loading={sectionId === "art-therapy" ? "eager" : "lazy"}
-            className={sectionId === "art-therapy" ? "object-cover opacity-10" : "object-cover opacity-15"}
-          />
-        </div>
+        <FixedBackgroundImage
+          src={backgroundImage}
+          opacity={sectionId === "art-therapy" ? 0.1 : 0.15}
+          loading={sectionId === "art-therapy" ? "eager" : "lazy"}
+        />
       )}
 
       <section className="relative" style={{ clipPath: "inset(0)" }}>
         <div id="archive-section" className="pt-24 md:pt-24 pb-16">
-          <div className="max-w-7xl mx-auto px-4 md:pl-32 md:pr-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
             {sectionId !== "monkeybrain" && section && (
               <>
                 <div className="mt-8">
@@ -140,15 +136,7 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
         </div>
       </section>
 
-      <SectionHintsGrid currentHref={currentHref} />
-
-      <section className="relative pb-24 pt-16">
-        <div className="max-w-7xl mx-auto px-4 md:pl-32 md:pr-8">
-          <div className="flex flex-col items-center gap-6 text-center">
-            <p className="text-white/80 text-xl md:text-2xl">{t.disclaimer}</p>
-          </div>
-        </div>
-      </section>
+      <SectionHintsGrid currentHref={currentHref} transparentCards />
 
       {sectionId !== "monkeybrain" && section && lightboxImages.length > 0 && (
         <Lightbox

@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import InteractionHint from "@/app/components/InteractionHint";
+import { useQuardsText } from "@/app/translations/quards";
 
 export default function QuardSwitcher() {
+  const t = useQuardsText();
   const [showFront, setShowFront] = useState(true);
 
   const toggleImage = () => {
@@ -13,36 +16,7 @@ export default function QuardSwitcher() {
 
   return (
     <div className="my-8 flex flex-col items-center">
-      {/* Hint text and arrow above image */}
-      <motion.div
-        className="flex flex-col items-center text-white/60 mb-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <span className="italic text-sm">tap to switch</span>
-        <svg
-          width="24"
-          height="20"
-          viewBox="0 0 24 20"
-          fill="none"
-          className="text-white/60"
-        >
-          <path
-            d="M12 2 L12 14"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M6 10 L12 16 L18 10"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
+      <InteractionHint text={t.tapToSwitch} className="mb-2" />
 
       <div className="relative inline-block">
         <Image

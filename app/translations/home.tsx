@@ -17,6 +17,7 @@ const translations = {
       "In my client work, I combine these personal interests with each brief, responding closely to what the client needs while weaving in elements of my own playful visual world.",
     ],
     ctaLabel: "Get in Touch",
+    viewProjectHint: "View project",
   },
   de: {
     navGallery: "persönliches Archiv",
@@ -29,6 +30,7 @@ const translations = {
       "Meine professionelle Laufbahn begann an der NABA Mailand, wo ich einen Bachelor in Grafikdesign und Art Direction abschloss. Seitdem arbeite ich als freiberufliche Illustratorin und Designerin und studiere gleichzeitig Kunsttherapie, was mein Interesse an Intuition, emotionalem Ausdruck und prozessgesteuertem Schaffen vertieft hat.",
     ],
     ctaLabel: "Kontakt aufnehmen",
+    viewProjectHint: "Projekt ansehen",
   },
   ru: {
     navGallery: "личный архив",
@@ -41,6 +43,7 @@ const translations = {
       "Я начала свой профессиональный путь в NABA Milan, где получила степень бакалавра по графическому дизайну и арт-дирекции. С тех пор я работаю как фриланс-иллюстратор и дизайнер, параллельно изучая арт-терапию, что углубило мой интерес к интуиции, эмоциональному выражению и процессному творчеству.",
     ],
     ctaLabel: "Связаться",
+    viewProjectHint: "Открыть проект",
   },
 } as const;
 

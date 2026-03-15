@@ -85,8 +85,6 @@ export const ofestImages: StaticImageData[] = [
 
 export const winter22Images: StaticImageData[] = [
   winter22_2,
-  winter22_3,
-
   winter22_7,
 
   winter22_9,

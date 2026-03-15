@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import InfiniteScrollGallery from "@/app/components/InfiniteScrollGallery";
+import ClickThroughGallery from "@/app/components/ClickThroughGallery";
 import Lightbox from "@/app/components/Lightbox";
 import { ImageItem } from "@/app/data/model";
 
@@ -24,13 +24,21 @@ export default function QuardExamplesCarousel() {
 
   return (
     <>
-      <InfiniteScrollGallery
-        images={images}
-        height={400}
-        altPrefix="Quard example"
-        onImageClick={(index) => setLightboxIndex(index)}
-        imageClassName="ipad-border"
-      />
+      <div className="w-full mt-2 md:mt-4 mb-6 md:mb-10">
+        <div className="relative mx-auto w-full max-w-7xl px-3 md:pl-32 md:pr-6">
+          <div className="rounded-[26px] border border-white/12 bg-black/20 backdrop-blur-[2px] p-3 md:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+            <div className="relative">
+              <ClickThroughGallery
+                images={images}
+                altPrefix="Quard example"
+                onImageClick={(index) => setLightboxIndex(index)}
+                height={300}
+                imageClassName="ipad-border"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Lightbox
         images={lightboxImages}

@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
-
-const workingImg = "/working.webp";
+import FixedBackgroundImage from "./FixedBackgroundImage";
 
 interface ProjectHeroSectionProps {
   src: StaticImageData;
@@ -28,67 +27,28 @@ export default function ProjectHeroSection({
   return (
     <div
       ref={heroRef}
-      className="relative w-screen h-screen"
+      className="relative w-screen min-h-screen"
       style={noBackground ? undefined : { clipPath: "inset(0)" }}
     >
       {!noBackground && (
-        <div className="fixed inset-0 w-full h-full -z-10">
-          <Image
-            src={src}
-            fill
-            sizes="100vw"
-            alt={alt}
-            placeholder="blur"
-            className="w-full h-full object-cover opacity-20 scale-100"
-            style={{ objectPosition: "center 70%" }}
-            quality={60}
-            priority
-          />
-        </div>
+        <FixedBackgroundImage
+          src={src}
+          alt={alt}
+          opacity={0.2}
+          objectPosition="center 70%"
+          imageClassName="w-full h-full object-cover scale-100"
+          quality={60}
+          priority
+        />
       )}
-      <motion.div
-        className="absolute inset-0 flex flex-col justify-end z-10"
-      >
-        <div className="content-container pb-20 md:pb-32">
-          <div className="w-48 md:w-64">
-            <Image
-              src={workingImg}
-              alt="Working with"
-              width={2048}
-              height={2048}
-              className="w-full h-auto drop-shadow-xl"
-              priority
-            />
+      <motion.div className="relative z-10 flex min-h-screen flex-col">
+        <div className="h-20 md:h-24 shrink-0" />
+        <div className="content-container mt-auto pb-20 md:pb-32">
+          <div className="-mb-1 md:-mb-2 text-white/90 !text-base md:!text-xl tracking-[0.32em] uppercase font-semibold">
+            Working With
           </div>
           {title && (
-            <h1 className="!leading-none">
-              {title.split(/(\^[^^]+\^)/g).map((segment, i) => {
-                if (segment.startsWith("^") && segment.endsWith("^")) {
-                  // Large text (marked with ^) - split by \n for newlines
-                  const content = segment.slice(1, -1);
-                  return content.split("\\n").map((line, k) => (
-                    <span
-                      key={`${i}-${k}`}
-                      className="block !text-7xl md:!text-[10rem]"
-                    >
-                      {line}
-                    </span>
-                  ));
-                }
-                // Small text - split by spaces and render each word
-                return segment
-                  .split(" ")
-                  .filter(Boolean)
-                  .map((word, j) => (
-                    <span
-                      key={`${i}-${j}`}
-                      className="block !text-3xl md:!text-5xl tracking-[0.3em] md:tracking-[0.5em]"
-                    >
-                      {word}
-                    </span>
-                  ));
-              })}
-            </h1>
+            <h1 className="!leading-none !text-7xl md:!text-[10rem]">{title}</h1>
           )}
           {description && (
             <p className="text-sm md:text-base mt-4 max-w-2xl">{description}</p>
