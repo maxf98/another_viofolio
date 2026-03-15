@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import Image, { type StaticImageData } from "next/image";
+import InteractionHint from "@/app/components/InteractionHint";
 import OverlayShell from "@/app/components/OverlayShell";
 import { pageImages as defaultImages } from "./images";
 
@@ -15,9 +16,19 @@ type FlipBookInstance = {
   getCurrentPageIndex?: () => number;
   flipNext: (corner?: "top" | "bottom") => void;
 };
+
 type FlipBookRef = {
   pageFlip?: () => FlipBookInstance | undefined;
 };
+
+const PAGE_LOAD_BEHIND = 1;
+const PAGE_LOAD_AHEAD = 4;
+const INITIAL_PAGE_LOAD_AHEAD = 6;
+const EAGER_LOAD_AHEAD = 3;
+const INITIAL_EAGER_LOAD_AHEAD = 4;
+const MOBILE_VIEWPORT_MAX_WIDTH = 1024;
+const PORTRAIT_HINT_WIDTH_MULTIPLIER = 1.5;
+const LANDSCAPE_DISPLAY_SCALE = 1.08;
 
 function computeBookSize(
   viewportWidth: number,
@@ -25,14 +36,14 @@ function computeBookSize(
   isOverlay: boolean,
   isCoverMode: boolean,
 ) {
-  const paddingX = isOverlay ? 8 : 32;
-  const paddingY = isOverlay ? 24 : 0;
+  const isLandscapeViewport = viewportWidth > viewportHeight;
+  const paddingX = isOverlay ? (isLandscapeViewport ? 2 : 8) : 32;
+  const paddingY = isOverlay ? (isLandscapeViewport ? 2 : 24) : 0;
   const availableWidth = Math.max(0, viewportWidth - paddingX);
   const availableHeight = Math.max(0, viewportHeight - paddingY);
 
   const basePageWidth = 400;
   const basePageHeight = 600;
-  // On cover, a single visible page should size against viewport width.
   const bookBaseWidth = isCoverMode ? basePageWidth : basePageWidth * 2;
 
   const widthScale = availableWidth > 0 ? availableWidth / bookBaseWidth : 1;
@@ -47,20 +58,32 @@ function computeBookSize(
   };
 }
 
+function getPagesToLoad(pageIndex: number, totalPages: number) {
+  const start = Math.max(0, pageIndex - PAGE_LOAD_BEHIND);
+  const ahead = pageIndex === 0 ? INITIAL_PAGE_LOAD_AHEAD : PAGE_LOAD_AHEAD;
+  const end = Math.min(totalPages - 1, pageIndex + ahead);
+  const indexes: number[] = [];
+
+  for (let index = start; index <= end; index += 1) {
+    indexes.push(index);
+  }
+
+  return indexes;
+}
+
 export default function FlipBook({
   images,
   openInOverlay = false,
 }: FlipBookProps) {
   const pageImages = images || defaultImages;
-  const [currentPage, setCurrentPage] = useState(0); // starts at cover/page 1
+  const [loadedPages, setLoadedPages] = useState<Set<number>>(
+    () => new Set(getPagesToLoad(0, pageImages.length)),
+  );
+  const [currentPage, setCurrentPage] = useState(0);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [openCycle, setOpenCycle] = useState(0);
   const [landscapeHintLocked, setLandscapeHintLocked] = useState(false);
   const [hintViewport, setHintViewport] = useState<{
-    width: number;
-    height: number;
-  } | null>(null);
-  const [overlayViewport, setOverlayViewport] = useState<{
     width: number;
     height: number;
   } | null>(null);
@@ -72,6 +95,26 @@ export default function FlipBook({
   }));
   const bookRef = useRef<FlipBookRef | null>(null);
 
+  const allowOverlayIntro = openInOverlay;
+
+  const queuePagesForIndex = (pageIndex: number) => {
+    const indexesToLoad = getPagesToLoad(pageIndex, pageImages.length);
+
+    setLoadedPages((previous) => {
+      const next = new Set(previous);
+      let hasChanges = false;
+
+      for (const index of indexesToLoad) {
+        if (!next.has(index)) {
+          next.add(index);
+          hasChanges = true;
+        }
+      }
+
+      return hasChanges ? next : previous;
+    });
+  };
+
   useEffect(() => {
     const updateViewport = () =>
       setViewport({
@@ -82,6 +125,7 @@ export default function FlipBook({
     updateViewport();
     window.addEventListener("resize", updateViewport);
     window.addEventListener("orientationchange", updateViewport);
+
     return () => {
       window.removeEventListener("resize", updateViewport);
       window.removeEventListener("orientationchange", updateViewport);
@@ -89,28 +133,27 @@ export default function FlipBook({
   }, []);
 
   useEffect(() => {
-    if (!openInOverlay || !overlayOpen) return;
+    if (!allowOverlayIntro || !overlayOpen) return;
 
     const rotateDelayMs = 420;
     const rotateDurationMs = 700;
     let flipTimer: number | undefined;
 
     const rotateTimer = window.setTimeout(() => {
-      // Run cover translate intro in both portrait and landscape.
       setCoverShiftActive(false);
 
       const currentWidth = window.innerWidth;
       const currentHeight = window.innerHeight;
       const shouldLockLandscape =
         currentWidth > 0 &&
-        currentWidth <= 1024 &&
+        currentWidth <= MOBILE_VIEWPORT_MAX_WIDTH &&
         currentHeight > currentWidth;
 
       if (shouldLockLandscape) {
         setLandscapeHintLocked(true);
         setHintViewport({
-          width: Math.max(currentWidth, currentHeight),
-          height: Math.min(currentWidth, currentHeight),
+          width: currentWidth * PORTRAIT_HINT_WIDTH_MULTIPLIER,
+          height: currentHeight,
         });
       } else {
         setLandscapeHintLocked(false);
@@ -121,6 +164,7 @@ export default function FlipBook({
 
       flipTimer = window.setTimeout(() => {
         const instance = bookRef.current?.pageFlip?.();
+
         if (instance && instance.getCurrentPageIndex?.() === 0) {
           instance.flipNext("top");
         }
@@ -136,26 +180,31 @@ export default function FlipBook({
 
     return () => {
       window.clearTimeout(rotateTimer);
-      if (flipTimer) window.clearTimeout(flipTimer);
+
+      if (flipTimer) {
+        window.clearTimeout(flipTimer);
+      }
+
       window.clearTimeout(endTransformAnimationTimer);
     };
-  }, [bookRef, openCycle, openInOverlay, overlayOpen]);
+  }, [allowOverlayIntro, openCycle, overlayOpen]);
 
   const handleFlip = (e: { data: number }) => {
+    queuePagesForIndex(e.data);
     setCurrentPage(e.data);
   };
 
-  // Keep size fixed per session, but let rotation follow current orientation.
   const isCurrentlyPortrait = viewport.height > viewport.width;
-  const applyLandscapeHint = landscapeHintLocked && isCurrentlyPortrait;
-  const baseOverlayViewport = overlayViewport ?? viewport;
-  const adjustedViewport = hintViewport ?? {
-    width: Math.max(baseOverlayViewport.width, baseOverlayViewport.height),
-    height: Math.min(baseOverlayViewport.width, baseOverlayViewport.height),
-  };
-  // Keep cover-width baseline while hint mode is active to avoid post-animation rebound.
+  const isMobileViewport = viewport.width <= MOBILE_VIEWPORT_MAX_WIDTH;
+  const showLandscapeHint =
+    overlayOpen && isMobileViewport && isCurrentlyPortrait;
+  const usePortraitHintLayout =
+    landscapeHintLocked && isMobileViewport && isCurrentlyPortrait;
+  const isOverlayLandscape = openInOverlay && viewport.width > viewport.height;
+  const baseOverlayViewport = viewport;
+  const adjustedViewport = hintViewport ?? baseOverlayViewport;
   const isCoverMode =
-    openInOverlay && (currentPage === 0 || landscapeHintLocked);
+    allowOverlayIntro && (currentPage === 0 || usePortraitHintLayout);
   const initialBookSize = computeBookSize(
     baseOverlayViewport.width,
     baseOverlayViewport.height,
@@ -170,9 +219,6 @@ export default function FlipBook({
   );
   const pageWidth = initialBookSize.pageWidth;
   const pageHeight = initialBookSize.pageHeight;
-  const bookKey = openInOverlay
-    ? `overlay-${openCycle}`
-    : `${Math.round(pageWidth)}x${Math.round(pageHeight)}`;
   const coverShiftPx =
     currentPage === 0 && coverShiftActive ? pageWidth / 2 : 0;
   const widthResizeRatio =
@@ -184,7 +230,21 @@ export default function FlipBook({
       ? adjustedBookSize.pageHeight / initialBookSize.pageHeight
       : 1;
   const targetResizeScale = Math.min(widthResizeRatio, heightResizeRatio);
-  const resizeScale = landscapeHintLocked ? targetResizeScale : 1;
+  const resizeScale = usePortraitHintLayout ? targetResizeScale : 1;
+  const displayScale =
+    resizeScale *
+    (isOverlayLandscape && !usePortraitHintLayout
+      ? LANDSCAPE_DISPLAY_SCALE
+      : 1);
+  const bookStageWidth = pageWidth * 2;
+  const bookStageHeight = pageHeight;
+  const imageSizes = `${Math.max(160, Math.round(pageWidth))}px`;
+  const geometryKey = `${Math.round(pageWidth)}x${Math.round(pageHeight)}-${
+    usePortraitHintLayout ? "portrait-hint" : "default"
+  }`;
+  const bookKey = openInOverlay
+    ? `overlay-${openCycle}-${geometryKey}`
+    : geometryKey;
 
   const renderIndicator = () => (
     <div
@@ -217,11 +277,14 @@ export default function FlipBook({
   );
 
   const flipbookContent = (showIndicator: boolean) => (
-    <div className="flipbook-wrapper flex justify-center items-center w-full h-full relative px-4 overflow-visible">
+    <div
+      className={`flipbook-wrapper flex justify-center items-center w-full h-full relative overflow-visible ${
+        isOverlayLandscape ? "px-0" : "px-4"
+      }`}
+    >
       {showIndicator ? renderIndicator() : null}
       <HTMLFlipBook
         ref={(instance) => {
-          // react-pageflip exposes imperative API through pageFlip()
           bookRef.current = (instance as unknown as FlipBookRef) ?? null;
         }}
         key={bookKey}
@@ -251,8 +314,11 @@ export default function FlipBook({
         onFlip={handleFlip}
       >
         {pageImages.map((imageSrc, index) => {
-          // Prioritize current page and next 2 pages
-          const isPriority = index >= currentPage && index <= currentPage + 3;
+          const shouldRenderImage = loadedPages.has(index);
+          const eagerLoadAhead =
+            currentPage === 0 ? INITIAL_EAGER_LOAD_AHEAD : EAGER_LOAD_AHEAD;
+          const shouldEagerLoad =
+            index >= currentPage && index <= currentPage + eagerLoadAhead;
 
           return (
             <div
@@ -264,7 +330,7 @@ export default function FlipBook({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "4px",
+                padding: isOverlayLandscape ? "1px" : "4px",
               }}
             >
               <div
@@ -276,16 +342,20 @@ export default function FlipBook({
                   maxHeight: "100%",
                 }}
               >
-                <Image
-                  src={imageSrc}
-                  alt={`Page ${index + 1}`}
-                  fill
-                  style={{
-                    objectFit: "contain",
-                  }}
-                  sizes="(max-width: 768px) 100vw, 400px"
-                  priority={isPriority}
-                />
+                {shouldRenderImage ? (
+                  <Image
+                    src={imageSrc}
+                    alt={`Page ${index + 1}`}
+                    fill
+                    style={{
+                      objectFit: "contain",
+                    }}
+                    sizes={imageSizes}
+                    loading={shouldEagerLoad ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div className="h-full w-full rounded-sm bg-black/15" />
+                )}
               </div>
             </div>
           );
@@ -314,17 +384,13 @@ export default function FlipBook({
         <button
           type="button"
           onClick={() => {
-            // Open in default orientation first, then evaluate rotation in effect.
-            setOverlayViewport({
-              width: window.innerWidth,
-              height: window.innerHeight,
-            });
-            setAnimateTransform(true);
-            setCoverShiftActive(true);
+            setLoadedPages(new Set(getPagesToLoad(0, pageImages.length)));
+            setAnimateTransform(allowOverlayIntro);
+            setCoverShiftActive(allowOverlayIntro);
             setLandscapeHintLocked(false);
             setHintViewport(null);
             setCurrentPage(0);
-            setOpenCycle((prev) => prev + 1);
+            setOpenCycle((previous) => previous + 1);
             setOverlayOpen(true);
           }}
           className="group relative block w-[min(88vw,340px)] lg:w-[380px] mx-auto cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5E6A3] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
@@ -347,41 +413,40 @@ export default function FlipBook({
         isOpen={overlayOpen}
         onClose={() => {
           setOverlayOpen(false);
-          setOverlayViewport(null);
           setAnimateTransform(false);
           setCoverShiftActive(false);
           setLandscapeHintLocked(false);
           setHintViewport(null);
+          setLoadedPages(new Set(getPagesToLoad(0, pageImages.length)));
         }}
+        stopContainerPropagation={false}
       >
-        <div
-          className="absolute left-1/2 top-1/2"
-          style={{
-            transition: animateTransform
-              ? "transform 700ms ease-in-out"
-              : "none",
-            transform: `translate(calc(-50% - ${coverShiftPx}px), -50%) rotate(${applyLandscapeHint ? 90 : 0}deg) scale(${resizeScale})`,
-            width: `${
-              (applyLandscapeHint
-                ? (hintViewport?.width ??
-                  Math.max(
-                    baseOverlayViewport.width,
-                    baseOverlayViewport.height,
-                  ))
-                : baseOverlayViewport.width) ?? 0
-            }px`,
-            height: `${
-              (applyLandscapeHint
-                ? (hintViewport?.height ??
-                  Math.min(
-                    baseOverlayViewport.width,
-                    baseOverlayViewport.height,
-                  ))
-                : baseOverlayViewport.height) ?? 0
-            }px`,
-          }}
-        >
-          {flipbookContent(false)}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          {showLandscapeHint ? (
+            <div
+              className="pointer-events-none absolute left-1/2 -translate-x-1/2"
+              style={{ bottom: "calc(100% + 12px)" }}
+            >
+              <InteractionHint text="better in landscape" delay={0} />
+            </div>
+          ) : null}
+          <div
+            className="pointer-events-auto"
+            onClick={(event) => event.stopPropagation()}
+            onPointerDown={(event) => event.stopPropagation()}
+            style={{
+              transition: animateTransform
+                ? "transform 700ms ease-in-out"
+                : "none",
+              transform: `translateX(${-coverShiftPx}px) scale(${displayScale})`,
+              width: `${bookStageWidth}px`,
+              height: `${bookStageHeight}px`,
+            }}
+          >
+            {flipbookContent(false)}
+          </div>
+        </div>
         </div>
       </OverlayShell>
     </>
