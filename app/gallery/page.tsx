@@ -115,7 +115,10 @@ function WorkGalleryInner() {
                       {t.monkeybrain.description}
                     </p>
                   </div>
-                  <FlipBook />
+                  <FlipBook
+                    tapHintText={t.monkeybrain.tapToFlickThrough}
+                    landscapeHintText={t.monkeybrain.betterInLandscape}
+                  />
                 </div>
               </div>
             </section>

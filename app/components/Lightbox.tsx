@@ -138,11 +138,11 @@ export default function Lightbox({
   return (
     <OverlayShell isOpen={isOpen} onClose={onClose} stopContainerPropagation={false}>
       <div className="w-full h-full">
-        {/* Navigation arrows - Desktop only (hidden on mobile) */}
+        {/* Navigation arrows - Desktop and mobile landscape */}
         {images.length > 1 && (
           <>
             <div
-              className="hidden md:block fixed left-4 md:left-8 top-1/2 -translate-y-1/2"
+              className="hidden fixed left-3 top-1/2 -translate-y-1/2 max-md:landscape:block md:block md:left-8"
               style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
             >
               <CTAButton
@@ -158,7 +158,7 @@ export default function Lightbox({
               </CTAButton>
             </div>
             <div
-              className="hidden md:block fixed right-4 md:right-8 top-1/2 -translate-y-1/2"
+              className="hidden fixed right-3 top-1/2 -translate-y-1/2 max-md:landscape:block md:block md:right-8"
               style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
             >
               <CTAButton
@@ -176,10 +176,10 @@ export default function Lightbox({
           </>
         )}
 
-        {/* Mobile navigation buttons - Fixed at bottom */}
+        {/* Mobile portrait navigation buttons - Fixed at bottom */}
         {images.length > 1 && (
           <div
-            className="md:hidden fixed bottom-8 left-0 right-0 flex justify-center items-center gap-4 px-4"
+            className="fixed bottom-8 left-0 right-0 flex items-center justify-between px-4 sm:px-6 md:hidden max-md:landscape:hidden"
             style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
           >
             <CTAButton
@@ -209,14 +209,14 @@ export default function Lightbox({
 
         {/* Embla Carousel */}
         <div
-          className="w-full h-full overflow-hidden"
+          className="w-full h-full overflow-hidden max-md:landscape:overflow-y-auto max-md:landscape:overscroll-contain"
           ref={emblaRef}
           style={{
             opacity: wrapVisible ? 1 : 0,
             transition: `opacity ${WRAP_FADE_MS}ms ease-in-out`,
           }}
         >
-          <div className="flex h-full items-center">
+          <div className="flex h-full items-center max-md:landscape:min-h-full max-md:landscape:items-start">
             {images.map((image, i) => {
               const isCurrent = i === currentIndex;
               const isPrev = i === (currentIndex - 1 + images.length) % images.length;
@@ -226,7 +226,7 @@ export default function Lightbox({
               return (
                 <div
                   key={i}
-                  className={`flex-[0_0_95%] md:flex-[0_0_90%] min-w-0 flex items-center justify-center px-4 md:px-8 ${
+                  className={`flex-[0_0_95%] md:flex-[0_0_90%] min-w-0 flex items-center justify-center px-4 md:px-8 max-md:landscape:min-h-full max-md:landscape:items-start max-md:landscape:px-12 max-md:landscape:py-8 ${
                     i !== currentIndex ? "cursor-pointer" : ""
                   }`}
                   onClick={(e) => {
@@ -240,10 +240,14 @@ export default function Lightbox({
                     // Current slide: allow propagation to close lightbox
                   }}
                 >
-                  <div className={`flex flex-col md:flex-row items-center gap-6 md:gap-12 max-w-[1400px] w-full ${showText ? 'md:items-start' : 'md:items-center'}`}>
+                  <div
+                    className={`flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-[1400px] w-full max-md:landscape:max-w-[min(720px,calc(100vw-7rem))] max-md:landscape:pb-24 ${
+                      showText ? "md:items-start" : "md:items-center"
+                    }`}
+                  >
                     <div className={`flex-shrink min-w-0 ${!showText ? 'mx-auto' : ''}`}>
                       <Image
-                        className={`object-contain select-none max-h-[60vh] md:max-h-[85vh] w-auto h-auto max-w-full ${imageClassName}`}
+                        className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] w-auto h-auto max-w-full ${imageClassName}`}
                         src={image.image}
                         alt={image.alt ?? "Gallery image"}
                         {...(typeof image.image !== "string" && { placeholder: "blur" })}
@@ -254,7 +258,7 @@ export default function Lightbox({
                       />
                     </div>
                     {showText && (
-                      <div className="flex-shrink-0 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto md:min-w-[280px] md:max-w-[320px]">
+                      <div className="flex-shrink-0 flex flex-col items-center md:items-start text-center md:text-left w-full max-md:landscape:max-w-[min(560px,100%)] md:w-auto md:min-w-[280px] md:max-w-[320px]">
                         {(image.title || image.alt) && (
                           <h3 className="text-white text-xl md:text-2xl font-medium capitalize">
                             {image.title || image.alt}

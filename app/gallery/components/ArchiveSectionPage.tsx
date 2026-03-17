@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import LocalNav from "@/app/components/navigation/LocalNav";
 import GalleryGrid from "@/app/components/GalleryGrid";
 import Lightbox from "@/app/components/Lightbox";
@@ -73,7 +74,21 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
         : "/gallery/monkeybrain";
 
   return (
-    <div className="flex flex-col relative min-h-screen overflow-x-hidden">
+    <div className="flex flex-col relative isolate min-h-screen overflow-x-hidden">
+      {sectionId === "monkeybrain" && (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <Image
+            src="/projects/MONKEYBRAIN/pages/FINALPATTERNS_left.webp"
+            alt="Monkeybrain background pattern"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-18"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#0c0d12]/36" />
+        </div>
+      )}
+
       <LocalNav
         sections={[
           {
@@ -83,15 +98,21 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
         ]}
       />
 
-      {backgroundImage && (
+      {backgroundImage && sectionId !== "monkeybrain" && (
         <FixedBackgroundImage
           src={backgroundImage}
-          opacity={sectionId === "art-therapy" ? 0.1 : 0.15}
+          opacity={
+            sectionId === "art-therapy"
+              ? 0.06
+              : sectionId === "monkeybrain"
+                ? 0.08
+                : 0.15
+          }
           loading={sectionId === "art-therapy" ? "eager" : "lazy"}
         />
       )}
 
-      <section className="relative" style={{ clipPath: "inset(0)" }}>
+      <section className="relative z-10" style={{ clipPath: "inset(0)" }}>
         <div id="archive-section" className="pt-24 md:pt-24 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
             {sectionId !== "monkeybrain" && section && (
@@ -129,14 +150,20 @@ export default function ArchiveSectionPage({ sectionId }: ArchiveSectionPageProp
                     {t.monkeybrain.description}
                   </p>
                 </div>
-                <FlipBook openInOverlay />
+                <FlipBook
+                  openInOverlay
+                  tapHintText={t.monkeybrain.tapToFlickThrough}
+                  landscapeHintText={t.monkeybrain.betterInLandscape}
+                />
               </>
             )}
           </div>
         </div>
       </section>
 
-      <SectionHintsGrid currentHref={currentHref} transparentCards />
+      <div className="relative z-10">
+        <SectionHintsGrid currentHref={currentHref} transparentCards />
+      </div>
 
       {sectionId !== "monkeybrain" && section && lightboxImages.length > 0 && (
         <Lightbox

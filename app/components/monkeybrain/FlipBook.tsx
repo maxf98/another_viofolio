@@ -10,6 +10,8 @@ import { pageImages as defaultImages } from "./images";
 interface FlipBookProps {
   images?: StaticImageData[];
   openInOverlay?: boolean;
+  tapHintText?: string;
+  landscapeHintText?: string;
 }
 
 type FlipBookInstance = {
@@ -74,6 +76,8 @@ function getPagesToLoad(pageIndex: number, totalPages: number) {
 export default function FlipBook({
   images,
   openInOverlay = false,
+  tapHintText = "tap to flick through",
+  landscapeHintText = "better in landscape",
 }: FlipBookProps) {
   const pageImages = images || defaultImages;
   const [loadedPages, setLoadedPages] = useState<Set<number>>(
@@ -82,8 +86,9 @@ export default function FlipBook({
   const [currentPage, setCurrentPage] = useState(0);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [openCycle, setOpenCycle] = useState(0);
-  const [landscapeHintLocked, setLandscapeHintLocked] = useState(false);
-  const [hintViewport, setHintViewport] = useState<{
+  const [portraitHintLayoutLocked, setPortraitHintLayoutLocked] =
+    useState(false);
+  const [portraitHintViewport, setPortraitHintViewport] = useState<{
     width: number;
     height: number;
   } | null>(null);
@@ -150,14 +155,14 @@ export default function FlipBook({
         currentHeight > currentWidth;
 
       if (shouldLockLandscape) {
-        setLandscapeHintLocked(true);
-        setHintViewport({
+        setPortraitHintLayoutLocked(true);
+        setPortraitHintViewport({
           width: currentWidth * PORTRAIT_HINT_WIDTH_MULTIPLIER,
           height: currentHeight,
         });
       } else {
-        setLandscapeHintLocked(false);
-        setHintViewport(null);
+        setPortraitHintLayoutLocked(false);
+        setPortraitHintViewport(null);
       }
 
       const flipDelayAfterRotateMs = rotateDurationMs + 80;
@@ -199,12 +204,21 @@ export default function FlipBook({
   const showLandscapeHint =
     overlayOpen && isMobileViewport && isCurrentlyPortrait;
   const usePortraitHintLayout =
-    landscapeHintLocked && isMobileViewport && isCurrentlyPortrait;
+    portraitHintLayoutLocked && isMobileViewport && isCurrentlyPortrait;
+  const usePortraitTapHint = isMobileViewport && isCurrentlyPortrait;
+  const isMobileLandscapeViewport = isMobileViewport && !isCurrentlyPortrait;
+  const tapHintDirection = usePortraitTapHint ? "bottom" : "right";
+  const tapHintClassName = usePortraitTapHint
+    ? "text-center"
+    : "items-end max-md:max-w-[8.5rem] max-md:whitespace-normal text-right md:whitespace-nowrap";
   const isOverlayLandscape = openInOverlay && viewport.width > viewport.height;
   const baseOverlayViewport = viewport;
-  const adjustedViewport = hintViewport ?? baseOverlayViewport;
+  const adjustedViewport = portraitHintViewport ?? baseOverlayViewport;
   const isCoverMode =
-    allowOverlayIntro && (currentPage === 0 || usePortraitHintLayout);
+    allowOverlayIntro &&
+    currentPage === 0 &&
+    !usePortraitHintLayout &&
+    !(isMobileViewport && isCurrentlyPortrait);
   const initialBookSize = computeBookSize(
     baseOverlayViewport.width,
     baseOverlayViewport.height,
@@ -236,7 +250,7 @@ export default function FlipBook({
     (isOverlayLandscape && !usePortraitHintLayout
       ? LANDSCAPE_DISPLAY_SCALE
       : 1);
-  const bookStageWidth = pageWidth * 2;
+  const bookStageWidth = isCoverMode ? pageWidth : pageWidth * 2;
   const bookStageHeight = pageHeight;
   const imageSizes = `${Math.max(160, Math.round(pageWidth))}px`;
   const geometryKey = `${Math.round(pageWidth)}x${Math.round(pageHeight)}-${
@@ -245,34 +259,37 @@ export default function FlipBook({
   const bookKey = openInOverlay
     ? `overlay-${openCycle}-${geometryKey}`
     : geometryKey;
+  const previewAspectRatio =
+    typeof pageImages[0] === "object" &&
+    "width" in pageImages[0] &&
+    "height" in pageImages[0]
+      ? `${pageImages[0].width} / ${pageImages[0].height}`
+      : "4 / 3";
+  const previewAspectRatioValue =
+    typeof pageImages[0] === "object" &&
+    "width" in pageImages[0] &&
+    "height" in pageImages[0]
+      ? pageImages[0].width / pageImages[0].height
+      : 4 / 3;
+  const previewButtonStyle = isMobileLandscapeViewport
+    ? { width: `min(88vw, calc(104dvh * ${previewAspectRatioValue}))` }
+    : undefined;
 
   const renderIndicator = () => (
     <div
-      className={`absolute left-[5%] md:left-[10%] top-1/2 -translate-y-1/2 flex items-center gap-4 pointer-events-none transition-opacity duration-500 ${
-        currentPage === 0 ? "z-10 opacity-100" : "-z-10 opacity-0"
-      }`}
+      className={`pointer-events-none absolute transition-opacity duration-500 ${
+        usePortraitTapHint
+          ? "left-1/2 -translate-x-1/2 bottom-full mb-1.5"
+          : "left-[5%] md:left-[10%] top-1/2 -translate-y-1/2"
+      } ${currentPage === 0 ? "z-10 opacity-100" : "-z-10 opacity-0"}`}
     >
-      <div className="flex flex-col items-end">
-        <span className="text-[#F5E6A3] text-xl md:text-4xl font-black tracking-tight animate-tap-hint">
-          tap the magazine
-        </span>
-        <span className="text-white/70 text-base md:text-2xl font-medium mt-1">
-          to flip through
-        </span>
-        <svg
-          className="w-10 h-10 md:w-14 md:h-14 text-[#F5E6A3] animate-arrow-bounce mt-2 self-end"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M13 7l5 5m0 0l-5 5m5-5H6"
-          />
-        </svg>
-      </div>
+      <InteractionHint
+        text={tapHintText}
+        delay={0}
+        size="large"
+        direction={tapHintDirection}
+        className={tapHintClassName}
+      />
     </div>
   );
 
@@ -370,43 +387,70 @@ export default function FlipBook({
 
   return (
     <>
-      <div className="mx-auto w-full relative">
-        <div className="pointer-events-none hidden md:block absolute top-1/2 -translate-y-1/2 right-[calc(50%+170px+1.5rem)] lg:right-[calc(50%+190px+2rem)]">
-          <div className="flex flex-col items-end">
-            <span className="text-[#F5E6A3] text-xl md:text-2xl lg:text-3xl font-black tracking-tight animate-tap-hint whitespace-nowrap text-right">
-              tap the magazine
-            </span>
-            <span className="text-white/70 text-base md:text-lg lg:text-xl font-medium mt-1 whitespace-nowrap text-right">
-              to flip through
-            </span>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setLoadedPages(new Set(getPagesToLoad(0, pageImages.length)));
-            setAnimateTransform(allowOverlayIntro);
-            setCoverShiftActive(allowOverlayIntro);
-            setLandscapeHintLocked(false);
-            setHintViewport(null);
-            setCurrentPage(0);
-            setOpenCycle((previous) => previous + 1);
-            setOverlayOpen(true);
-          }}
-          className="group relative block w-[min(88vw,340px)] lg:w-[380px] mx-auto cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5E6A3] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
-          aria-label="Open Monkeybrain magazine"
+      <div className="mx-auto mt-16 md:mt-12 w-full relative">
+        <div
+          className={`mx-auto w-fit relative ${
+            usePortraitTapHint ? "flex flex-col items-center gap-1.5" : ""
+          }`}
         >
-          <div className="relative aspect-[2/3] w-full overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
-            <Image
-              src={pageImages[0]}
-              alt="Monkeybrain title page"
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 90vw, 400px"
-              priority
+          <div
+            className={`pointer-events-none ${
+              usePortraitTapHint
+                ? ""
+                : "absolute right-full top-1/2 mr-2 md:mr-3 -translate-y-1/2"
+            }`}
+          >
+            <InteractionHint
+              text={tapHintText}
+              delay={0}
+              size="large"
+              direction={tapHintDirection}
+              className={tapHintClassName}
             />
           </div>
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              const shouldUsePortraitHintLayout =
+                viewport.width > 0 &&
+                viewport.width <= MOBILE_VIEWPORT_MAX_WIDTH &&
+                viewport.height > viewport.width;
+
+              setLoadedPages(new Set(getPagesToLoad(0, pageImages.length)));
+              setAnimateTransform(allowOverlayIntro);
+              setCoverShiftActive(allowOverlayIntro);
+              setPortraitHintLayoutLocked(shouldUsePortraitHintLayout);
+              setPortraitHintViewport(
+                shouldUsePortraitHintLayout
+                  ? {
+                      width: viewport.width * PORTRAIT_HINT_WIDTH_MULTIPLIER,
+                      height: viewport.height,
+                    }
+                  : null,
+              );
+              setCurrentPage(0);
+              setOpenCycle((previous) => previous + 1);
+              setOverlayOpen(true);
+            }}
+            className="group relative block w-[min(88vw,340px)] lg:w-[380px] mx-auto cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5E6A3] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
+            style={previewButtonStyle}
+            aria-label="Open Monkeybrain magazine"
+          >
+            <div
+              className="relative w-full overflow-hidden transition-transform duration-300 group-hover:-translate-y-1"
+              style={{ aspectRatio: previewAspectRatio }}
+            >
+              <Image
+                src={pageImages[0]}
+                alt="Monkeybrain title page"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 90vw, 400px"
+                priority
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       <OverlayShell
@@ -415,38 +459,38 @@ export default function FlipBook({
           setOverlayOpen(false);
           setAnimateTransform(false);
           setCoverShiftActive(false);
-          setLandscapeHintLocked(false);
-          setHintViewport(null);
+          setPortraitHintLayoutLocked(false);
+          setPortraitHintViewport(null);
           setLoadedPages(new Set(getPagesToLoad(0, pageImages.length)));
         }}
         stopContainerPropagation={false}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {showLandscapeHint ? (
+            {showLandscapeHint ? (
+              <div
+                className="pointer-events-none absolute left-1/2 -translate-x-1/2"
+                style={{ bottom: "calc(100% + 48px)" }}
+              >
+                <InteractionHint text={landscapeHintText} delay={0} />
+              </div>
+            ) : null}
             <div
-              className="pointer-events-none absolute left-1/2 -translate-x-1/2"
-              style={{ bottom: "calc(100% + 12px)" }}
+              className="pointer-events-auto"
+              onClick={(event) => event.stopPropagation()}
+              onPointerDown={(event) => event.stopPropagation()}
+              style={{
+                transition: animateTransform
+                  ? "transform 700ms ease-in-out"
+                  : "none",
+                transform: `translateX(${-coverShiftPx}px) scale(${displayScale})`,
+                width: `${bookStageWidth}px`,
+                height: `${bookStageHeight}px`,
+              }}
             >
-              <InteractionHint text="better in landscape" delay={0} />
+              {flipbookContent(false)}
             </div>
-          ) : null}
-          <div
-            className="pointer-events-auto"
-            onClick={(event) => event.stopPropagation()}
-            onPointerDown={(event) => event.stopPropagation()}
-            style={{
-              transition: animateTransform
-                ? "transform 700ms ease-in-out"
-                : "none",
-              transform: `translateX(${-coverShiftPx}px) scale(${displayScale})`,
-              width: `${bookStageWidth}px`,
-              height: `${bookStageHeight}px`,
-            }}
-          >
-            {flipbookContent(false)}
           </div>
-        </div>
         </div>
       </OverlayShell>
     </>

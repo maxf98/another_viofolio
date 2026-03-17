@@ -6,88 +6,115 @@ import { useLang } from "@/app/context/LanguageContext";
 const translations = {
   en: {
     heroTitle: "ELGATO",
-    heroDescription: "Elgato is a leading creator of hardware and software for content creators, known for products like the Stream Deck, capture cards, microphones, and lighting tools used by streamers and creatives worldwide. I had the opportunity to collaborate with their teams globally on custom product designs and illustrated brand assets, contributing to the visual identity of several releases and campaigns.",
+    heroDescription:
+      "Elgato creates tools for content creators, from streaming hardware to creative production gear. I collaborated with their team on a variety of illustration and design projects, contributing to product releases, brand collaborations, and special campaigns.",
     customsTitle: "Product Customs",
-    customsDescription: "I designed custom faceplates for Elgato's Stream Deck and Wave XLR, including the first versions released in their store and various partner collaborations.",
+    customsDescription:
+      "I worked on a variety of custom faceplate designs for Elgato's Stream Deck and Wave XLR, developing concepts and bringing them to life across partner collaborations and store releases.",
     dreamvilleTitle: "Dreamville x Elgato",
-    dreamvilleDescription: "I helped bring the first Dreamville x Elgato Wave 3 microphone to life by crafting its visual identity, exploring color directions, and creating assets used throughout the collaboration's launch.",
+    dreamvilleDescription:
+      "I had the opportunity to design the visual assets for the Dreamville x Elgato Wave:3 collaboration, translating the Dreamville brand onto the microphone through illustration, color, and composition.",
     anniversaryTitle: "Anniversary Designs",
-    anniversaryDescription: "For Elgato's 10-year anniversary, I developed the event's visual identity, creating limited-edition products featuring a custom pattern, two color palettes, and the Elgato X event logo.",
-    summaryText: "Throughout these projects, I faced many challenges and learned a great deal—working across a wide variety of specifications, experimenting with new ideas, and always keeping the brand feeling consistent.",
+    anniversaryDescription:
+      "For Elgato’s 10-year anniversary, I designed the visual identity for the event, creating limited-edition products featuring a custom pattern and the event’s logo.",
+    summaryText:
+      "Throughout these projects, I faced many challenges and learned a great deal—working across a wide variety of specifications, experimenting with new ideas, and always keeping the brand feeling consistent.",
     giftboxesTitle: "Partner Gift Boxes",
-    giftboxesDescription: "I created a series of playful visual narratives for Elgato's partner gift boxes, building imaginative worlds around their brand by working with their logo and products.",
+    giftboxesDescription:
+      "I created playful visual narratives for Elgato’s partner gift boxes, transforming their products and logo into imaginative illustrated worlds.",
     boxes: [
       {
-        title: "Winter Holidays 2022",
-        description: "For Elgato's 2022 Holiday Gift Box, I developed two visual narratives: reimagining the Stream Deck as illuminated winter-night windows, and creating an Elgato-inspired gingerbread house.",
+        title: "Winter Lights",
+        description:
+          "Inspired by the Stream Deck buttons, I imagined each button as a window into other people's homes, celebrating the diversity of winter holidays. The Winter Lights design appeared on the Stream Deck and packaging, complemented by an illustrated gingerbread house featured in the box and promotional materials.",
       },
       {
-        title: "Winter Holidays 2021",
-        description: "This gift box brought together a wide range of custom illustrations I developed over time—from Elgato winter-themed stickers to branded posters—all coming together in one cheerful, festive box.",
+        title: "Winter Trails",
+        description:
+          "For this winter gift box, I created a snowy world, integrating the Elgato brand into playful winter-themed environments. The box brought together a variety of custom illustrations I developed over time, from Elgato-themed stickers to branded posters, all combined into one cohesive and imaginative package.",
       },
       {
         title: "Oktoberfest Gift Box",
-        description: "Inspired by Munich's Oktoberfest, I created an illustrated gift box combining classic festival elements with Elgato's playful, creative identity.",
+        description:
+          "Inspired by Munich’s Oktoberfest, I designed an illustrated gift box that blends traditional festival elements with Elgato’s playful and creative brand identity.",
       },
     ],
   },
   de: {
     heroTitle: "ELGATO",
-    heroDescription: "Elgato ist ein führender Hersteller von Hardware und Software für Content Creator, bekannt für Produkte wie das Stream Deck, Capture Cards, Mikrofone und Beleuchtungstools. Ich hatte die Möglichkeit, mit ihren Teams weltweit an individuellen Produktdesigns und illustrierten Markenassets zusammenzuarbeiten.",
+    heroDescription:
+      "Elgato ist ein Unternehmen, das für Tools für Content Creator bekannt ist - von Streaming-Hardware bis hin zu Equipment für kreative Produktionen. Ich arbeitete mit ihrem Team an einer Vielzahl von Illustrations- und Designprojekten und trug zu Produktveröffentlichungen, Brand-Kollaborationen und besonderen Kampagnen bei.",
     customsTitle: "Produkt-Customs",
-    customsDescription: "Ich entwarf individuelle Frontplatten für Elgatos Stream Deck und Wave XLR, einschließlich der ersten Versionen, die in ihrem Store veröffentlicht wurden.",
+    customsDescription:
+      "Ich arbeitete an einer Vielzahl individueller Faceplate-Designs fuer Elgatos Stream Deck und Wave XLR, entwickelte Konzepte und setzte sie fuer Partner-Kollaborationen und Store-Releases um.",
     dreamvilleTitle: "Dreamville x Elgato",
-    dreamvilleDescription: "Ich half dabei, das erste Dreamville x Elgato Wave 3-Mikrofon zum Leben zu erwecken, indem ich die visuelle Identität entwickelte, Farbrichtungen erkundete und Assets für den Launch der Zusammenarbeit erstellte.",
-    anniversaryTitle: "Jubiläumsdesigns",
-    anniversaryDescription: "Für Elgatos 10-jähriges Jubiläum entwickelte ich die visuelle Identität des Events und schuf Sonderprodukte mit einem individuellen Muster, zwei Farbpaletten und dem Elgato X Event-Logo.",
-    summaryText: "Im Laufe dieser Projekte stand ich vor vielen Herausforderungen und lernte sehr viel – ich arbeitete mit einer Vielzahl von Spezifikationen, experimentierte mit neuen Ideen und sorgte stets für ein konsistentes Markenimage.",
-    giftboxesTitle: "Partner-Geschenkboxen",
-    giftboxesDescription: "Ich schuf eine Reihe verspielter visueller Erzählungen für Elgatos Partner-Geschenkboxen und baute fantasievolle Welten rund um ihre Marke auf.",
+    dreamvilleDescription:
+      "Ich hatte die Moeglichkeit, die visuellen Assets fuer die Dreamville x Elgato Wave:3 Kollaboration zu gestalten und die Dreamville-Marke durch Illustration, Farbe und Komposition auf das Mikrofon zu uebersetzen.",
+    anniversaryTitle: "Jubiläums designs",
+    anniversaryDescription:
+      "Fuer Elgatos 10-jaehriges Jubilaeum gestaltete ich die visuelle Identitaet des Events und schuf limitierte Produkte mit einem individuellen Muster und dem Logo des Events.",
+    summaryText:
+      "Im Laufe dieser Projekte stand ich vor vielen Herausforderungen und lernte sehr viel – ich arbeitete mit einer Vielzahl von Spezifikationen, experimentierte mit neuen Ideen und sorgte stets für ein konsistentes Markenimage.",
+    giftboxesTitle: "Partner Geschenk Boxen",
+    giftboxesDescription:
+      "Ich schuf verspielte visuelle Erzaehlungen fuer Elgatos Partner-Geschenkboxen und verwandelte ihre Produkte und ihr Logo in imaginative illustrierte Welten.",
     boxes: [
       {
         title: "Winterfeiertage 2022",
-        description: "Für Elgatos Holiday Gift Box 2022 entwickelte ich zwei visuelle Erzählungen: die Neuinterpretation des Stream Decks als beleuchtete Winternachtsfenster und ein Elgato-inspiriertes Lebkuchenhaus.",
+        description:
+          "Inspiriert von den Stream-Deck-Tasten stellte ich mir jede Taste als Fenster in die Haeuser anderer Menschen vor und feierte so die Vielfalt winterlicher Feiertage. Das Winter-Lights-Design erschien auf dem Stream Deck und der Verpackung, ergaenzt durch ein illustriertes Lebkuchenhaus, das in der Box und in den Werbematerialien auftauchte.",
       },
       {
-        title: "Winterfeiertage 2021",
-        description: "Diese Geschenkbox vereinte eine breite Palette individueller Illustrationen, die ich im Laufe der Zeit entwickelt hatte – von Elgato-Winterstickets bis hin zu Markenpostern.",
+        title: "Winterpfade",
+        description:
+          "Fuer diese winterliche Geschenkbox erschuf ich eine verschneite Welt und integrierte die Elgato-Marke in verspielte winterliche Umgebungen. Die Box vereinte eine Vielzahl individueller Illustrationen, die ich im Laufe der Zeit entwickelt hatte - von Elgato-inspirierten Stickern bis hin zu Markenpostern, alles zusammengefuehrt in einem stimmigen und fantasievollen Gesamtpaket.",
       },
       {
         title: "Oktoberfest-Geschenkbox",
-        description: "Inspiriert vom Münchner Oktoberfest schuf ich eine illustrierte Geschenkbox, die klassische Festivalelemente mit Elgatos verspielter, kreativer Identität verbindet.",
+        description:
+          "Inspiriert vom Muenchner Oktoberfest gestaltete ich eine illustrierte Geschenkbox, die traditionelle Festivalelemente mit Elgatos verspielter und kreativer Markenidentitaet verbindet.",
       },
     ],
   },
   ru: {
     heroTitle: "ELGATO",
-    heroDescription: "Elgato — ведущий создатель аппаратного и программного обеспечения для контент-мейкеров, известный такими продуктами, как Stream Deck, карты захвата, микрофоны и инструменты освещения. Мне выпала возможность сотрудничать с их командами по всему миру над индивидуальными дизайнами продуктов и иллюстрированными брендовыми активами.",
+    heroDescription:
+      "Elgato — компания, известная своими инструментами для контент-мейкеров: от стримингового оборудования до устройств для креативного продакшена. Я сотрудничала с их командой над различными иллюстрационными и дизайн-проектами, внося вклад в продуктовые релизы, брендовые коллаборации и специальные кампании.",
     customsTitle: "Кастомизация продуктов",
-    customsDescription: "Я разработала индивидуальные лицевые панели для Stream Deck и Wave XLR от Elgato, включая первые версии, выпущенные в их магазине.",
+    customsDescription:
+      "Я работала над различными дизайнами кастомных лицевых панелей для Elgato Stream Deck и Wave XLR, разрабатывая концепции и воплощая их для партнёрских коллабораций и релизов в магазине.",
     dreamvilleTitle: "Dreamville x Elgato",
-    dreamvilleDescription: "Я помогла воплотить в жизнь первый микрофон Dreamville x Elgato Wave 3, создав визуальную идентичность, исследуя цветовые направления и создавая ресурсы для запуска коллаборации.",
+    dreamvilleDescription:
+      "У меня была возможность разработать визуальные материалы для коллаборации Dreamville x Elgato Wave:3, перенеся бренд Dreamville на микрофон через иллюстрацию, цвет и композицию.",
     anniversaryTitle: "Юбилейные дизайны",
-    anniversaryDescription: "К 10-летию Elgato я разработала визуальную идентичность мероприятия, создав лимитированные продукты с уникальным паттерном, двумя цветовыми палитрами и логотипом события Elgato X.",
-    summaryText: "В ходе этих проектов я столкнулась со многими трудностями и многому научилась — работала с самыми разными спецификациями, экспериментировала с новыми идеями, при этом всегда сохраняя единый стиль бренда.",
+    anniversaryDescription:
+      "К 10-летию Elgato я разработала визуальную идентичность мероприятия, создав лимитированные продукты с собственным паттерном и логотипом события.",
+    summaryText:
+      "В ходе этих проектов я столкнулась со многими трудностями и многому научилась — работала с самыми разными спецификациями, экспериментировала с новыми идеями, при этом всегда сохраняя единый стиль бренда.",
     giftboxesTitle: "Партнёрские подарочные коробки",
-    giftboxesDescription: "Я создала серию игривых визуальных нарративов для партнёрских подарочных коробок Elgato, выстраивая воображаемые миры вокруг их бренда.",
+    giftboxesDescription:
+      "Я создала игривые визуальные нарративы для партнёрских подарочных коробок Elgato, превращая их продукты и логотип в воображаемые иллюстрированные миры.",
     boxes: [
       {
         title: "Зимние праздники 2022",
-        description: "Для праздничной подарочной коробки Elgato 2022 я разработала два визуальных нарратива: переосмысление Stream Deck как освещённых зимних окон и создание пряничного домика в стиле Elgato.",
+        description:
+          "Вдохновившись кнопками Stream Deck, я представила каждую кнопку как окно в дома других людей, отмечая разнообразие зимних праздников. Дизайн Winter Lights появился на Stream Deck и упаковке, а также был дополнен иллюстрированным пряничным домиком, который использовался в коробке и промоматериалах.",
       },
       {
-        title: "Зимние праздники 2021",
-        description: "Эта подарочная коробка объединила широкий спектр индивидуальных иллюстраций — от зимних стикеров Elgato до брендированных постеров.",
+        title: "Зимние тропы",
+        description:
+          "Для этой зимней подарочной коробки я создала снежный мир, интегрировав бренд Elgato в игривые зимние окружения. Коробка объединила разнообразные индивидуальные иллюстрации, которые я разрабатывала со временем, от стикеров в стиле Elgato до брендированных постеров, собранных в один цельный и воображаемый комплект.",
       },
       {
         title: "Подарочная коробка Октоберфест",
-        description: "Вдохновлённая мюнхенским Октоберфестом, я создала иллюстрированную подарочную коробку, сочетающую классические элементы фестиваля с игривой творческой идентичностью Elgato.",
+        description:
+          "Вдохновлённая мюнхенским Октоберфестом, я разработала иллюстрированную подарочную коробку, объединяющую традиционные элементы фестиваля с игривой и творческой бренд-идентичностью Elgato.",
       },
     ],
   },
 } as const;
 
-type ElgatoText = typeof translations[keyof typeof translations];
+type ElgatoText = (typeof translations)[keyof typeof translations];
 
 const ElgatoTextContext = createContext<ElgatoText | null>(null);
 
@@ -102,6 +129,7 @@ export function ElgatoTextProvider({ children }: { children: ReactNode }) {
 
 export function useElgatoText(): ElgatoText {
   const ctx = useContext(ElgatoTextContext);
-  if (!ctx) throw new Error("useElgatoText must be used within ElgatoTextProvider");
+  if (!ctx)
+    throw new Error("useElgatoText must be used within ElgatoTextProvider");
   return ctx;
 }

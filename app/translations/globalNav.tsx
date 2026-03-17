@@ -1,5 +1,6 @@
 export const globalNavText = {
   en: {
+    home: "Home",
     aboutMe: "About Me",
     personalArchive: "Personal Archive",
     digitalExplorations: "Digital Explorations",
@@ -11,6 +12,7 @@ export const globalNavText = {
     artist: "an artist",
   },
   de: {
+    home: "Home",
     aboutMe: "Über mich",
     personalArchive: "Persönliches Archiv",
     digitalExplorations: "Digitale Erkundungen",
@@ -22,6 +24,7 @@ export const globalNavText = {
     artist: "Künstler",
   },
   ru: {
+    home: "Главная",
     aboutMe: "Обо мне",
     personalArchive: "Личный архив",
     digitalExplorations: "Цифровые исследования",

@@ -11,10 +11,7 @@ import SectionHintsGrid from "@/app/components/SectionHintsGrid";
 import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import Image from "next/image";
 import { ImageItem } from "@/app/data/model";
-import {
-  dImages,
-  xImages,
-} from "@/app/data/elgato";
+import { dImages, xImages } from "@/app/data/elgato";
 import { pairImages, sdImages, xlrImages } from "./CustomsGallery";
 import { ElgatoTextProvider, useElgatoText } from "@/app/translations/elgato";
 
@@ -103,27 +100,26 @@ function ElgatoInner() {
     <div className="bg-transparent overflow-x-hidden">
       <LocalNav sections={navs} />
 
-      <ProjectHeroSection
-        src={heroImg}
-        alt="Elgato Poster"
-        title={t.heroTitle}
-        description={t.heroDescription}
-        noBackground
-      />
-
-      {/* Product Customs Section */}
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <FixedBackgroundImage
-          src="/projects/elgato/gato3.png"
+          src={heroImg}
+          alt="Elgato Poster"
           opacity={0.2}
           objectPosition="center 70%"
           containerClassName="-z-10 bg-[#24242e]"
           quality={60}
-          loading="eager"
+          priority
         />
-        <div className="content-container flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
-          <div id="customs">
-            <div className="mb-24">
+        <ProjectHeroSection
+          title={t.heroTitle}
+          description={t.heroDescription}
+          noBackground
+        />
+
+        {/* Product Customs Section */}
+        <div className="flex flex-col justify-center items-center gap-16 pt-32 md:pt-32 pb-24 md:pb-16">
+          <div id="customs" className="w-full">
+            <div className="mb-24 content-container">
               <h1>{t.customsTitle}</h1>
               <p>{t.customsDescription}</p>
             </div>

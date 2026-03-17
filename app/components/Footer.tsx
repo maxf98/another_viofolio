@@ -63,22 +63,8 @@ function getFooterBackground(pathname: string) {
       containerBg: "",
     };
   }
-  if (pathname === "/gallery/monkeybrain") {
-    return {
-      src: "/gallery/m2%202.png",
-      objectPosition: "center",
-      opacity: 0.15,
-      containerBg: "",
-    };
-  }
-  if (pathname === "/monkeybrain") {
-    return {
-      src: "/gallery/m2%202.png",
-      objectPosition: "center",
-      opacity: 0.15,
-      containerBg: "",
-    };
-  }
+  if (pathname === "/gallery/monkeybrain") return null;
+  if (pathname === "/monkeybrain") return null;
   if (pathname === "/gallery") {
     return {
       src: "/gallery/m2%202.png",

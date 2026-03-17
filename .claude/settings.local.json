@@ -6,7 +6,9 @@
       "Bash(do mv \"$f\" \"$f%.PNG.png\")",
       "Bash(done)",
       "Bash(sips:*)",
-      "Bash(cwebp:*)"
+      "Bash(cwebp:*)",
+      "Bash(grep -r LetterSwitcher /Users/maxfest/vscode/another_viofolio/app --include=*.tsx --include=*.mdx --include=*.ts)",
+      "Bash(wc -l /Users/maxfest/vscode/another_viofolio/app/components/*.tsx)"
     ],
     "deny": [],
     "ask": []

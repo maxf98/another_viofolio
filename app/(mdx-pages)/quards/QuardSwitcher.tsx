@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import InteractionHint from "@/app/components/InteractionHint";
 import { useQuardsText } from "@/app/translations/quards";
@@ -19,27 +19,45 @@ export default function QuardSwitcher() {
       <InteractionHint text={t.tapToSwitch} className="mb-2" />
 
       <div className="relative inline-block">
-        <Image
-          src="/projects/quards/sample_quard_front.jpg"
-          alt="Quard front side"
-          width={800}
-          height={1200}
-          className="w-full max-w-xs sm:max-w-md ipad-border cursor-pointer"
+        <button
+          type="button"
           onClick={toggleImage}
-        />
+          className="relative block w-full max-w-xs overflow-hidden ipad-border cursor-pointer sm:max-w-md"
+          aria-label={
+            showFront ? "Show quard back side" : "Show quard front side"
+          }
+        >
+          <motion.div
+            className="relative"
+            animate={{ opacity: showFront ? 1 : 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+          >
+            <Image
+              src="/projects/quards/sample_quard_front.jpg"
+              alt="Quard front side"
+              width={800}
+              height={1200}
+              className="h-auto w-full object-cover"
+              priority
+              loading="eager"
+            />
+          </motion.div>
 
-        <AnimatePresence>
-          {!showFront && (
+          <motion.div
+            className="absolute inset-0"
+            animate={{ opacity: showFront ? 0 : 1 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+          >
             <Image
               src="/projects/quards/sample_quard_back.jpg"
               alt="Quard back side"
-              className="absolute inset-0 w-full max-w-xs sm:max-w-md ipad-border cursor-pointer"
-              width={800}
-              height={1200}
-              onClick={toggleImage}
+              fill
+              className="object-cover"
+              priority
+              loading="eager"
             />
-          )}
-        </AnimatePresence>
+          </motion.div>
+        </button>
 
         <div className="absolute top-10 right-[70px] drop-shadow-lg">
           <motion.div

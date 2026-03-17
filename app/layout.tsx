@@ -43,8 +43,14 @@ export default function RootLayout({
         <LanguageProvider>
           <LoadProvider>
             <GlobalNavProvider>
-              <Logo />
-              <HamburgerButton />
+              <div className="pointer-events-none fixed inset-x-0 top-0 z-[20001] flex items-center justify-between px-4 py-3 md:px-6 md:py-10">
+                <div className="pointer-events-auto">
+                  <Logo />
+                </div>
+                <div className="pointer-events-auto">
+                  <HamburgerButton />
+                </div>
+              </div>
               <GlobalNav />
               <AboutMeOverlay />
               <div className="min-h-screen">

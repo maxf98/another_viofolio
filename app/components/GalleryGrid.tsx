@@ -43,11 +43,16 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
       if (!containerRef.current) return;
 
       const containerWidth = containerRef.current.offsetWidth;
+      const isMobileLandscape =
+        typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 767px) and (orientation: landscape)")
+          .matches;
 
       // Determine columns based on screen width
       let columns = 2;
       if (containerWidth >= 1024) columns = Math.min(maxColumns, 4);
-      else if (containerWidth >= 768) columns = Math.min(maxColumns, 3);
+      else if (containerWidth >= 768 || isMobileLandscape)
+        columns = Math.min(maxColumns, 3);
 
       // Gap sizes
       let gap = 48;
@@ -124,7 +129,7 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
               src={item.image}
               alt={item.alt ?? "A Gallery Image"}
               fill
-              sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+              sizes="(max-width: 767px) and (orientation: portrait) 50vw, (max-width: 767px) and (orientation: landscape) 33vw, (max-width: 1024px) 25vw, 20vw"
               className="object-cover rounded-sm shadow-lg"
               placeholder="blur"
               quality={80}

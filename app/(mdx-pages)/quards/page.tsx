@@ -90,17 +90,7 @@ function QuardsInner() {
               />
             </div>
           </div>
-          <div className="content-container flex justify-center">
-            <Image
-              src="/projects/quards/feature.webp"
-              alt="Quards featured artwork"
-              width={800}
-              height={533}
-              className="w-full max-w-md h-auto"
-              loading="lazy"
-            />
-          </div>
-          <div className="content-container flex flex-col gap-8 mt-32 mb-16">
+          <div className="content-container flex flex-col gap-8 mt-16 mb-16">
             <p>{t.visualIdentityP3}</p>
           </div>
           <Image
@@ -118,19 +108,20 @@ function QuardsInner() {
         </div>
       </div>
 
-      {/* Summary Section */}
-      <div className="relative" style={{ clipPath: "inset(0)" }}>
-        <FixedBackgroundImage
-          src="/projects/quards/featureArtNoBG.webp"
-          opacity={0.2}
-          containerClassName="-z-10 bg-[#24242e]"
-          quality={60}
-          loading="lazy"
-        />
-        <div className="content-container py-32 flex flex-col items-center text-center">
-          <p className="max-w-2xl text-lg">{t.summaryText}</p>
+      {t.summaryText && (
+        <div className="relative" style={{ clipPath: "inset(0)" }}>
+          <FixedBackgroundImage
+            src="/projects/quards/featureArtNoBG.webp"
+            opacity={0.2}
+            containerClassName="-z-10 bg-[#24242e]"
+            quality={60}
+            loading="lazy"
+          />
+          <div className="content-container py-32 flex flex-col items-center text-center">
+            <p className="max-w-2xl text-lg">{t.summaryText}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="relative" style={{ clipPath: "inset(0)" }}>
         <FixedBackgroundImage

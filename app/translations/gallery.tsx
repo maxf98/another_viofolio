@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { useLang, Lang } from "@/app/context/LanguageContext";
+import { useLang } from "@/app/context/LanguageContext";
 import { GallerySection } from "@/app/data/graph";
 import { galleryImages } from "@/app/data/graph";
 
@@ -12,7 +12,9 @@ const translations = {
     artTherapyHint: "Open an image to learn more about the technique!",
     monkeybrain: {
       title: "Monkeybrain Magazine",
-      description: "Developed as my bachelor thesis at NABA Milano in Graphic Design and Art Direction, this project integrates mixed media practices, illustrated photography, and image editing with research into human psychology and inner experience. The outcome is Monkey Brain, an illustrated magazine for young adults that communicates awareness through expressive and narrative-driven imagery.",
+      description: "Developed as my bachelor thesis at NABA Milano in Graphic Design and Art Direction, this project blends mixed media, illustrated photography, and image editing with research into human psychology and inner experience, producing Monkey Brain, an illustrated magazine for young adults that conveys awareness through narrative-driven visuals.",
+      tapToFlickThrough: "tap to flick through",
+      betterInLandscape: "better in landscape",
     },
     disclaimer: "Interested to see the process behind my work? Check out my socials",
     navIllustratedPhotography: "Digital Explorations",
@@ -22,23 +24,19 @@ const translations = {
       {
         id: "illustrated-photography",
         title: "Digital Explorations",
-        description: "I work with photography, mixed media, collage, and drawing.",
+        description:
+          "Snapshots from my surroundings serve as a starting point for imaginative worlds. By experimenting with editing and drawing, I uncover new forms and scenes, letting everyday moments transform into something unexpected.",
         images: [
           { index: 0, image: galleryImages.illustratedPhotography[4], alt: "view", title: "View", description: "A window into another world." },
           { index: 1, image: galleryImages.illustratedPhotography[21], alt: "sun", title: "Sun", description: "A radiant study of warmth, shape, and light." },
           { index: 2, image: galleryImages.illustratedPhotography[17], alt: "grandpa", title: "Grandpa", description: "A tribute to cherished memories." },
           { index: 4, image: galleryImages.illustratedPhotography[2], alt: "sunburn", title: "Sunburn", description: "The warmth that leaves its mark." },
-          { index: 5, image: galleryImages.illustratedPhotography[12], alt: "bottle", title: "Bottle", description: "Messages waiting to be discovered." },
           { index: 6, image: galleryImages.illustratedPhotography[14], alt: "wood", title: "Wood", description: "Nature's textures meet imagination." },
-          { index: 7, image: galleryImages.illustratedPhotography[19], alt: "what", title: "What", description: "An open-ended image that invites multiple readings and imagined stories." },
-          { index: 8, image: galleryImages.illustratedPhotography[18], alt: "bird", title: "Bird", description: "Freedom takes flight in unexpected forms." },
           { index: 9, image: galleryImages.illustratedPhotography[1], alt: "ship", title: "Ship", description: "A voyage through dreams and memories." },
-          { index: 10, image: galleryImages.illustratedPhotography[3], alt: "memories", title: "Memories", description: "Fragments of memory translated into layered visual notes." },
           { index: 11, image: galleryImages.illustratedPhotography[10], alt: "ghosts", title: "Ghosts", description: "Echoes of presence lingering in space." },
           { index: 12, image: galleryImages.illustratedPhotography[13], alt: "chat", title: "Chat", description: "Conversations that shape who we are." },
           { index: 13, image: galleryImages.illustratedPhotography[8], alt: "thoughts", title: "Thoughts", description: "A visual stream of layered ideas and inner reflections." },
           { index: 14, image: galleryImages.illustratedPhotography[16], alt: "monster", title: "Monster", description: "Friendly creatures from the imagination." },
-          { index: 15, image: galleryImages.illustratedPhotography[7], alt: "flowers", title: "Flowers", description: "A botanical-focused drawing study with layered colour and line." },
           { index: 17, image: galleryImages.illustratedPhotography[0], alt: "fake", title: "Fake", description: "A conceptual digital drawing reflecting on appearance, performance, and constructed identity." },
           { index: 18, image: galleryImages.illustratedPhotography[6], alt: "treeudude", title: "Tree Dude", description: "Where humans and nature intertwine." },
           { index: 3, image: galleryImages.illustratedPhotography[9], alt: "looking", title: "Looking", description: "Searching for meaning in the everyday." },
@@ -53,13 +51,13 @@ const translations = {
       {
         id: "art-therapy",
         title: "Analogue Process Driven Explorations",
-        description: "Analogue materials invite a slower, more embodied approach. Influenced by my art therapy studies and personal chance-based experiments, these explorations prioritise intuition, responsiveness, and process.",
+        description:
+          "These analogue works explore image-making through physical materials and experimental processes. Inspired by my art therapy journey, the focus lies on intuition, expression, and responsiveness to the materials, inviting chance to the creative process.",
         images: [
           { index: 0, image: galleryImages.artTherapy[0], alt: "blowout", title: "Blowout", description: "This method uses ink, a brush, and a straw to generate chance-based imagery. Ink is flicked or placed onto paper and blown across the surface, creating unpredictable, breath-shaped marks. The resulting forms are then observed and intuitively developed using additional materials, allowing the image to evolve through response." },
           { index: 15, image: galleryImages.artTherapy[3], alt: "chalk work", title: "Chalk Work", description: "Working with chalk allows marks to remain open, fragile, and easily altered. Images emerge through touch, movement, and continuous response to what appears on the surface." },
           { index: 3, image: galleryImages.artTherapy[13], alt: "carib", title: "Image Continuation", description: "Chosen cutouts or images are positioned as a starting point and then continued with different media like paints, pastels, and drawing materials." },
           { index: 4, image: galleryImages.artTherapy[8], alt: "frottage texture study", title: "Frottage", description: "Frottage is a rubbing technique where paper is placed over textured surfaces and graphite or pastel is drawn across it to capture hidden patterns. The collected textures become starting points for intuitive image-making and layered composition." },
-          { index: 5, image: galleryImages.artTherapy[5], alt: "mask", title: "Color Marks", description: "Colour is applied randomly across the surface of the paper. The resulting marks are then observed for emerging forms, which guide the next steps of the image." },
           { index: 8, image: galleryImages.artTherapy[7], alt: "puzzle collage", title: "Puzzle Collage", description: "This exercise begins by cutting a puzzle shape out of paper. Without knowing how it will come together, each piece is illustrated individually and intuitively, then combined into a surprising collage that results in something I would never have drawn with intention." },
           { index: 9, image: galleryImages.artTherapy[14], alt: "mix3", title: "Intuitive Drawing with Music", description: "This drawing is made while listening to music and letting changes in rhythm, mood, and intensity influence the marks and composition." },
           { index: 10, image: galleryImages.artTherapy[9], alt: "dragon drawing", title: "Dragon", description: "An intuitive image study where creature-like forms emerge through spontaneous mark-making and development." },
@@ -90,7 +88,9 @@ const translations = {
     artTherapyHint: "Öffne ein Bild, um mehr über die Technik zu erfahren!",
     monkeybrain: {
       title: "Monkeybrain Magazin",
-      description: "Als meine Bachelorarbeit an der NABA Mailand in Grafikdesign und Art Direction entwickelt, verbindet dieses Projekt Mixed-Media-Praktiken, illustrierte Fotografie und Bildbearbeitung mit Forschung zur menschlichen Psychologie und inneren Erfahrung. Das Ergebnis ist Monkey Brain, ein illustriertes Magazin für junge Erwachsene, das Bewusstsein durch ausdrucksstarke und narrativ getriebene Bildsprache vermittelt.",
+      description: "Entwickelt als meine Bachelorarbeit an der NABA Mailand in Grafikdesign und Art Direction verbindet dieses Projekt Mixed Media, illustrierte Fotografie und Bildbearbeitung mit Forschung zu menschlicher Psychologie und innerer Erfahrung und fuehrt zu Monkey Brain, einem illustrierten Magazin fuer junge Erwachsene, das Bewusstsein durch narrativ gefuehrte Bildwelten vermittelt.",
+      tapToFlickThrough: "zum Durchblättern tippen",
+      betterInLandscape: "besser im Querformat",
     },
     disclaimer: "Interessiert am Prozess hinter meiner Arbeit? Schau in meine sozialen Netzwerke",
     navIllustratedPhotography: "Illustrierte Fotografie",
@@ -100,23 +100,19 @@ const translations = {
       {
         id: "illustrated-photography",
         title: "Illustrierte Fotografie",
-        description: "Bilder werden als Ausgangspunkte behandelt, nicht als Ergebnisse – sie verschieben sich durch digitale Eingriffe langsam hin zu Szenen, die Geschichte, Atmosphäre und Andersartigkeit andeuten. Ergänzend dazu sind digitale Zeichnungen in dieselbe Bildwelt integriert.",
+        description:
+          "Momentaufnahmen aus meiner Umgebung dienen als Ausgangspunkt fuer imaginative Bildwelten. Durch das Experimentieren mit Bearbeitung und Zeichnung entdecke ich neue Formen und Szenen und lasse alltaegliche Momente zu etwas Unerwartetem werden.",
         images: [
           { index: 0, image: galleryImages.illustratedPhotography[4], alt: "view", title: "Aussicht", description: "Ein Fenster in eine andere Welt." },
           { index: 1, image: galleryImages.illustratedPhotography[21], alt: "sun", title: "Sun", description: "Eine strahlende Studie zu Wärme, Form und Licht." },
           { index: 2, image: galleryImages.illustratedPhotography[17], alt: "grandpa", title: "Opa", description: "Ein Tribut an geliebte Erinnerungen." },
           { index: 4, image: galleryImages.illustratedPhotography[2], alt: "sunburn", title: "Sonnenbrand", description: "Die Wärme, die ihre Spuren hinterlässt." },
-          { index: 5, image: galleryImages.illustratedPhotography[12], alt: "bottle", title: "Flasche", description: "Botschaften warten darauf, entdeckt zu werden." },
           { index: 6, image: galleryImages.illustratedPhotography[14], alt: "wood", title: "Holz", description: "Die Texturen der Natur begegnen der Vorstellungskraft." },
-          { index: 7, image: galleryImages.illustratedPhotography[19], alt: "what", title: "What", description: "Ein offenes Bild, das mehrere Lesarten und imaginierte Geschichten zulässt." },
-          { index: 8, image: galleryImages.illustratedPhotography[18], alt: "bird", title: "Vogel", description: "Freiheit entfaltet sich in unerwarteten Formen." },
           { index: 9, image: galleryImages.illustratedPhotography[1], alt: "ship", title: "Schiff", description: "Eine Reise durch Träume und Erinnerungen." },
-          { index: 10, image: galleryImages.illustratedPhotography[3], alt: "memories", title: "Memories", description: "Erinnerungsfragmente werden in geschichtete visuelle Notizen übersetzt." },
           { index: 11, image: galleryImages.illustratedPhotography[10], alt: "ghosts", title: "Geister", description: "Echos von Anwesenheit, die im Raum verweilen." },
           { index: 12, image: galleryImages.illustratedPhotography[13], alt: "chat", title: "Gespräch", description: "Unterhaltungen, die uns formen." },
           { index: 13, image: galleryImages.illustratedPhotography[8], alt: "gedanken", title: "Gedanken", description: "Ein visueller Strom aus geschichteten Ideen und inneren Reflexionen." },
           { index: 14, image: galleryImages.illustratedPhotography[16], alt: "monster", title: "Monster", description: "Freundliche Wesen aus der Phantasie." },
-          { index: 15, image: galleryImages.illustratedPhotography[7], alt: "flowers", title: "Flowers", description: "Eine botanische Zeichenstudie mit geschichteter Farbe und Linie." },
           { index: 17, image: galleryImages.illustratedPhotography[0], alt: "fake", title: "Fake", description: "Eine konzeptuelle digitale Zeichnung über Schein, Inszenierung und konstruierte Identität." },
           { index: 18, image: galleryImages.illustratedPhotography[6], alt: "treeudude", title: "Baumkerl", description: "Wo Mensch und Natur sich verflechten." },
           { index: 3, image: galleryImages.illustratedPhotography[9], alt: "looking", title: "Schauen", description: "Auf der Suche nach Bedeutung im Alltag." },
@@ -131,13 +127,13 @@ const translations = {
       {
         id: "art-therapy",
         title: "Analoge prozessgeleitete Erkundungen",
-        description: "Analoge Materialien laden zu einem langsameren, verkörperten Ansatz ein. Beeinflusst von meinem Kunststudium und persönlichen zufallsbasierten Experimenten stellen diese Erkundungen Intuition, Reaktionsfähigkeit und Prozess in den Vordergrund.",
+        description:
+          "Diese analogen Arbeiten erforschen Bildfindung durch physische Materialien und experimentelle Prozesse. Inspiriert von meinem kunsttherapeutischen Weg liegt der Fokus auf Intuition, Ausdruck und dem Reagieren auf die Materialien, wodurch der kreative Prozess bewusst dem Zufall geoeffnet wird.",
         images: [
           { index: 0, image: galleryImages.artTherapy[0], alt: "blowout", title: "Blasbild", description: "Diese Methode verwendet Tinte, einen Pinsel und einen Strohhalm, um zufallsbasierte Bilder zu erzeugen. Tinte wird auf Papier gekleckst oder getropft und über die Oberfläche geblasen, wodurch unvorhersehbare, atemförmige Spuren entstehen. Die resultierenden Formen werden dann beobachtet und mit zusätzlichen Materialien intuitiv weiterentwickelt." },
           { index: 15, image: galleryImages.artTherapy[3], alt: "chalk work", title: "Kreidearbeit", description: "Das Arbeiten mit Kreide ermöglicht es, Spuren offen, fragil und leicht veränderbar zu halten. Bilder entstehen durch Berührung, Bewegung und kontinuierliche Reaktion auf das, was auf der Oberfläche erscheint." },
           { index: 3, image: galleryImages.artTherapy[13], alt: "carib", title: "Image Continuation", description: "Ausgewählte Ausschnitte oder Bilder werden als Ausgangspunkt platziert und anschließend mit verschiedenen Medien wie Farbe, Pastell und Zeichnung weitergeführt." },
           { index: 4, image: galleryImages.artTherapy[8], alt: "Frottage-Texturstudie", title: "Frottage", description: "Frottage ist eine Abriebtechnik: Papier wird auf strukturierte Oberflächen gelegt und mit Graphit oder Pastell überrieben, um verborgene Muster sichtbar zu machen. Diese Texturen dienen anschließend als Ausgangspunkt für intuitives Arbeiten und vielschichtige Kompositionen." },
-          { index: 5, image: galleryImages.artTherapy[5], alt: "mask", title: "Farbspuren", description: "Farbe wird zufällig auf der Oberfläche des Papiers aufgetragen. Die entstandenen Spuren werden dann auf entstehende Formen beobachtet, die die nächsten Schritte des Bildes leiten." },
           { index: 8, image: galleryImages.artTherapy[7], alt: "Puzzle-Collage", title: "Puzzle-Collage", description: "Diese Übung beginnt damit, eine Puzzleform aus Papier auszuschneiden. Ohne zu wissen, wie alles zusammenkommt, wird jedes Teil einzeln und intuitiv gestaltet und danach zu einer überraschenden Collage zusammengesetzt - etwas, das ich niemals so bewusst gezeichnet hätte." },
           { index: 9, image: galleryImages.artTherapy[14], alt: "mix3", title: "Intuitive Drawing with Music", description: "Diese Zeichnung entsteht beim Hören von Musik, wobei Veränderungen in Rhythmus, Stimmung und Intensität die Spuren und Komposition beeinflussen." },
           { index: 10, image: galleryImages.artTherapy[9], alt: "Drachenzeichnung", title: "Drache", description: "Eine intuitive Bildstudie, bei der durch spontane Markierungen und Weiterentwicklung wesenhafte Formen entstehen." },
@@ -168,7 +164,9 @@ const translations = {
     artTherapyHint: "Открой изображение, чтобы узнать больше о технике!",
     monkeybrain: {
       title: "Журнал Monkeybrain",
-      description: "Разработанный как дипломная работа в NABA Милан по графическому дизайну и арт-дирекции, этот проект объединяет практики смешанных медиа, иллюстрированную фотографию и редактирование изображений с исследованиями человеческой психологии. Результат — иллюстрированный журнал Monkey Brain для молодых взрослых.",
+      description: "Разработанный как мой дипломный проект в NABA Milano по графическому дизайну и арт-дирекции, этот проект сочетает смешанные медиа, иллюстрированную фотографию и редактирование изображений с исследованием человеческой психологии и внутреннего опыта, создавая Monkey Brain — иллюстрированный журнал для молодых взрослых, передающий осознанность через визуальные повествования.",
+      tapToFlickThrough: "нажми, чтобы листать",
+      betterInLandscape: "лучше в горизонтальном режиме",
     },
     disclaimer: "Хотите увидеть процесс создания моих работ? Загляните в мои социальные сети",
     navIllustratedPhotography: "Иллюстрированная фотография",
@@ -178,23 +176,19 @@ const translations = {
       {
         id: "illustrated-photography",
         title: "Иллюстрированная фотография",
-        description: "Изображения рассматриваются как отправные точки, а не результаты — постепенно трансформируясь через цифровое вмешательство в сцены, предлагающие историю, атмосферу и инаковость. Цифровые рисунки теперь включены в этот же поток.",
+        description:
+          "Снимки из моего окружения служат отправной точкой для воображаемых миров. Экспериментируя с обработкой и рисунком, я нахожу новые формы и сцены, позволяя повседневным моментам превращаться во что-то неожиданное.",
         images: [
           { index: 0, image: galleryImages.illustratedPhotography[4], alt: "view", title: "Вид", description: "Окно в другой мир." },
           { index: 1, image: galleryImages.illustratedPhotography[21], alt: "sun", title: "Sun", description: "Светлая работа о тепле, форме и свете." },
           { index: 2, image: galleryImages.illustratedPhotography[17], alt: "grandpa", title: "Дедушка", description: "Дань уважения дорогим воспоминаниям." },
           { index: 4, image: galleryImages.illustratedPhotography[2], alt: "sunburn", title: "Солнечный ожог", description: "Тепло, оставляющее след." },
-          { index: 5, image: galleryImages.illustratedPhotography[12], alt: "bottle", title: "Бутылка", description: "Послания, ждущие своего открытия." },
           { index: 6, image: galleryImages.illustratedPhotography[14], alt: "wood", title: "Дерево", description: "Текстуры природы встречаются с воображением." },
-          { index: 7, image: galleryImages.illustratedPhotography[19], alt: "what", title: "What", description: "Открытая по смыслу работа, допускающая разные прочтения и воображаемые истории." },
-          { index: 8, image: galleryImages.illustratedPhotography[18], alt: "bird", title: "Птица", description: "Свобода обретает крылья в неожиданных формах." },
           { index: 9, image: galleryImages.illustratedPhotography[1], alt: "ship", title: "Корабль", description: "Путешествие через мечты и воспоминания." },
-          { index: 10, image: galleryImages.illustratedPhotography[3], alt: "memories", title: "Memories", description: "Фрагменты памяти переводятся в многослойные визуальные заметки." },
           { index: 11, image: galleryImages.illustratedPhotography[10], alt: "ghosts", title: "Призраки", description: "Эхо присутствия, витающее в пространстве." },
           { index: 12, image: galleryImages.illustratedPhotography[13], alt: "chat", title: "Разговор", description: "Беседы, формирующие нас." },
           { index: 13, image: galleryImages.illustratedPhotography[8], alt: "мысли", title: "Мысли", description: "Визуальный поток многослойных идей и внутренних отражений." },
           { index: 14, image: galleryImages.illustratedPhotography[16], alt: "monster", title: "Монстр", description: "Дружелюбные существа из воображения." },
-          { index: 15, image: galleryImages.illustratedPhotography[7], alt: "flowers", title: "Flowers", description: "Ботаническое исследование рисунка с многослойным цветом и линией." },
           { index: 17, image: galleryImages.illustratedPhotography[0], alt: "fake", title: "Fake", description: "Концептуальный цифровой рисунок о внешнем образе, постановке и сконструированной идентичности." },
           { index: 18, image: galleryImages.illustratedPhotography[6], alt: "treeudude", title: "Древесный", description: "Где человек и природа переплетаются." },
           { index: 3, image: galleryImages.illustratedPhotography[9], alt: "looking", title: "Взгляд", description: "В поисках смысла в повседневном." },
@@ -209,13 +203,13 @@ const translations = {
       {
         id: "art-therapy",
         title: "Аналоговые процессуальные исследования",
-        description: "Аналоговые материалы приглашают к более медленному, телесному подходу. Вдохновлённые изучением арт-терапии и личными экспериментами, основанными на случайности, эти исследования ставят во главу угла интуицию, отзывчивость и процесс.",
+        description:
+          "Эти аналоговые работы исследуют создание изображения через физические материалы и экспериментальные процессы. Вдохновлённые моим путём в арт-терапии, они сосредоточены на интуиции, выразительности и отклике на материалы, приглашая случайность в творческий процесс.",
         images: [
           { index: 0, image: galleryImages.artTherapy[0], alt: "blowout", title: "Выдувание", description: "Этот метод использует тушь, кисть и трубочку для создания изображений, основанных на случайности. Тушь капается на бумагу и выдувается по поверхности, создавая непредсказуемые отметины." },
           { index: 15, image: galleryImages.artTherapy[3], alt: "chalk work", title: "Работа с мелом", description: "Работа с мелом позволяет линиям оставаться открытыми, хрупкими и легко изменяемыми. Образы возникают через прикосновение, движение и непрерывную реакцию." },
           { index: 3, image: galleryImages.artTherapy[13], alt: "carib", title: "Image Continuation", description: "Выбранные вырезки или изображения используются как отправная точка и затем продолжаются разными материалами: краской, пастелью и графикой." },
           { index: 4, image: galleryImages.artTherapy[8], alt: "фроттаж текстуры", title: "Фроттаж", description: "Фроттаж - это техника натирания: бумага кладется на фактурную поверхность, а сверху проводится графитом или пастелью, чтобы проявить скрытые узоры. Полученные текстуры становятся отправной точкой для интуитивной работы и многослойной композиции." },
-          { index: 5, image: galleryImages.artTherapy[5], alt: "mask", title: "Цветовые отметины", description: "Краска наносится хаотично по поверхности бумаги. Полученные отметины затем изучаются на предмет возникающих форм." },
           { index: 8, image: galleryImages.artTherapy[7], alt: "пазл-коллаж", title: "Пазл-коллаж", description: "Это упражнение начинается с вырезания формы пазла из бумаги. Не зная заранее, как всё сложится, я интуитивно оформляю каждый фрагмент по отдельности, а затем соединяю их в неожиданную коллажную композицию - результат, который невозможно было бы нарисовать намеренно." },
           { index: 9, image: galleryImages.artTherapy[14], alt: "mix3", title: "Intuitive Drawing with Music", description: "Этот рисунок создается под музыку: изменения ритма, настроения и интенсивности напрямую влияют на линии, жест и композицию." },
           { index: 10, image: galleryImages.artTherapy[9], alt: "рисунок дракона", title: "Дракон", description: "Интуитивное исследование образа, где похожие на существо формы возникают через спонтанные линии и дальнейшую доработку." },

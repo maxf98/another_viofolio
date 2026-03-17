@@ -146,8 +146,9 @@ export default function Hero() {
 
       const gap = 20;
       const availableHeight = containerHeight - heyoHeight - gap;
+      const isMobile = containerWidth < 768;
       const isCompactLandscape = containerWidth > containerHeight && containerHeight < 700;
-      const maxLetterSize = isCompactLandscape ? 400 : 340;
+      const maxLetterSize = isCompactLandscape ? 320 : isMobile ? 112 : 340;
 
       // Try horizontal letters: 3 letters side by side
       const horizontalLetterSize = Math.min(containerWidth / 3, availableHeight, maxLetterSize);
@@ -217,7 +218,7 @@ export default function Hero() {
 
   return (
     <div className="w-full h-[110lvh] relative">
-      <div className="absolute inset-x-0 top-0 h-screen flex items-center justify-center p-32 md:p-40 max-lg:landscape:p-14">
+      <div className="absolute inset-x-0 top-0 h-screen flex items-center justify-center p-32 max-md:portrait:p-14 md:p-40 max-lg:landscape:p-14">
         <div
           ref={containerRef}
           className="w-full h-full flex items-center justify-center"
@@ -236,7 +237,7 @@ export default function Hero() {
               alt="Heyo"
               width={288}
               height={112}
-              className="w-40 h-auto md:w-72 md:h-28 object-contain"
+              className="w-32 max-md:portrait:w-40 h-auto md:w-64 md:h-24 object-contain"
               priority
             />
           </motion.div>

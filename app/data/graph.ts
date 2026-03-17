@@ -132,12 +132,14 @@ export const letters: Record<"V" | "I" | "O", LetterItem[]> = {
     { index: 1, image: "/letters/V/pp.png", alt: "pp" },
   ],
   I: [
-    { index: 1, image: "/letters/I/shapes.webp", alt: "shapes" },
     { index: 4, image: "/letters/I/plants.png", alt: "plants" },
+    { index: 1, image: "/letters/I/shapes.webp", alt: "shapes" },
+    { index: 3, image: "/letters/I/window.webp", alt: "window" },
   ],
   O: [
     { index: 9, image: "/letters/O/7o.png", alt: "7o" },
     { index: 4, image: "/letters/O/1o.png", alt: "1o" },
     { index: 7, image: "/letters/O/4o.png", alt: "4o" },
+    { index: 14, image: "/letters/O/newo.png", alt: "newo" },
   ],
 };

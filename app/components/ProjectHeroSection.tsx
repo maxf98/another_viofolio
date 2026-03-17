@@ -5,14 +5,22 @@ import { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import FixedBackgroundImage from "./FixedBackgroundImage";
 
-interface ProjectHeroSectionProps {
-  src: StaticImageData;
-  alt: string;
+type ProjectHeroSectionProps = {
   title: string;
   description?: string;
   children?: React.ReactNode;
-  noBackground?: boolean;
-}
+} & (
+  | {
+      noBackground?: false;
+      src: StaticImageData;
+      alt: string;
+    }
+  | {
+      noBackground: true;
+      src?: StaticImageData;
+      alt?: string;
+    }
+);
 
 export default function ProjectHeroSection({
   src,
@@ -32,8 +40,8 @@ export default function ProjectHeroSection({
     >
       {!noBackground && (
         <FixedBackgroundImage
-          src={src}
-          alt={alt}
+          src={src!}
+          alt={alt!}
           opacity={0.2}
           objectPosition="center 70%"
           imageClassName="w-full h-full object-cover scale-100"

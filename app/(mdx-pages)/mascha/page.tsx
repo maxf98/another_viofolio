@@ -45,14 +45,16 @@ function MaschaInner() {
         />
 
         <ProjectHeroSection
-          src={heroImg}
-          alt="Mascha"
           title={t.heroTitle}
           description={t.heroDescription}
           noBackground={true}
         />
 
         <div id="breathe" className="relative pt-24 pb-32">
+          <div className="content-container mb-12 md:mb-16">
+            <h1>{t.navBreathe}</h1>
+            <p>{t.breatheDescription}</p>
+          </div>
           <div className="content-container flex flex-wrap gap-6 md:gap-10 items-start">
             {/* <div className="w-full md:w-7/12">
               <Image
@@ -120,13 +122,17 @@ function MaschaInner() {
           quality={60}
           loading="lazy"
         />
+        <div className="content-container mb-12 md:mb-16">
+          <h1>{t.navKundalini}</h1>
+          <p>{t.kundaliniDescription}</p>
+        </div>
         <div className="content-container flex flex-wrap gap-6 md:gap-10 justify-center">
           <Image
             src="/projects/mascha/kundalini/kundalini.webp"
             alt="Kundalini album cover"
             width={552}
             height={552}
-            className="full max-w-[620px] h-auto"
+            className="w-full max-w-[620px] h-auto"
             loading="lazy"
           />
 
@@ -154,6 +160,10 @@ function MaschaInner() {
           loading="lazy"
         />
         <div id="feelloved" className="relative pt-24 pb-32">
+          <div className="content-container mb-12 md:mb-16">
+            <h1>{t.navFeelLoved}</h1>
+            <p>{t.feelLovedDescription}</p>
+          </div>
           <div className="content-container flex flex-wrap gap-6 md:gap-10 items-center justify-center">
             {/* <div className="w-full md:w-8/12">
               <Image

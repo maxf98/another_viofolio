@@ -11,7 +11,7 @@ import AboutMeSection from "./components/AboutMeSection";
 import CTAButton from "./components/CTAButton";
 import FixedBackgroundImage from "./components/FixedBackgroundImage";
 import { HomeTextProvider, useHomeText } from "./translations/home";
-import { PreviewCardsGrid } from "./components/PreviewCard";
+import { PreviewCard } from "./components/PreviewCard";
 
 function HomeInner() {
   const { state } = useLoadState();
@@ -52,21 +52,6 @@ function HomeInner() {
       label: t.navMascha,
     },
   ];
-
-  const previewGridClass =
-    "w-full h-full grid grid-cols-2 md:grid-cols-3 grid-rows-3 md:grid-rows-2 gap-px p-0";
-  const previewCardClass =
-    "relative w-full h-full overflow-hidden bg-[#1f1f29]";
-  const previewTitleClass =
-    "relative z-10 inline-block w-full line-clamp-2 origin-left text-sm md:text-base font-semibold text-white uppercase tracking-[0.04em] group-hover:tracking-[0.06em] group-hover:scale-110 transition-all duration-300 leading-tight";
-  const previewTitleSlotClass = "relative min-h-[2.4rem] md:min-h-[2.8rem]";
-  const previewTextWrapClass =
-    "absolute bottom-0 left-0 right-0 px-3 md:px-4 pb-4 md:pb-5 pt-4 md:pt-5 flex flex-col justify-end";
-  const previewTextSafetyZoneClass =
-    "absolute inset-x-0 bottom-0 h-24 md:h-28 pointer-events-none bg-gradient-to-t from-[#111318]/80 via-[#111318]/45 to-transparent";
-  const showcaseSectionClass = "relative min-h-[100vh] flex items-center justify-center py-12 md:py-14";
-  const showcaseContentClass =
-    "content-container flex flex-col items-center gap-8 md:gap-12 max-lg:landscape:w-full max-lg:landscape:max-w-[96vw]";
 
   const personalArchiveCards = [
     {
@@ -130,7 +115,9 @@ function HomeInner() {
         <motion.div
           className="fixed -z-10 pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: state.allLettersReady && heroBackgroundLoaded ? 0.9 : 0 }}
+          animate={{
+            opacity: state.allLettersReady && heroBackgroundLoaded ? 0.9 : 0,
+          }}
           transition={{ duration: 0.6, delay: 0.5 }}
           style={{
             transform: "translate3d(0, 0, 0)",
@@ -165,8 +152,15 @@ function HomeInner() {
       {deferredSectionsReady && (
         <>
           {/* About Me Section on Gallery Background */}
-          <div className="relative overflow-hidden" style={{ clipPath: "inset(0)" }}>
-            <div id="about-me" className="relative min-h-[115vh]" style={{ clipPath: "inset(0)" }}>
+          <div
+            className="relative overflow-hidden"
+            style={{ clipPath: "inset(0)" }}
+          >
+            <div
+              id="about-me"
+              className="relative min-h-screen"
+              style={{ clipPath: "inset(0)" }}
+            >
               <FixedBackgroundImage
                 src="/gallery/looking.webp"
                 alt="Gallery"
@@ -177,7 +171,7 @@ function HomeInner() {
               />
               <div className="absolute inset-0 -z-[5] pointer-events-none bg-[#1a1a1f]/10" />
               <div className="absolute inset-0 -z-[5] pointer-events-none bg-[#0d5f63]/18" />
-              <div className="absolute inset-0 flex items-center justify-center translate-y-16 md:translate-y-24">
+              <div className="absolute inset-0 flex items-center justify-center translate-y-6 md:translate-y-10">
                 <AboutMeSection />
               </div>
             </div>
@@ -185,7 +179,7 @@ function HomeInner() {
             {/* Combined Projects Section */}
             <div
               id="gallery"
-              className="relative h-[100vh] overflow-hidden bg-[#24242e]"
+              className="relative min-h-screen overflow-hidden bg-[#24242e] md:h-[100vh]"
               style={{ clipPath: "inset(0)" }}
             >
               <FixedBackgroundImage
@@ -193,23 +187,29 @@ function HomeInner() {
                 opacity={0.45}
                 objectPosition="center"
               />
-              <PreviewCardsGrid
-                cards={combinedProjectCards}
-                viewProjectHint={t.viewProjectHint}
-                activeMobileCard={activeMobileCard}
-                setActiveMobileCard={setActiveMobileCard}
-                supportsHover={supportsHover}
-                gridClassName={previewGridClass}
-                cardClassName={previewCardClass}
-                titleClassName={previewTitleClass}
-                titleSlotClassName={previewTitleSlotClass}
-                textWrapClassName={previewTextWrapClass}
-                textSafetyZoneClassName={previewTextSafetyZoneClass}
-              />
+              <div className="grid w-full grid-cols-2 auto-rows-[34svh] gap-px p-0 max-md:landscape:auto-rows-[46svh] md:h-full md:grid-cols-3 md:grid-rows-2 md:auto-rows-auto">
+                {combinedProjectCards.map((card) => {
+                  const isActive = !supportsHover && activeMobileCard === card.href;
+                  return (
+                    <PreviewCard
+                      key={card.href}
+                      card={card}
+                      viewProjectHint={t.viewProjectHint}
+                      isActive={isActive}
+                      onActivate={() => setActiveMobileCard(card.href)}
+                      supportsHover={supportsHover}
+                      variant="home"
+                    />
+                  );
+                })}
+              </div>
             </div>
 
             {/* Footer CTA Section */}
-            <section className="relative py-32 md:py-48 px-8 overflow-hidden" style={{ clipPath: "inset(0)" }}>
+            <section
+              className="relative py-32 md:py-48 px-8 overflow-hidden"
+              style={{ clipPath: "inset(0)" }}
+            >
               <FixedBackgroundImage
                 src="/gallery/ship.webp"
                 alt="Background"
@@ -237,8 +237,7 @@ function HomeInner() {
                 </motion.div>
 
                 <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-8">
-                  Open for freelance projects, collaborations, and creative
-                  adventures.
+                  {t.ctaDescription}
                 </p>
 
                 <div className="mt-6 flex justify-center">

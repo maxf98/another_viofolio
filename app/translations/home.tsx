@@ -16,6 +16,8 @@ const translations = {
       "Much of my personal practice is rooted in experimentation and chance. I often begin with photographs of nature, spaces, and patterns, then reshape them into imagined narratives. My analogue process is also informed by art therapy methods, creating space for intuition, reflection, and gentle discovery.",
       "In my client work, I combine these personal interests with each brief, responding closely to what the client needs while weaving in elements of my own playful visual world.",
     ],
+    ctaDescription:
+      "Open for freelance projects, collaborations, and creative adventures.",
     ctaLabel: "Get in Touch",
     viewProjectHint: "View project",
   },
@@ -29,6 +31,8 @@ const translations = {
       "Hallo, ich bin Vio – Künstlerin, Illustratorin und Designerin aus München. Ich schaffe ausdrucksstarke Illustrationen und Designs mit einem spielerischen, narrativen Ansatz, bei dem Geschichtenerzählen im Mittelpunkt meiner Arbeit steht.",
       "Meine professionelle Laufbahn begann an der NABA Mailand, wo ich einen Bachelor in Grafikdesign und Art Direction abschloss. Seitdem arbeite ich als freiberufliche Illustratorin und Designerin und studiere gleichzeitig Kunsttherapie, was mein Interesse an Intuition, emotionalem Ausdruck und prozessgesteuertem Schaffen vertieft hat.",
     ],
+    ctaDescription:
+      "Offen für Freelance-Projekte, Kollaborationen und kreative Abenteuer.",
     ctaLabel: "Kontakt aufnehmen",
     viewProjectHint: "Projekt ansehen",
   },
@@ -42,6 +46,8 @@ const translations = {
       "Привет, я Вио — художница, иллюстратор и дизайнер из Мюнхена. Я создаю выразительные иллюстрации и дизайн с игривым, нарративным подходом, где рассказывание историй лежит в основе моей практики.",
       "Я начала свой профессиональный путь в NABA Milan, где получила степень бакалавра по графическому дизайну и арт-дирекции. С тех пор я работаю как фриланс-иллюстратор и дизайнер, параллельно изучая арт-терапию, что углубило мой интерес к интуиции, эмоциональному выражению и процессному творчеству.",
     ],
+    ctaDescription:
+      "Открыта для фриланс-проектов, коллабораций и творческих приключений.",
     ctaLabel: "Связаться",
     viewProjectHint: "Открыть проект",
   },

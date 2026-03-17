@@ -39,7 +39,7 @@ export default function AboutMeSection() {
               alt="Illustrator Designer Artist"
               width={1600}
               height={320}
-              className="w-56 md:w-72 h-auto object-contain mx-auto"
+              className="w-44 md:w-60 h-auto object-contain mx-auto"
               loading="lazy"
             />
           </motion.div>
@@ -56,6 +56,7 @@ export default function AboutMeSection() {
               bgColor="#ffffff"
               textColor="text-[#10363a]"
               bgOpacity={0.98}
+              size="md"
             >
               {t.aboutButton}
             </CTAButton>

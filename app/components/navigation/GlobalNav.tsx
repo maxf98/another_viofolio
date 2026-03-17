@@ -15,6 +15,10 @@ export default function GlobalNav() {
   const { lang } = useLang();
   const t = globalNavText[lang];
   const pathname = usePathname();
+  const itemVariants = {
+    hidden: { opacity: 0, x: 20 },
+    visible: { opacity: 1, x: 0 },
+  };
 
   const handleAboutMeClick = () => {
     openAboutMe();
@@ -26,6 +30,10 @@ export default function GlobalNav() {
   };
 
   const isActive = (path: string) => pathname === path;
+  const linkClass =
+    "block w-full rounded-sm px-6 py-2 text-left text-lg font-medium text-white/90 transition-all duration-200 hover:bg-white/5 hover:text-white max-md:py-1.5 max-md:text-base max-md:landscape:px-3";
+  const headingClass =
+    "mb-1 px-6 text-xs font-semibold uppercase tracking-wider text-white/50 pointer-events-none max-md:px-0 max-md:landscape:px-0";
 
   return (
     <AnimatePresence>
@@ -44,7 +52,7 @@ export default function GlobalNav() {
 
           {/* Menu panel */}
           <motion.div
-            className="absolute inset-y-0 right-0 w-full md:w-full md:max-w-md text-white flex flex-col bg-white/10 backdrop-blur-lg md:border-l border-white/15 z-[19999]"
+            className="absolute inset-y-0 right-0 z-[19999] flex w-full flex-col bg-white/10 text-white backdrop-blur-lg border-white/15 md:w-full md:max-w-md md:border-l"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -52,13 +60,13 @@ export default function GlobalNav() {
             aria-label="Global navigation menu"
           >
             {/* Language toggle at top */}
-            <div className="pt-20 pb-6 px-6 flex justify-center border-b border-white/10">
+            <div className="flex justify-center border-b border-white/10 px-5 pb-4 pt-16 max-md:portrait:px-20 max-md:portrait:pb-3 max-md:portrait:pt-5 max-md:landscape:px-20 max-md:landscape:pb-3 max-md:landscape:pt-5 md:px-6 md:pb-6 md:pt-20">
               <LanguageToggle />
             </div>
 
             {/* Navigation links */}
             <motion.nav
-              className="flex-1 flex flex-col py-8 overflow-y-auto"
+              className="flex-1 overflow-y-auto py-6 max-md:flex max-md:flex-col max-md:justify-center md:py-8"
               initial="hidden"
               animate="visible"
               exit="hidden"
@@ -70,157 +78,134 @@ export default function GlobalNav() {
                 },
               }}
             >
-              {/* About Me */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 20 },
-                  visible: { opacity: 1, x: 0 },
-                }}
-              >
-                <button
-                  onClick={handleAboutMeClick}
-                  className="w-full px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 text-left"
-                >
-                  {t.aboutMe}
-                </button>
-              </motion.div>
-              {/* Personal Archive Section */}
-              <div className="mt-8">
-                <motion.h3
-                  className="text-xs uppercase tracking-wider text-white/50 font-semibold px-6 mb-1 pointer-events-none"
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  {t.personalArchive}
-                </motion.h3>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/gallery/illustrated-photography"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/gallery/illustrated-photography")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
+              <div className="my-auto flex flex-col gap-8 px-6 max-md:landscape:grid max-md:landscape:[grid-template-columns:minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1fr)] max-md:landscape:items-start max-md:landscape:gap-x-4 max-md:landscape:gap-y-0 max-md:landscape:px-6">
+                <div className="min-w-0 space-y-1 max-md:landscape:space-y-0.5">
+                  <motion.h3
+                    className={`${headingClass} invisible`}
+                    variants={itemVariants}
+                    aria-hidden
                   >
-                    {t.digitalExplorations}
-                  </Link>
-                </motion.div>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/gallery/art-therapy"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/gallery/art-therapy")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
-                  >
-                    {t.analogueExplorations}
-                  </Link>
-                </motion.div>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/gallery/monkeybrain"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/gallery/monkeybrain")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
-                  >
-                    {t.monkeybrainMag}
-                  </Link>
-                </motion.div>
-              </div>
-              {/* Working With Section */}
-              <div className="mt-8">
-                <motion.h3
-                  className="text-xs uppercase tracking-wider text-white/50 font-semibold px-6 mb-1 pointer-events-none"
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  {t.workingWith}
-                </motion.h3>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/quards"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/quards")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
-                  >
-                    {t.startup}
-                  </Link>
-                </motion.div>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/elgato"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/elgato")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
-                  >
-                    {t.company}
-                  </Link>
-                </motion.div>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                >
-                  <Link
-                    href="/mascha"
-                    onClick={handleLinkClick}
-                    className={`block px-6 py-2 text-lg font-medium text-white/90 hover:text-white hover:bg-white/5 transition-all duration-200 ${
-                      isActive("/mascha")
-                        ? "underline underline-offset-4 decoration-white/60"
-                        : ""
-                    }`}
-                  >
-                    {t.artist}
-                  </Link>
-                </motion.div>
+                    {t.personalArchive}
+                  </motion.h3>
+                  <motion.div variants={itemVariants}>
+                    <Link
+                      href="/"
+                      onClick={handleLinkClick}
+                      className={`${linkClass} ${
+                        isActive("/")
+                          ? "underline underline-offset-4 decoration-white/60"
+                          : ""
+                      }`}
+                    >
+                      {t.home}
+                    </Link>
+                  </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <button onClick={handleAboutMeClick} className={linkClass}>
+                      {t.aboutMe}
+                    </button>
+                  </motion.div>
+                </div>
+
+                <div className="min-w-0 max-md:landscape:mt-0">
+                  <motion.h3 className={headingClass} variants={itemVariants}>
+                    {t.personalArchive}
+                  </motion.h3>
+                  <div className="space-y-1 max-md:landscape:space-y-0.5">
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/gallery/illustrated-photography"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/gallery/illustrated-photography")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.digitalExplorations}
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/gallery/art-therapy"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/gallery/art-therapy")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.analogueExplorations}
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/gallery/monkeybrain"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/gallery/monkeybrain")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.monkeybrainMag}
+                      </Link>
+                    </motion.div>
+                  </div>
+                </div>
+
+                <div className="min-w-0 max-md:landscape:mt-0">
+                  <motion.h3 className={headingClass} variants={itemVariants}>
+                    {t.workingWith}
+                  </motion.h3>
+                  <div className="space-y-1 max-md:landscape:space-y-0.5">
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/elgato"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/elgato")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.company}
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/quards"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/quards")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.startup}
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link
+                        href="/mascha"
+                        onClick={handleLinkClick}
+                        className={`${linkClass} ${
+                          isActive("/mascha")
+                            ? "underline underline-offset-4 decoration-white/60"
+                            : ""
+                        }`}
+                      >
+                        {t.artist}
+                      </Link>
+                    </motion.div>
+                  </div>
+                </div>
               </div>
             </motion.nav>
 
             {/* Social links at bottom */}
-            <div className="px-6 pb-8 border-t border-white/10 pt-6">
-              <div className="flex gap-8 justify-center">
+            <div className="border-t border-white/10 px-5 pb-5 pt-4 max-md:landscape:px-6 max-md:landscape:pb-3 max-md:landscape:pt-3 md:px-6 md:pb-8 md:pt-6">
+              <div className="flex justify-center gap-6 md:gap-8">
                 <RotateOnHover rotation={15} stiffness={400} damping={8}>
                   <a
                     href="https://www.tiktok.com/@vioseum"
@@ -229,7 +214,7 @@ export default function GlobalNav() {
                     className="text-white/70 hover:text-white transition-colors"
                     aria-label="TikTok"
                   >
-                    <FaTiktok size={32} />
+                    <FaTiktok size={28} />
                   </a>
                 </RotateOnHover>
 
@@ -241,7 +226,7 @@ export default function GlobalNav() {
                     className="text-white/70 hover:text-white transition-colors"
                     aria-label="Instagram"
                   >
-                    <FaInstagram size={32} />
+                    <FaInstagram size={28} />
                   </a>
                 </RotateOnHover>
 
@@ -251,7 +236,7 @@ export default function GlobalNav() {
                     className="text-white/70 hover:text-white transition-colors"
                     aria-label="Email"
                   >
-                    <FaEnvelope size={32} />
+                    <FaEnvelope size={28} />
                   </a>
                 </RotateOnHover>
               </div>
