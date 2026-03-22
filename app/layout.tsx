@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "./styles/backgrounds.css";
-import "./styles/prose.css";
 import Footer from "./components/Footer";
 import { LoadProvider } from "./context/LoadContext";
 import { LanguageProvider } from "./context/LanguageContext";
@@ -10,10 +8,9 @@ import { GlobalNavProvider } from "./components/navigation/GlobalNavContext";
 import GlobalNav from "./components/navigation/GlobalNav";
 import HamburgerButton from "./components/navigation/HamburgerButton";
 import Logo from "./components/navigation/Logo";
-import AboutMeOverlay from "./components/AboutMeOverlay";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
 });
 
@@ -38,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+        className={`${dmSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <LanguageProvider>
           <LoadProvider>
@@ -52,7 +49,6 @@ export default function RootLayout({
                 </div>
               </div>
               <GlobalNav />
-              <AboutMeOverlay />
               <div className="min-h-screen">
                 <div className="relative z-[10]">
                   {children}

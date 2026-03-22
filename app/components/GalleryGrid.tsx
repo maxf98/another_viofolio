@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
-import { GalleryItem } from "@/app/data/model";
+import { GalleryItem } from "@/app/model";
 
 interface GalleryGridProps {
   images: GalleryItem[];

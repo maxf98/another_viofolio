@@ -3,7 +3,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
-import { ImageItem } from "@/app/data/model";
+import { ImageItem } from "@/app/model";
 import CTAButton from "./CTAButton";
 import OverlayShell from "./OverlayShell";
 import { OVERLAY_CONTROL_Z_INDEX } from "./overlayZ";
@@ -23,7 +23,7 @@ export default function Lightbox({
   selectedIndex,
   onClose,
   imageClassName = "",
-  showText = true,
+  showText = false,
 }: LightboxProps) {
   const isOpen = selectedIndex !== null;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex ?? 0);
@@ -83,7 +83,6 @@ export default function Lightbox({
         slide.style.transition =
           "opacity 0.3s ease-out, transform 0.3s ease-out";
       });
-
     };
 
     applyStyles();
@@ -136,7 +135,11 @@ export default function Lightbox({
   }, [isOpen, onClose, scrollNext, scrollPrev]);
 
   return (
-    <OverlayShell isOpen={isOpen} onClose={onClose} stopContainerPropagation={false}>
+    <OverlayShell
+      isOpen={isOpen}
+      onClose={onClose}
+      stopContainerPropagation={false}
+    >
       <div className="w-full h-full">
         {/* Navigation arrows - Desktop and mobile landscape */}
         {images.length > 1 && (
@@ -176,10 +179,10 @@ export default function Lightbox({
           </>
         )}
 
-        {/* Mobile portrait navigation buttons - Fixed at bottom */}
+        {/* Mobile portrait navigation buttons - Fixed at center */}
         {images.length > 1 && (
           <div
-            className="fixed bottom-8 left-0 right-0 flex items-center justify-between px-4 sm:px-6 md:hidden max-md:landscape:hidden"
+            className="fixed top-1/2 -translate-y-1/2 left-0 right-0 flex items-center justify-between px-4 sm:px-6 md:hidden max-md:landscape:hidden"
             style={{ zIndex: OVERLAY_CONTROL_Z_INDEX }}
           >
             <CTAButton
@@ -219,7 +222,8 @@ export default function Lightbox({
           <div className="flex h-full items-center max-md:landscape:min-h-full max-md:landscape:items-start">
             {images.map((image, i) => {
               const isCurrent = i === currentIndex;
-              const isPrev = i === (currentIndex - 1 + images.length) % images.length;
+              const isPrev =
+                i === (currentIndex - 1 + images.length) % images.length;
               const isNext = i === (currentIndex + 1) % images.length;
               const shouldPrioritize = isCurrent || isPrev || isNext;
 
@@ -245,12 +249,16 @@ export default function Lightbox({
                       showText ? "md:items-start" : "md:items-center"
                     }`}
                   >
-                    <div className={`flex-shrink min-w-0 ${!showText ? 'mx-auto' : ''}`}>
+                    <div
+                      className={`flex-shrink min-w-0 ${!showText ? "mx-auto" : ""}`}
+                    >
                       <Image
-                        className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] w-auto h-auto max-w-full ${imageClassName}`}
+                        className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] mt-12 w-auto h-auto max-w-full ${imageClassName}`}
                         src={image.image}
                         alt={image.alt ?? "Gallery image"}
-                        {...(typeof image.image !== "string" && { placeholder: "blur" })}
+                        {...(typeof image.image !== "string" && {
+                          placeholder: "blur",
+                        })}
                         sizes="(max-width: 768px) 90vw, 70vw"
                         draggable={false}
                         priority={shouldPrioritize}

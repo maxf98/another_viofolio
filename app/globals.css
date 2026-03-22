@@ -14,18 +14,116 @@ body {
   overflow-x: hidden;
 }
 
+/* ============================================================
+   DESIGN TOKENS — edit these to customise the feel of the site
+   ============================================================ */
 :root {
-  --background: #393535;
-  --foreground: #ededed;
-  --bg-gradient-1: rgba(255, 138, 92, 0.4);
-  --bg-gradient-2: rgba(124, 207, 255, 0.25);
-  --bg-gradient-3: rgba(0, 0, 0, 0.55);
+  /* ── COLOURS ──────────────────────────────────────────────── */
+
+  /* Core palette */
+  --color-page-bg: #1c1b1b; /* main page background */
+  --color-surface: #393535; /* cards, overlays */
+
+  /* Text roles */
+  --color-text: #ededed; /* primary body text */
+  --color-text-secondary: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* subtitles, descriptions, footer icons */
+  --color-text-muted: rgba(
+    255,
+    255,
+    255,
+    0.65
+  ); /* footer copyright, captions */
+  --color-text-hint: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* tap/scroll indicators, InteractionHint, card badges */
+
+  /* Label / secondary-title role */
+  --color-label: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* nav section headers, card category labels, "Go To" */
+
+  /* Accent */
+  --color-accent-warm: rgba(255, 138, 92, 0.4); /* warm gradient stop */
+  --color-accent-cool: rgba(124, 207, 255, 0.25); /* cool gradient stop */
+  --color-dark-overlay: rgba(0, 0, 0, 0.55); /* image dark overlays */
+
+  /* ── TYPOGRAPHY ───────────────────────────────────────────── */
+
+  /* Font families */
+  --font-display: var(--font-dm-sans);
+  --font-body: var(--font-dm-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Type scale */
+  --text-display: clamp(2.75rem, 10vw, 4rem); /* hero h1 / big display titles */
+  --text-project-hero: clamp(
+    4.375rem,
+    13vw,
+    10rem
+  ); /* project page title (intentionally large) */
+  --text-heading-lg: 2.5rem; /* section headings (h2) */
+  --text-heading: 2rem; /* sub-headings */
+  --text-heading-sm: 1.5rem; /* card titles */
+  --text-body-lg: 1.125rem; /* lead paragraphs */
+  --text-body: 1rem; /* default body */
+  --text-body-sm: 0.875rem; /* captions */
+  --text-label: 0.75rem; /* secondary titles: nav section headers, card category labels */
+  --text-indicator: 0.6875rem; /* card badges, InteractionHint text */
+
+  /* Weights */
+  --weight-body: 400;
+  --weight-heading: 600;
+  --weight-bold: 700;
+
+  /* Line heights */
+  --leading-body: 1.6;
+  --leading-heading: 1.2;
+  --leading-tight: 1; /* project hero h1 */
+
+  /* Letter spacing */
+  --tracking-label: 0.16em; /* card category labels, "Working With" subtitle */
+  --tracking-indicator: 0.12em; /* card badges, InteractionHint */
+  --tracking-wide: 0.25em; /* "Go To" header */
+
+  /* ── COMPONENTS ───────────────────────────────────────────── */
+
+  /* CTA Button */
+  --button-color: #b89fd4; /* button background colour */
+  --button-opacity: 0.35; /* button background transparency (0–1) */
+  --button-blobbiness: medium; /* blob shape: low | medium | high */
+
+  /* Global Nav */
+  --nav-link-size: 1.125rem; /* nav link font size (desktop) */
+  --nav-link-weight: 500; /* nav link font weight */
+  --nav-link-color: rgba(255, 255, 255, 0.9); /* nav link text colour */
+  --nav-label-size: var(--text-label); /* nav section header font size */
+  --nav-label-color: var(--color-label); /* nav section header colour */
+
+  /* Blur & frosted glass */
+  --overlay-blur: 12px; /* backdrop blur on overlays/nav panels */
+
+  /* ── SPACING ──────────────────────────────────────────────── */
+  --section-padding-y: 4rem; /* vertical padding between sections */
+  --section-padding-top: 6rem; /* top padding (accounts for fixed nav) */
+  --content-padding-x: 1.5rem; /* horizontal content padding on mobile */
+  --content-padding-x-md: 2rem; /* horizontal content padding on desktop */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-text);
+  --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-geist-mono);
   --spacing-128: 32rem;
 }
@@ -37,7 +135,7 @@ body {
 body {
   background-color: #1c1b1b;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
 }
 
 a,
@@ -77,31 +175,40 @@ button {
   }
 }
 
-.content-container h1 {
-  font-size: clamp(2.75rem, 10vw, 4rem) !important;
-  font-weight: 700;
-  line-height: 1.2;
-  color: white;
-  text-transform: uppercase;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+h1 {
+  font-size: var(--text-display) !important;
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-heading);
+  color: var(--color-text);
   letter-spacing: 0;
   text-wrap: balance;
   width: 100%;
+  margin-bottom: 1.5rem;
 }
 
-.content-container p {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
+p {
+  color: var(--color-text-muted);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body);
+  padding: 0.5rem 0;
 
-@media (min-width: 768px) {
-  .content-container p {
-    font-size: 1rem;
+  @media (min-width: 768px) {
+    font-size: var(--text-body);
   }
 }
 
 @keyframes tap-hint {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -112,7 +219,8 @@ button {
 }
 
 @keyframes arrow-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
@@ -126,6 +234,42 @@ button {
 
 .animate-arrow-bounce {
   animation: arrow-bounce 1s ease-in-out infinite;
+}
+
+/* ── BACKGROUND VARIANTS ───────────────────────────────────── */
+.bg-default {
+  background: transparent;
+}
+
+.bg-dotted {
+  background: #24242e;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+}
+
+.bg-monkeybrain {
+  position: relative;
+  background-color: #1c1b1b;
+}
+
+.bg-monkeybrain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/projects/MONKEYBRAIN/pages/FINALPATTERNS_left.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
 }
 
 @layer utilities {

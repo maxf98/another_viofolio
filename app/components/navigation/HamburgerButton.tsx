@@ -4,10 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalNav } from "./GlobalNavContext";
 
 export default function HamburgerButton() {
-  const { isGlobalNavOpen, isAboutMeOpen, toggleGlobalNav } = useGlobalNav();
-
-  // Hide hamburger when AboutMe overlay is open
-  if (isAboutMeOpen) return null;
+  const { isGlobalNavOpen, toggleGlobalNav } = useGlobalNav();
 
   return (
     <AnimatePresence>

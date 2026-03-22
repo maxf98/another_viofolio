@@ -18,7 +18,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("vio-lang");
     if (stored === "en" || stored === "de" || stored === "ru") {
-      setLangState(stored);
+      setLangState(stored); // eslint-disable-line react-hooks/set-state-in-effect
     }
   }, []);
 

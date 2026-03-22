@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaTiktok, FaInstagram, FaEnvelope } from "react-icons/fa";
-import RotateOnHover from "./animations/RotateOnHover";
+import SocialLinks from "./SocialLinks";
 import { useLang } from "@/app/context/LanguageContext";
 import { usePathname } from "next/navigation";
 import FixedBackgroundImage from "./FixedBackgroundImage";
@@ -47,7 +46,7 @@ function getFooterBackground(pathname: string) {
       containerBg: "bg-[#24242e]",
     };
   }
-  if (pathname === "/gallery/illustrated-photography") {
+  if (pathname === "/illustrated-photography") {
     return {
       src: "/gallery/bird.webp",
       objectPosition: "center",
@@ -55,7 +54,7 @@ function getFooterBackground(pathname: string) {
       containerBg: "",
     };
   }
-  if (pathname === "/gallery/art-therapy") {
+  if (pathname === "/art-therapy") {
     return {
       src: "/gallery/Frottage.png",
       objectPosition: "center",
@@ -63,7 +62,7 @@ function getFooterBackground(pathname: string) {
       containerBg: "",
     };
   }
-  if (pathname === "/gallery/monkeybrain") return null;
+  if (pathname === "/monkeybrain") return null;
   if (pathname === "/monkeybrain") return null;
   if (pathname === "/gallery") {
     return {
@@ -84,17 +83,19 @@ export default function Footer() {
   const hasImageBg = Boolean(footerBg);
 
   const iconClass = hasImageBg
-    ? "text-white/75 hover:text-white transition-colors"
+    ? "text-[var(--color-text-secondary)] hover:text-white transition-colors"
     : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors";
   const linkClass = hasImageBg
-    ? "text-white/75 hover:text-white transition-colors"
+    ? "text-[var(--color-text-secondary)] hover:text-white transition-colors"
     : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors";
   const copyrightClass = hasImageBg
-    ? "text-sm text-white/65"
+    ? "text-[length:var(--text-body-sm)] text-[var(--color-text-muted)]"
     : "text-sm text-gray-500 dark:text-gray-400";
 
   return (
-    <footer className={`w-full border-t ${hasImageBg ? "border-white/20 relative overflow-hidden" : "border-gray-200 dark:border-gray-700 bg-body"}`}>
+    <footer
+      className={`w-full border-t ${hasImageBg ? "border-white/20 relative overflow-hidden" : "border-gray-200 dark:border-gray-700 bg-body"}`}
+    >
       {footerBg && (
         <>
           <FixedBackgroundImage
@@ -114,43 +115,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center gap-8">
           {/* Social Links */}
-          <div className="flex gap-8">
-            <RotateOnHover rotation={15} stiffness={400} damping={8}>
-              <a
-                href="https://www.tiktok.com/@vioseum"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconClass}
-                aria-label="TikTok"
-              >
-                <FaTiktok size={32} />
-              </a>
-            </RotateOnHover>
+          <SocialLinks iconClass={iconClass} />
 
-            <RotateOnHover rotation={15} stiffness={400} damping={8}>
-              <a
-                href="https://www.instagram.com/vioseum/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconClass}
-                aria-label="Instagram"
-              >
-                <FaInstagram size={32} />
-              </a>
-            </RotateOnHover>
-
-            <RotateOnHover rotation={15} stiffness={400} damping={8}>
-              <a
-                href="mailto:vioprandetskaya@gmail.com"
-                className={iconClass}
-                aria-label="Email"
-              >
-                <FaEnvelope size={32} />
-              </a>
-            </RotateOnHover>
-          </div>
-
-          {/* Footer Links */}
+          {/* Footer Links
           <div className="flex gap-6 text-sm">
             <Link
               href="/impressum"
@@ -158,7 +125,7 @@ export default function Footer() {
             >
               {t.impressum}
             </Link>
-          </div>
+          </div> */}
 
           {/* Copyright */}
           <p className={copyrightClass}>

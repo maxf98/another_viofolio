@@ -10,8 +10,6 @@ export interface NavSection {
   id: string;
   label?: string;
   src?: string;
-  bgColor?: string;
-  size?: number;
 }
 
 interface LocalNavProps {

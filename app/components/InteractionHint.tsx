@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FaArrowDown } from "react-icons/fa";
 
 type InteractionHintSize = "small" | "large";
 type InteractionHintDirection = "top" | "right" | "bottom" | "left";
@@ -28,12 +29,13 @@ export default function InteractionHint({
     : direction === "top"
       ? "flex-col-reverse"
       : "flex-col";
-  const alignmentClass = isHorizontal ? "items-baseline" : "items-center";
-  const spacingClass = isHorizontal ? "gap-2.5" : "gap-1";
+  const alignmentClass = "items-center";
+  const spacingClass = "gap-1";
   const textSizeClass =
-    size === "large" ? "text-lg md:text-2xl" : "text-sm";
-  const svgSizeClass =
-    size === "large" ? "h-8 w-8 md:h-10 md:w-10" : "h-5 w-6";
+    size === "large"
+      ? "text-base md:text-xl"
+      : "text-[length:var(--text-indicator)] tracking-[var(--tracking-indicator)]";
+  const svgSizeClass = size === "large" ? "h-6 w-6 md:h-8 md:w-8" : "h-5 w-6";
   const rotationClass =
     direction === "top"
       ? "rotate-180"
@@ -45,36 +47,18 @@ export default function InteractionHint({
 
   return (
     <motion.div
-      className={`flex ${containerDirectionClass} ${alignmentClass} ${spacingClass} text-white/60 ${className}`}
+      className={`flex ${containerDirectionClass} ${alignmentClass} ${spacingClass} text-[var(--color-text-hint)] ${className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay }}
     >
-      <span className={`italic ${isHorizontal ? "leading-tight" : "leading-none"} ${textSizeClass}`}>
+      <span className={`italic leading-none px-3 py-1 ${textSizeClass}`}>
         {text}
       </span>
-      <svg
-        width="24"
-        height="20"
-        viewBox="0 0 24 20"
-        fill="none"
-        className={`shrink-0 self-center text-white/60 ${svgSizeClass} ${rotationClass}`}
+      <FaArrowDown
+        className={`text-[var(--color-text-hint)] ${svgSizeClass} ${rotationClass}`}
         aria-hidden="true"
-      >
-        <path
-          d="M12 2 L12 14"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path
-          d="M6 10 L12 16 L18 10"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      />
     </motion.div>
   );
 }

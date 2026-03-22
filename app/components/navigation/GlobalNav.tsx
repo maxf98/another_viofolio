@@ -11,7 +11,7 @@ import LanguageToggle from "@/app/components/LanguageToggle";
 import RotateOnHover from "../animations/RotateOnHover";
 
 export default function GlobalNav() {
-  const { isGlobalNavOpen, closeGlobalNav, openAboutMe } = useGlobalNav();
+  const { isGlobalNavOpen, closeGlobalNav } = useGlobalNav();
   const { lang } = useLang();
   const t = globalNavText[lang];
   const pathname = usePathname();
@@ -20,20 +20,15 @@ export default function GlobalNav() {
     visible: { opacity: 1, x: 0 },
   };
 
-  const handleAboutMeClick = () => {
-    openAboutMe();
-    closeGlobalNav();
-  };
-
   const handleLinkClick = () => {
     closeGlobalNav();
   };
 
   const isActive = (path: string) => pathname === path;
   const linkClass =
-    "block w-full rounded-sm px-6 py-2 text-left text-lg font-medium text-white/90 transition-all duration-200 hover:bg-white/5 hover:text-white max-md:py-1.5 max-md:text-base max-md:landscape:px-3";
+    "block w-full rounded-sm px-6 py-2 text-left font-[var(--nav-link-weight)] text-[length:var(--nav-link-size)] text-[var(--nav-link-color)] transition-all duration-200 hover:bg-white/5 hover:text-white max-md:py-1.5 max-md:text-base max-md:landscape:px-3";
   const headingClass =
-    "mb-1 px-6 text-xs font-semibold uppercase tracking-wider text-white/50 pointer-events-none max-md:px-0 max-md:landscape:px-0";
+    "mb-1 px-6 font-semibold uppercase tracking-wider text-[length:var(--nav-label-size)] text-[var(--nav-label-color)] pointer-events-none max-md:px-0 max-md:landscape:px-0";
 
   return (
     <AnimatePresence>
@@ -101,9 +96,13 @@ export default function GlobalNav() {
                     </Link>
                   </motion.div>
                   <motion.div variants={itemVariants}>
-                    <button onClick={handleAboutMeClick} className={linkClass}>
+                    <Link
+                      href="/about"
+                      onClick={handleLinkClick}
+                      className={`${linkClass} ${isActive("/about") ? "underline underline-offset-4 decoration-white/60" : ""}`}
+                    >
                       {t.aboutMe}
-                    </button>
+                    </Link>
                   </motion.div>
                 </div>
 
@@ -114,10 +113,10 @@ export default function GlobalNav() {
                   <div className="space-y-1 max-md:landscape:space-y-0.5">
                     <motion.div variants={itemVariants}>
                       <Link
-                        href="/gallery/illustrated-photography"
+                        href="/illustrated-photography"
                         onClick={handleLinkClick}
                         className={`${linkClass} ${
-                          isActive("/gallery/illustrated-photography")
+                          isActive("/illustrated-photography")
                             ? "underline underline-offset-4 decoration-white/60"
                             : ""
                         }`}
@@ -127,10 +126,10 @@ export default function GlobalNav() {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link
-                        href="/gallery/art-therapy"
+                        href="/art-therapy"
                         onClick={handleLinkClick}
                         className={`${linkClass} ${
-                          isActive("/gallery/art-therapy")
+                          isActive("/art-therapy")
                             ? "underline underline-offset-4 decoration-white/60"
                             : ""
                         }`}
@@ -140,10 +139,10 @@ export default function GlobalNav() {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link
-                        href="/gallery/monkeybrain"
+                        href="/monkeybrain"
                         onClick={handleLinkClick}
                         className={`${linkClass} ${
-                          isActive("/gallery/monkeybrain")
+                          isActive("/monkeybrain")
                             ? "underline underline-offset-4 decoration-white/60"
                             : ""
                         }`}

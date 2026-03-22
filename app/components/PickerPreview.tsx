@@ -13,6 +13,9 @@ interface PickerPreviewProps {
   onSelectionChange?: (index: number) => void;
   pickerClassName?: string;
   previewClassName?: string;
+  className?: string;
+  /** Amount in rem to bleed the preview beyond its container on mobile (lg and below). Applied equally on both sides. */
+  mobileBleed?: number;
 }
 
 export default function PickerPreview({
@@ -23,6 +26,8 @@ export default function PickerPreview({
   onSelectionChange,
   pickerClassName = "w-16 h-16",
   previewClassName = "h-96",
+  className = "",
+  mobileBleed,
 }: PickerPreviewProps) {
   const safeIndex = Math.min(Math.max(defaultIndex, 0), images.length - 1);
   const [selectedIndex, setSelectedIndex] = useState(safeIndex);
@@ -34,10 +39,18 @@ export default function PickerPreview({
 
   const selectedImage = images[selectedIndex] ?? images[0];
 
+  const bleedStyle = mobileBleed
+    ? {
+        marginLeft: `-${mobileBleed}rem`,
+        marginRight: `-${mobileBleed}rem`,
+        width: `calc(100% + ${mobileBleed * 2}rem)`,
+      }
+    : undefined;
+
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${className}`}>
       {/* Picker Row */}
-      <div className="flex gap-2 justify-center flex-nowrap w-full mb-8 relative z-10">
+      <div className="flex gap-2 justify-center flex-nowrap w-full relative z-10">
         {images.map((src, index) => (
           <Picker
             key={index}
@@ -53,7 +66,8 @@ export default function PickerPreview({
 
       {/* Preview */}
       <div
-        className={`w-full relative ${previewClassName} overflow-hidden select-none`}
+        className={`relative ${previewClassName} overflow-hidden select-none lg:!ml-0 lg:!mr-0 lg:!w-full`}
+        style={bleedStyle}
       >
         <motion.div
           className={`absolute inset-0 ${onPreviewClick ? "cursor-pointer" : ""}`}

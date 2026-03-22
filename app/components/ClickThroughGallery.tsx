@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
+import InteractionHint from "@/app/components/InteractionHint";
 
 interface ClickThroughGalleryProps {
   images: (string | StaticImageData)[];
@@ -8,6 +10,7 @@ interface ClickThroughGalleryProps {
   onImageClick?: (index: number) => void;
   height?: number;
   imageClassName?: string;
+  showScrollHint?: boolean;
 }
 
 export default function ClickThroughGallery({
@@ -16,16 +19,32 @@ export default function ClickThroughGallery({
   onImageClick,
   height = 220,
   imageClassName = "",
+  showScrollHint = false,
 }: ClickThroughGalleryProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const check = () => setIsScrollable(el.scrollWidth > el.clientWidth);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [images]);
+
   if (!images.length) return null;
   const tileHeight = Math.max(180, Math.round(height * 0.72));
 
   return (
     <div className="relative w-full">
-      <div className="mb-2 text-[11px] uppercase tracking-[0.12em] text-white/58">
-        Scroll sideways
-      </div>
-      <div className="overflow-x-auto overflow-y-hidden pb-2">
+      {showScrollHint && isScrollable && (
+        <div className="flex justify-end mb-2 pr-1">
+          <InteractionHint text="scroll" direction="right" delay={0.5} />
+        </div>
+      )}
+      <div ref={scrollRef} className="overflow-x-auto overflow-y-hidden pb-2">
         <div className="flex items-stretch gap-3 md:gap-4 min-w-max pr-4 mx-auto w-fit">
           {images.map((image, index) => {
             const isStatic = typeof image !== "string";

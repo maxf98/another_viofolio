@@ -69,7 +69,7 @@ export function PreviewCard({
               ? "opacity-40 scale-105"
               : "opacity-78 group-hover:opacity-40 group-hover:scale-105"
           }`}
-          sizes="(min-width: 1280px) 20vw, (min-width: 768px) 33vw, (min-width: 640px) 44vw, 76vw"
+          sizes="(min-width: 768px) 33vw, 50vw"
         />
         <div
           className={`absolute inset-0 transition-colors duration-300 ${
@@ -79,7 +79,7 @@ export function PreviewCard({
           }`}
         />
         <div
-          className={`absolute right-3 top-3 z-20 rounded-full border border-white/30 bg-black/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 md:text-xs ${
+          className={`absolute right-3 top-3 z-20 rounded-full border border-[var(--color-text-hint)]/30 bg-black/45 px-3 py-1 text-[length:var(--text-indicator)] font-semibold uppercase tracking-[var(--tracking-indicator)] text-[var(--color-text-hint)] transition-all duration-300 ${
             isActive
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
@@ -87,7 +87,7 @@ export function PreviewCard({
         >
           {viewProjectHint}
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-24 md:h-28 pointer-events-none bg-gradient-to-t from-[#111318]/80 via-[#111318]/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-36 md:h-40 pointer-events-none bg-gradient-to-t from-[#111318]/80 via-[#111318]/45 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 flex flex-col justify-end p-3 md:p-4">
           <div className="relative min-h-[2.2rem] md:min-h-[2.6rem]">
             <motion.div
@@ -107,13 +107,13 @@ export function PreviewCard({
             </motion.div>
           </div>
           <AnimatePresence>
-            {showActive && (
+            {showActive && !isSectionHint && (
               <motion.div
                 initial={{ opacity: 0, maxHeight: 0, marginTop: 0 }}
-                animate={{ opacity: 1, maxHeight: 64, marginTop: 4 }}
+                animate={{ opacity: 1, maxHeight: 120, marginTop: 4 }}
                 exit={{ opacity: 0, maxHeight: 0, marginTop: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`relative z-20 line-clamp-2 text-white/85 leading-tight overflow-hidden ${
+                className={`relative z-20 text-[var(--color-text-secondary)] leading-tight overflow-hidden ${
                   isSectionHint ? "text-xs md:text-sm" : "text-sm md:text-base"
                 }`}
               >
