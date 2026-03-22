@@ -190,11 +190,11 @@ function ElgatoInner() {
             <h1>{t.anniversaryTitle}</h1>
             <div className="flex flex-col-reverse md:flex-col-reverse gap-4">
               <Image
-                src="/covers/elgato+/x2.png"
+                src="/covers/elgato+/x22.png"
                 alt="Elgato X"
                 width={1920}
                 height={1080}
-                className="w-full"
+                className="w-full max-w-[480px] mx-auto"
               />
               <p>{t.anniversaryDescription}</p>
             </div>

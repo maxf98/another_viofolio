@@ -192,7 +192,7 @@ function HomeInner() {
 
                 <div className="mt-6 flex justify-center">
                   <CTAButton
-                    href="mailto:vioprandetskaya@gmail.com"
+                    href="mailto:vio@vioseum.art"
                     bgColor="#ffffff"
                     textColor="text-[#10363a]"
                     bgOpacity={0.98}

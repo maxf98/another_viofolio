@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import RotateOnHover from "../animations/RotateOnHover";
+import RotateOnHover from "../RotateOnHover";
 import { useGlobalNav } from "./GlobalNavContext";
 
 export default function Logo() {

@@ -34,6 +34,7 @@ export default function QuardExamplesCarousel() {
                 onImageClick={(index) => setLightboxIndex(index)}
                 height={300}
                 imageClassName="ipad-border"
+                showScrollHint
               />
             </div>
           </div>

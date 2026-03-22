@@ -1,7 +1,7 @@
 "use client";
 
 import { FaTiktok, FaInstagram, FaEnvelope } from "react-icons/fa";
-import RotateOnHover from "./animations/RotateOnHover";
+import RotateOnHover from "./RotateOnHover";
 
 const socials = [
   {
@@ -17,7 +17,7 @@ const socials = [
     target: "_blank" as const,
   },
   {
-    href: "mailto:vioprandetskaya@gmail.com",
+    href: "mailto:vio@vioseum.art",
     label: "Email",
     icon: FaEnvelope,
     target: undefined,
@@ -36,7 +36,9 @@ export default function SocialLinks({
   className?: string;
 }) {
   return (
-    <div className={`flex ${vertical ? "flex-row gap-7 lg:flex-col lg:gap-6" : "gap-8"} ${className}`}>
+    <div
+      className={`flex ${vertical ? "flex-row gap-7 lg:flex-col lg:gap-6" : "gap-8"} ${className}`}
+    >
       {socials.map(({ href, label, icon: Icon, target }) => (
         <RotateOnHover key={label} rotation={15} stiffness={400} damping={8}>
           <a

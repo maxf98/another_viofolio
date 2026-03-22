@@ -3,12 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaTiktok, FaInstagram, FaEnvelope } from "react-icons/fa";
 import { useGlobalNav } from "./GlobalNavContext";
 import { useLang } from "@/app/context/LanguageContext";
 import { globalNavText } from "@/app/translations/globalNav";
 import LanguageToggle from "@/app/components/LanguageToggle";
-import RotateOnHover from "../animations/RotateOnHover";
+import SocialLinks from "@/app/components/SocialLinks";
 
 export default function GlobalNav() {
   const { isGlobalNavOpen, closeGlobalNav } = useGlobalNav();
@@ -204,41 +203,11 @@ export default function GlobalNav() {
 
             {/* Social links at bottom */}
             <div className="border-t border-white/10 px-5 pb-5 pt-4 max-md:landscape:px-6 max-md:landscape:pb-3 max-md:landscape:pt-3 md:px-6 md:pb-8 md:pt-6">
-              <div className="flex justify-center gap-6 md:gap-8">
-                <RotateOnHover rotation={15} stiffness={400} damping={8}>
-                  <a
-                    href="https://www.tiktok.com/@vioseum"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/70 hover:text-white transition-colors"
-                    aria-label="TikTok"
-                  >
-                    <FaTiktok size={28} />
-                  </a>
-                </RotateOnHover>
-
-                <RotateOnHover rotation={15} stiffness={400} damping={8}>
-                  <a
-                    href="https://www.instagram.com/vioseum/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/70 hover:text-white transition-colors"
-                    aria-label="Instagram"
-                  >
-                    <FaInstagram size={28} />
-                  </a>
-                </RotateOnHover>
-
-                <RotateOnHover rotation={15} stiffness={400} damping={8}>
-                  <a
-                    href="mailto:vioprandetskaya@gmail.com"
-                    className="text-white/70 hover:text-white transition-colors"
-                    aria-label="Email"
-                  >
-                    <FaEnvelope size={28} />
-                  </a>
-                </RotateOnHover>
-              </div>
+              <SocialLinks
+                size={28}
+                iconClass="text-white/70 hover:text-white transition-colors"
+                className="justify-center gap-6 md:gap-8"
+              />
             </div>
           </motion.div>
         </div>
