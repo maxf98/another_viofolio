@@ -43,13 +43,12 @@ export default function CustomsGallery({
         images={pairImages}
         label="Pairs"
         pickerClassName="w-28 h-20 lg:w-36 lg:h-24"
-        previewClassName="h-96 -mt-32 lg:-mt-8"
+        previewClassName="h-96 -mt-16 lg:-mt-8"
         onPreviewClick={onPairClick}
-        mobileBleed={3.5}
       />
 
       {/* SD and XLR Side by Side on Desktop, Stacked on Mobile */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 -mt-16 lg:mt-0">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 -mt-8 lg:mt-0">
         <PickerPreview
           images={sdImages}
           label="SD"

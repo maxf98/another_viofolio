@@ -68,7 +68,8 @@ export default function ClickThroughGallery({
                   src={image}
                   alt={`${altPrefix} ${index + 1}`}
                   fill
-                  className={`object-cover transition-transform duration-500 group-hover:scale-[1.03] ${imageClassName}`}
+                  sizes="(max-width: 768px) 80vw, 520px"
+                  className={`transition-transform duration-500 group-hover:scale-[1.03] ${imageClassName}`}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-70" />
               </button>

@@ -71,6 +71,9 @@ export const customsWebShotsImages: StaticImageData[] = [
   customsWebShot4,
   customsWebShot5,
   customsWebShot2,
+  customsWebShot3,
+  customsWebShot6,
+  customsWebShot7,
   front1,
 ];
 
@@ -84,11 +87,14 @@ export const ofestImages: StaticImageData[] = [
 ];
 
 export const winter22Images: StaticImageData[] = [
+  winter22_1,
   winter22_2,
-  winter22_7,
+  winter22_3,
+  winter22_8,
   winter22_9,
   winter22_10,
   winter22_11,
+  winter22_all,
 ];
 
 export const winter23Images: StaticImageData[] = [

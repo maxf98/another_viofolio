@@ -1,6 +1,5 @@
 import angels from "../../public/gallery/angels.webp";
 import beach from "../../public/gallery/beach.webp";
-import bird from "../../public/gallery/bird.webp";
 import bottle from "../../public/gallery/bottle.webp";
 import chat from "../../public/gallery/chat.webp";
 import field from "../../public/gallery/field.webp";
@@ -10,10 +9,8 @@ import looking from "../../public/gallery/looking.webp";
 import memories from "../../public/gallery/memories.webp";
 import sunburn from "../../public/gallery/sunburn.webp";
 import dude from "../../public/gallery/dude.png";
-import self from "../../public/gallery/self.png";
 import flowers from "../../public/gallery/flowers.png";
 import schadenfreude from "../../public/gallery/schadenfreude.png";
-import fake from "../../public/gallery/fake.png";
 import treeudude from "../../public/gallery/treeudude.webp";
 import dogs from "../../public/gallery/dogs.webp";
 import vogue from "../../public/gallery/vogue.webp";
@@ -26,6 +23,8 @@ import view from "../../public/gallery/view.webp";
 import what from "../../public/gallery/what.png";
 import eye from "../../public/gallery/eye.png";
 import girl from "../../public/gallery/girl.png";
+import surrealdude from "../../public/gallery/surrealdude.webp";
+import cloud from "../../public/gallery/cloud.png";
 import thoughtsPng from "../../public/gallery/originals_backup/thoughts.png";
 
 import blowout from "../../public/gallery/blowout.png";
@@ -43,6 +42,7 @@ import abdruck from "../../public/gallery/Narrative.png";
 import pic from "../../public/gallery/pic.png";
 import carib from "../../public/gallery/carib.png";
 import mix3 from "../../public/gallery/mix3.png";
+import city from "../../public/gallery/city.png";
 
 import m1 from "../../public/gallery/m1 2.png";
 import m2 from "../../public/gallery/m2 2.png";
@@ -53,7 +53,6 @@ import m7 from "../../public/gallery/m7.png";
 
 export const galleryImages = {
   illustratedPhotography: [
-    bird,
     ship,
     what,
     memories,
@@ -71,12 +70,16 @@ export const galleryImages = {
     angels,
     monster,
     sunburn,
-    fake,
     grandpa,
     dogs,
     sun,
+    field,
+    vogue,
+    surrealdude,
+    beach,
+    cloud,
   ],
-  artTherapy: [blowout, fish, stairhair, chalk3, flo, mask, grounded, puzzle, frottage, dragon, handpainting, abdruck, pic, carib, mix3],
+  artTherapy: [blowout, fish, stairhair, chalk3, flo, mask, grounded, puzzle, frottage, dragon, handpainting, abdruck, pic, carib, mix3, city],
   monkeybrain: [m1, m2, m3, m4, m6, m7],
 };
 

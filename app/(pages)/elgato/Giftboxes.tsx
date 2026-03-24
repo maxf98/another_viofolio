@@ -63,18 +63,18 @@ export default function Giftboxes() {
               />
             )}
             <div className="content-container">
-              <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
-                <div className="relative w-full md:w-3/5 aspect-[4/3] rounded-2xl overflow-hidden">
+              <div className="flex flex-col md:flex-row gap-12 items-center">
+                <div className="w-full md:w-2/3 flex flex-col gap-4">
+                  <h2 className="text-2xl font-bold">{box.title}</h2>
+                  <p className="text-base-content/70 whitespace-pre-line">{box.description}</p>
+                </div>
+                <div className="relative w-full md:w-1/3 aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
                     src={box.image}
                     alt={box.title}
                     fill
                     className="object-contain"
                   />
-                </div>
-                <div className="w-full md:w-2/5 flex flex-col gap-4">
-                  <h2 className="text-2xl font-bold">{box.title}</h2>
-                  <p className="text-base-content/70">{box.description}</p>
                 </div>
               </div>
             </div>
@@ -90,6 +90,7 @@ export default function Giftboxes() {
                         handleImageClick(index, imageIndex)
                       }
                       showScrollHint
+                      imageClassName="object-cover"
                     />
                   </div>
                 </div>

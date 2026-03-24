@@ -11,7 +11,7 @@ import SectionHintsGrid from "@/app/components/SectionHintsGrid";
 import FixedBackgroundImage from "@/app/components/FixedBackgroundImage";
 import Image from "next/image";
 import { ImageItem } from "@/app/model";
-import { dImages, xImages } from "./images";
+import { dImages, xImages, customsWebShotsImages } from "./images";
 import { pairImages, sdImages, xlrImages } from "./CustomsGallery";
 import { ElgatoTextProvider, useElgatoText } from "@/app/translations/elgato";
 
@@ -128,6 +128,23 @@ function ElgatoInner() {
                 onXlrClick={handleXlrClick}
               />
             </div>
+            <div className="w-full mt-2 md:mt-4 mb-6 md:mb-10">
+              <div className="relative mx-auto w-full max-w-7xl px-3 md:px-6">
+                <div className="rounded-[26px] border border-white/12 bg-black/20 backdrop-blur-[2px] p-3 md:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+                  <ClickThroughGallery
+                    images={customsWebShotsImages}
+                    altPrefix="Product customs"
+                    onImageClick={(imageIndex) => {
+                      setLightboxImages(customsWebShotsImages.map((img, i) => ({ index: i, image: img, alt: `Product customs ${i + 1}` })));
+                      setLightboxIndex(imageIndex);
+                    }}
+                    height={300}
+                    showScrollHint
+                    imageClassName="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -165,6 +182,7 @@ function ElgatoInner() {
                     onImageClick={handleDreamvilleClick}
                     height={300}
                     showScrollHint
+                    imageClassName="object-cover"
                   />
                 </div>
               </div>
@@ -209,6 +227,7 @@ function ElgatoInner() {
                     onImageClick={handleXClick}
                     height={300}
                     showScrollHint
+                    imageClassName="object-cover"
                   />
                 </div>
               </div>

@@ -8,7 +8,10 @@
       "Bash(sips:*)",
       "Bash(cwebp:*)",
       "Bash(grep -r LetterSwitcher /Users/maxfest/vscode/another_viofolio/app --include=*.tsx --include=*.mdx --include=*.ts)",
-      "Bash(wc -l /Users/maxfest/vscode/another_viofolio/app/components/*.tsx)"
+      "Bash(wc -l /Users/maxfest/vscode/another_viofolio/app/components/*.tsx)",
+      "Bash(ls /Users/maxfest/vscode/another_viofolio/app/\\\\\\(pages\\\\\\)/)",
+      "Bash(ls -la \"/Users/maxfest/vscode/another_viofolio/app/\\(home\\)/components/\")",
+      "mcp__chrome-devtools__take_screenshot"
     ],
     "deny": [],
     "ask": []

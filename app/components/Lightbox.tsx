@@ -252,18 +252,29 @@ export default function Lightbox({
                     <div
                       className={`flex-shrink min-w-0 ${!showText ? "mx-auto" : ""}`}
                     >
-                      <Image
-                        className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] mt-12 w-auto h-auto max-w-full ${imageClassName}`}
-                        src={image.image}
-                        alt={image.alt ?? "Gallery image"}
-                        {...(typeof image.image !== "string" && {
-                          placeholder: "blur",
-                        })}
-                        sizes="(max-width: 768px) 90vw, 70vw"
-                        draggable={false}
-                        priority={shouldPrioritize}
-                        loading={shouldPrioritize ? "eager" : "lazy"}
-                      />
+                      {image.video ? (
+                        <video
+                          src={image.video}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] mt-12 w-auto h-auto max-w-full ${imageClassName}`}
+                        />
+                      ) : (
+                        <Image
+                          className={`object-contain select-none max-h-[60vh] max-md:landscape:max-h-[68vh] md:max-h-[85vh] mt-12 w-auto h-auto max-w-full ${imageClassName}`}
+                          src={image.image}
+                          alt={image.alt ?? "Gallery image"}
+                          {...(typeof image.image !== "string"
+                            ? { placeholder: "blur" }
+                            : { width: 1920, height: 1080 })}
+                          sizes="(max-width: 768px) 90vw, 70vw"
+                          draggable={false}
+                          priority={shouldPrioritize}
+                          loading={shouldPrioritize ? "eager" : "lazy"}
+                        />
+                      )}
                     </div>
                     {showText && (
                       <div className="flex-shrink-0 flex flex-col items-center md:items-start text-center md:text-left w-full max-md:landscape:max-w-[min(560px,100%)] md:w-auto md:min-w-[280px] md:max-w-[320px]">

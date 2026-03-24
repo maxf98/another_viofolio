@@ -4,6 +4,9 @@ import { StaticImageData } from "next/image";
 export interface ImageItem {
   index: number;
   image: StaticImageData | string;
+  video?: string; // path to mp4 — if set, renders as video instead of image
+  videoWidth?: number;
+  videoHeight?: number;
   alt?: string;
   title?: string;
   description?: string;

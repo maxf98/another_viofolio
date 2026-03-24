@@ -46,6 +46,15 @@ function getFooterBackground(pathname: string) {
       containerBg: "bg-[#24242e]",
     };
   }
+  if (pathname === "/about") {
+    return {
+      src: "/gallery/nobody.png",
+      objectPosition: "center 70%",
+      opacity: 1,
+      containerBg: "bg-[#0d5f63]/18",
+      overlay: "bg-[radial-gradient(circle_at_12%_14%,rgba(255,212,171,0.16),transparent_44%),radial-gradient(circle_at_84%_18%,rgba(174,206,255,0.14),transparent_38%),linear-gradient(to_bottom,rgba(8,9,14,0.28),rgba(8,9,14,0.22))]",
+    };
+  }
   if (pathname === "/illustrated-photography") {
     return {
       src: "/gallery/bird.webp",

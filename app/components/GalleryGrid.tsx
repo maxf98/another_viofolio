@@ -17,6 +17,56 @@ interface ImageLayout {
   height: number;
 }
 
+function LazyVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleMouseEnter = () => {
+    videoRef.current?.play().catch(() => {});
+    setIsPlaying(true);
+  };
+
+  const handleMouseLeave = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+    setIsPlaying(false);
+  };
+
+  return (
+    <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-lg">
+      <video
+        ref={videoRef}
+        src={src}
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className="w-full h-full object-cover"
+        onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 0.01; }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+      {/* Play button overlay — extends slightly outside so scrim has sharp corners */}
+      <div
+        className="absolute -inset-1 flex items-center justify-center pointer-events-none transition-opacity duration-300"
+        style={{ opacity: isPlaying ? 0 : 1 }}
+      >
+        <div className="absolute inset-0 bg-black/25" />
+        <div className="relative flex flex-col items-center gap-2">
+          <div className="w-12 h-12 rounded-full bg-white/95 flex items-center justify-center shadow-lg">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <polygon points="5,3 14,8 5,13" fill="#111" />
+            </svg>
+          </div>
+          <span className="text-white text-[11px] font-medium tracking-widest uppercase opacity-90">Hover to play</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [layouts, setLayouts] = useState<ImageLayout[]>([]);
@@ -73,7 +123,9 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
 
         // Calculate aspect ratio and apply scale
         const img = item.image as import("next/image").StaticImageData;
-        const aspectRatio = img.height / img.width;
+        const aspectRatio = item.video
+          ? (item.videoHeight ?? 1934) / (item.videoWidth ?? 1088)
+          : img.height / img.width;
         const props = imageProps[idx];
 
         const scaledWidth = columnWidth * props.scale;
@@ -125,16 +177,20 @@ function GalleryGrid({ images, clickedImage, maxColumns = 4 }: GalleryGridProps)
             }}
             onClick={() => clickedImage(item)}
           >
-            <Image
-              src={item.image}
-              alt={item.alt ?? "A Gallery Image"}
-              fill
-              sizes="(max-width: 767px) and (orientation: portrait) 50vw, (max-width: 767px) and (orientation: landscape) 33vw, (max-width: 1024px) 25vw, 20vw"
-              className="object-cover rounded-sm shadow-lg"
-              placeholder="blur"
-              quality={80}
-              loading="lazy"
-            />
+            {item.video ? (
+              <LazyVideo src={item.video} />
+            ) : (
+              <Image
+                src={item.image}
+                alt={item.alt ?? "A Gallery Image"}
+                fill
+                sizes="(max-width: 767px) and (orientation: portrait) 50vw, (max-width: 767px) and (orientation: landscape) 33vw, (max-width: 1024px) 25vw, 20vw"
+                className="object-cover rounded-sm shadow-lg"
+                placeholder="blur"
+                quality={80}
+                loading="lazy"
+              />
+            )}
           </div>
         );
       })}
