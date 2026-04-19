@@ -137,7 +137,10 @@ function HomeInner() {
                 objectPosition="center"
               />
               <div className="grid w-full grid-cols-2 auto-rows-[34svh] gap-px p-0 max-md:landscape:auto-rows-[46svh] md:h-full md:grid-cols-3 md:grid-rows-2 md:auto-rows-auto">
-                {combinedProjectCards.map((card) => {
+                {t.projectCards.map((translatedCard) => {
+                  const staticCard = combinedProjectCards.find((c) => c.href === translatedCard.href);
+                  if (!staticCard) return null;
+                  const card = { ...staticCard, ...translatedCard };
                   const isActive =
                     !supportsHover && activeMobileCard === card.href;
                   return (

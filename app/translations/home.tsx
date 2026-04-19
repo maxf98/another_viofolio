@@ -20,6 +20,14 @@ const translations = {
       "Open for freelance projects, collaborations, and creative adventures.",
     ctaLabel: "Get in Touch",
     viewProjectHint: "View project",
+    projectCards: [
+      { href: "/monkeybrain", title: "Monkeybrain Magazine", description: "Bachelor thesis magazine in mixed media" },
+      { href: "/art-therapy", title: "Analogue Explorations", description: "Process-driven experiments and material play" },
+      { href: "/illustrated-photography", title: "Digital Explorations", description: "Digital image-making and narrative scenes" },
+      { href: "/mascha", title: "Working with Mascha", description: "Album artwork and visual storytelling", defaultTitle: "Working with an artist" },
+      { href: "/quards", title: "Working with Quards", description: "App design and visual identity", defaultTitle: "Working with a startup" },
+      { href: "/elgato", title: "Working with Elgato", description: "Product customisation and brand illustration", defaultTitle: "Working with a company" },
+    ],
   },
   de: {
     navGallery: "persönliches Archiv",
@@ -35,6 +43,14 @@ const translations = {
       "Offen für Freelance-Projekte, Kollaborationen und kreative Abenteuer.",
     ctaLabel: "Kontakt aufnehmen",
     viewProjectHint: "Projekt ansehen",
+    projectCards: [
+      { href: "/monkeybrain", title: "Monkeybrain Magazin", description: "Bachelorarbeit-Magazin in Mixed Media" },
+      { href: "/art-therapy", title: "Analoge Erkundungen", description: "Prozessorientierte Experimente und Materialspiel" },
+      { href: "/illustrated-photography", title: "Digitale Erkundungen", description: "Digitale Bildgestaltung und narrative Szenen" },
+      { href: "/mascha", title: "Zusammenarbeit mit Mascha", description: "Album-Artwork und visuelles Geschichtenerzählen", defaultTitle: "Zusammenarbeit mit einer Künstlerin" },
+      { href: "/quards", title: "Zusammenarbeit mit Quards", description: "App-Design und visuelle Identität", defaultTitle: "Zusammenarbeit mit einem Startup" },
+      { href: "/elgato", title: "Zusammenarbeit mit Elgato", description: "Produktgestaltung und Markenillustration", defaultTitle: "Zusammenarbeit mit einem Unternehmen" },
+    ],
   },
   ru: {
     navGallery: "личный архив",
@@ -50,6 +66,14 @@ const translations = {
       "Открыта для фриланс-проектов, коллабораций и творческих приключений.",
     ctaLabel: "Связаться",
     viewProjectHint: "Открыть проект",
+    projectCards: [
+      { href: "/monkeybrain", title: "Monkeybrain Журнал", description: "Дипломный журнал в технике смешанных медиа" },
+      { href: "/art-therapy", title: "Аналоговые исследования", description: "Процессуальные эксперименты и работа с материалом" },
+      { href: "/illustrated-photography", title: "Цифровые исследования", description: "Цифровое создание образов и нарративные сцены" },
+      { href: "/mascha", title: "Сотрудничество с Машей", description: "Обложки альбомов и визуальный сторителлинг", defaultTitle: "Сотрудничество с художницей" },
+      { href: "/quards", title: "Сотрудничество с Quards", description: "Дизайн приложения и визуальная идентичность", defaultTitle: "Сотрудничество со стартапом" },
+      { href: "/elgato", title: "Сотрудничество с Elgato", description: "Кастомизация продукта и брендовая иллюстрация", defaultTitle: "Сотрудничество с компанией" },
+    ],
   },
 } as const;
 

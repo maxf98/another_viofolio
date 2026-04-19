@@ -14,7 +14,7 @@ const letters: Record<"V" | "I" | "O", LetterItem[]> = {
   I: [
     { index: 4, image: "/letters/I/plants.png", alt: "plants" },
     { index: 1, image: "/letters/I/shapes.webp", alt: "shapes" },
-    { index: 3, image: "/letters/I/window.webp", alt: "window" },
+    { index: 3, image: "/letters/I/window3.png", alt: "window3" },
   ],
   O: [
     { index: 9, image: "/letters/O/7o.png", alt: "7o" },

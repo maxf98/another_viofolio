@@ -9,11 +9,11 @@ export type ProjectCard = {
 
 export const personalArchiveCards: ProjectCard[] = [
   {
-    href: "/illustrated-photography",
-    image: "/gallery/sun.png",
-    alt: "Digital Explorations",
-    title: "Digital Explorations",
-    description: "Digital image-making and narrative scenes",
+    href: "/monkeybrain",
+    image: "/projects/MONKEYBRAIN/pages/monkeybrain.png",
+    alt: "Monkeybrain Magazine",
+    title: "Monkeybrain Magazine",
+    description: "Bachelor thesis magazine in mixed media",
   },
   {
     href: "/art-therapy",
@@ -23,22 +23,22 @@ export const personalArchiveCards: ProjectCard[] = [
     description: "Process-driven experiments and material play",
   },
   {
-    href: "/monkeybrain",
-    image: "/projects/MONKEYBRAIN/pages/monkeybrain.png",
-    alt: "Monkeybrain Magazine",
-    title: "Monkeybrain Magazine",
-    description: "Bachelor thesis magazine in mixed media",
+    href: "/illustrated-photography",
+    image: "/gallery/sun.png",
+    alt: "Digital Explorations",
+    title: "Digital Explorations",
+    description: "Digital image-making and narrative scenes",
   },
 ];
 
 export const workingCards: ProjectCard[] = [
   {
-    href: "/elgato",
-    image: "/projects/elgato/front1.png",
-    alt: "Elgato background preview",
-    defaultTitle: "Working with a company",
-    title: "Working with Elgato",
-    description: "Product customisation and brand illustration",
+    href: "/mascha",
+    image: "/covers/mascha/m3.webp",
+    alt: "Mascha background preview",
+    defaultTitle: "Working with an artist",
+    title: "Working with Mascha",
+    description: "Album artwork and visual storytelling",
   },
   {
     href: "/quards",
@@ -49,12 +49,12 @@ export const workingCards: ProjectCard[] = [
     description: "App design and visual identity",
   },
   {
-    href: "/mascha",
-    image: "/covers/mascha/m3.webp",
-    alt: "Mascha background preview",
-    defaultTitle: "Working with an artist",
-    title: "Working with Mascha",
-    description: "Album artwork and visual storytelling",
+    href: "/elgato",
+    image: "/projects/elgato/front1.png",
+    alt: "Elgato background preview",
+    defaultTitle: "Working with a company",
+    title: "Working with Elgato",
+    description: "Product customisation and brand illustration",
   },
 ];
 

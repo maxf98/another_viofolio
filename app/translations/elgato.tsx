@@ -44,18 +44,18 @@ const translations = {
     heroTitle: "ELGATO",
     heroDescription:
       "Elgato entwickelt Tools für Content Creator – von Streaming-Hardware bis hin zu Equipment für kreative Produktionen. Ich arbeitete mit ihrem Team an einer Vielzahl von Illustrations- und Designprojekten und trug zu Produktveröffentlichungen, Markenkooperationen und besonderen Kampagnen bei.",
-    customsTitle: "Product Customisation",
+    customsTitle: "Produktgestaltung",
     customsDescription:
       "Ich entwarf individuelle Frontplatten für Elgatos Stream Deck und Wave XLR und arbeitete dabei eng mit den Design- und Druckteams zusammen, um Konzepte zum Leben zu erwecken. Im Rahmen der Produktvorgaben entwickelte ich ansprechende Visuals, die zur technikorientierten Identität der Marke passten und zu offiziellen Produkten wurden, die weltweit von Kunden genutzt werden.",
     dreamvilleTitle: "Dreamville x Elgato",
     dreamvilleDescription:
       "Ich hatte die Möglichkeit, die visuellen Assets für die Dreamville x Elgato Wave:3 Kollaboration zu gestalten und die Dreamville-Marke durch Illustration, Farbe und Komposition auf das Mikrofon zu übersetzen.",
-    anniversaryTitle: "Anniversary Designs",
+    anniversaryTitle: "Jubiläumsdesigns",
     anniversaryDescription:
       "Elgato feierte sein 10-jähriges Jubiläum mit limitierten Produkten, für die ich ein passendes Muster und Logo entwarf, das an verschiedenen Touchpoints eingesetzt werden konnte. Das Elgato-Logo machte ich zum zentralen Element des Musters, verbunden durch das Logo des Events selbst.",
     summaryText:
       "Im Laufe dieser Projekte stand ich vor vielen Herausforderungen und lernte sehr viel – ich arbeitete mit den unterschiedlichsten Spezifikationen, experimentierte mit neuen Ideen und sorgte stets dafür, dass sich die Marke konsistent anfühlt.",
-    giftboxesTitle: "Gift Boxes",
+    giftboxesTitle: "Geschenkboxen",
     giftboxesDescription:
       "Elgato verschickt Geschenkboxen zu besonderen Anlässen. Ich gestaltete einige davon – von der Box selbst über die enthaltenen Materialien bis hin zu den Werbemitteln – und schuf dabei verspielte visuelle Erzählungen.",
     boxes: [
@@ -80,18 +80,18 @@ const translations = {
     heroTitle: "ELGATO",
     heroDescription:
       "Elgato — компания, известная своими инструментами для контент-мейкеров: от стримингового оборудования до устройств для креативного продакшена. Я сотрудничала с их командой над различными иллюстрационными и дизайн-проектами, внося вклад в продуктовые релизы, брендовые коллаборации и специальные кампании.",
-    customsTitle: "Product Customisation",
+    customsTitle: "Кастомизация продукта",
     customsDescription:
       "Я разрабатывала кастомные лицевые панели для Elgato Stream Deck и Wave XLR, сотрудничая с командами дизайна и печати, чтобы воплотить концепции в жизнь. Работая в рамках продуктовых ограничений, я создавала выразительные визуальные решения, отражающие технологическую идентичность бренда, которые стали официальными продуктами для покупателей по всему миру.",
     dreamvilleTitle: "Dreamville x Elgato",
     dreamvilleDescription:
       "У меня была возможность разработать визуальные материалы для коллаборации Dreamville x Elgato Wave:3, перенеся бренд Dreamville на микрофон через иллюстрацию, цвет и композицию.",
-    anniversaryTitle: "Anniversary Designs",
+    anniversaryTitle: "Юбилейные дизайны",
     anniversaryDescription:
       "К 10-летию Elgato я разработала паттерн и логотип для серии лимитированных продуктов, которые можно было использовать на разных носителях. Логотип Elgato стал центральным элементом паттерна, связанным с логотипом самого события.",
     summaryText:
       "В ходе этих проектов я столкнулась со многими трудностями и многому научилась — работала с самыми разными спецификациями, экспериментировала с новыми идеями, при этом всегда сохраняя единый стиль бренда.",
-    giftboxesTitle: "Gift Boxes",
+    giftboxesTitle: "Подарочные коробки",
     giftboxesDescription:
       "Elgato рассылает подарочные коробки по особым случаям. Я разработала несколько таких наборов — от самой коробки до материалов внутри и промо-материалов вокруг неё, создавая игривые визуальные нарративы.",
     boxes: [

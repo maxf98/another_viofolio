@@ -168,6 +168,7 @@ button {
   }
 }
 
+
 /* Mobile portrait sizing */
 @media (max-width: 1024px) and (orientation: portrait) {
   .content-container {
@@ -273,6 +274,56 @@ p {
 }
 
 @layer utilities {
+  /* Scattered gallery items need an explicit flex basis so large media
+     content does not force each wrapper back to a full row. */
+  .si-analogue,
+  .si-digital,
+  .si-animation {
+    --si-item-width: calc(50% - 8px);
+    flex: 0 0 var(--si-item-width);
+    width: var(--si-item-width);
+    max-width: var(--si-item-width);
+    min-width: 0;
+  }
+
+  .si-digital {
+    --si-item-width: calc(38% - 12px);
+  }
+
+  .si-analogue {
+    --si-item-width: calc(46% - 8px);
+  }
+
+  @media (max-width: 767px) and (orientation: landscape) {
+    .si-analogue,
+    .si-digital,
+    .si-animation {
+      --si-item-width: calc(33.333% - 10.667px);
+    }
+
+    .si-digital {
+      --si-item-width: calc(27% - 16px);
+    }
+
+    .si-analogue {
+      --si-item-width: calc(31% - 10.667px);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .si-analogue {
+      --si-item-width: calc(31% - 10.667px);
+    }
+
+    .si-digital {
+      --si-item-width: calc(19% - 24px);
+    }
+
+    .si-animation {
+      --si-item-width: calc(33.333% - 10.667px);
+    }
+  }
+
   .h-128 {
     height: 32rem;
   }
